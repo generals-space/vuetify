@@ -13,5 +13,4 @@ dev/*css
 !dev/router.js
 !dev/prepare-commit-message.js
 /es5
-/dist
 /release
