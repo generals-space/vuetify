@@ -3215,7 +3215,7 @@ process.umask = function() { return 0; };
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"vuetify","version":"0.16.9","author":{"name":"John Leider","email":"john@vuetifyjs.com"},"license":"MIT","homepage":"http://vuetifyjs.com","main":"dist/vuetify.js","unpkg":"dist/vuetify.js","types":"index.d.ts","scripts":{"watch":"cross-env TARGET=development webpack --config build/config.js --progress --hide-modules --watch","dev":"cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js --open --hot","build":"npm run build:dist && npm run build:es5","build:dev":"cross-env NODE_ENV=production node build/webpack.dev.config.js","build:dist":"rimraf dist && cross-env NODE_ENV=production webpack --config build/config.js --progress --hide-modules","build:es5":"rimraf es5 && cross-env NODE_ENV=es5 babel src --out-dir es5","debug-build":"node --inspect --debug-brk build/config.js","debug:test":"./node_modules/.bin/cross-env NODE_ENV=test node --inspect --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand --verbose","test":"cross-env NODE_ENV=test jest -i","lint":"eslint --ext .js,.vue src"},"description":"Vue.js 2 Semantic Component Framework","devDependencies":{"autoprefixer":"^7.1.4","avoriaz":"^4.1.0","babel-cli":"^6.26.0","babel-core":"^6.26.0","babel-eslint":"^8.0.0","babel-jest":"^21.0.2","babel-loader":"^7.1.2","babel-plugin-add-filehash":"^6.9.4","babel-plugin-detective":"^2.0.0","babel-plugin-module-resolver":"^2.7.1","babel-plugin-transform-async-to-generator":"^6.24.1","babel-plugin-transform-runtime":"^6.23.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.5.1","babel-preset-es2015":"^6.24.1","babel-preset-stage-2":"^6.24.1","cross-env":"^5.0.5","cross-spawn":"^5.1.0","css-loader":"^0.28.7","css-mqpacker":"^6.0.1","cssnano":"^3.10.0","eslint":"^4.6.1","eslint-config-standard":"^10.2.1","eslint-config-vue":"^2.0.2","eslint-friendly-formatter":"^3.0.0","eslint-loader":"^1.6.1","eslint-plugin-html":"^3.2.1","eslint-plugin-import":"^2.7.0","eslint-plugin-node":"^5.1.1","eslint-plugin-promise":"^3.4.0","eslint-plugin-pug":"^1.0.0","eslint-plugin-standard":"^3.0.1","eslint-plugin-vue":"^2.1.0","eventsource-polyfill":"^0.9.6","extract-text-webpack-plugin":"^3.0.0","friendly-errors-webpack-plugin":"^1.6.1","function-bind":"^1.1.1","husky":"^0.14.3","jest":"^21.1.0","jest-cli":"^21.1.0","jest-css-modules":"^1.1.0","jest-serializer-html":"^4.0.0","jest-vue-preprocessor":"^1.1.0","optimize-css-assets-webpack-plugin":"^3.2.0","optimize-js-plugin":"^0.0.4","postcss-loader":"^1.3.3","progress-bar-webpack-plugin":"^1.10.0","pug":"^2.0.0-rc.4","pug-loader":"^2.3.0","ress":"^1.1.1","rimraf":"^2.6.2","semver":"^5.4.1","serialize-javascript":"^1.3.0","style-loader":"^0.18.2","stylus":"^0.54.5","stylus-loader":"^3.0.1","uglifyjs-webpack-plugin":"^0.4.6","vue":"^2.5.2","vue-loader":"^13.3.0","vue-router":"^2.7.0","vue-server-renderer":"^2.5.2","vue-template-compiler":"^2.5.2","webpack":"^3.6.0","webpack-bundle-analyzer":"^2.9.0","webpack-bundle-size-analyzer":"^2.7.0","webpack-dev-server":"^2.8.2","webpack-merge":"^4.1.0","write-file-webpack-plugin":"^4.1.0"},"dependencies":{},"peerDependencies":{"vue":"^2.4.3"},"engines":{"node":">= 4.0.0","npm":">= 3.0.0"},"jest":{"verbose":false,"roots":["<rootDir>/src"],"moduleFileExtensions":["js","vue"],"moduleDirectories":["node_modules"],"moduleNameMapper":{"src/(.*)":"<rootDir>/src/$1"},"transform":{".*\\.(vue)$":"<rootDir>/node_modules/jest-vue-preprocessor","\\.(styl)$":"<rootDir>/node_modules/jest-css-modules",".*\\.(vue|js)$":"<rootDir>/node_modules/babel-jest"},"transformIgnorePatterns":["node_modules/(?!vue-router)"],"snapshotSerializers":["jest-serializer-html"]}}
+module.exports = {"name":"vuetify","version":"0.16.9","author":{"name":"John Leider","email":"john@vuetifyjs.com"},"license":"MIT","homepage":"http://vuetifyjs.com","main":"dist/vuetify.js","unpkg":"dist/vuetify.js","types":"index.d.ts","scripts":{"watch":"cross-env TARGET=development webpack --config build/config.js --progress --hide-modules --watch","dev":"cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js --open --hot","build":"npm run build:dist && npm run build:es5","build:dev":"cross-env NODE_ENV=production node build/webpack.dev.config.js","build:dist":"rimraf dist && cross-env NODE_ENV=production webpack --config build/config.js --progress --hide-modules","build:es5":"rimraf es5 && cross-env NODE_ENV=es5 babel src --out-dir es5","debug-build":"node --inspect --debug-brk build/config.js","debug:test":"./node_modules/.bin/cross-env NODE_ENV=test node --inspect --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand --verbose","test":"cross-env NODE_ENV=test jest -i","lint":"eslint --ext .js,.vue src","preparecommitmsg":"node dev/prepare-commit-message.js","precommit":"yarn run lint && yarn test","prepush":"yarn run lint && yarn test"},"description":"Vue.js 2 Semantic Component Framework","devDependencies":{"autoprefixer":"^7.1.4","avoriaz":"^4.1.0","babel-cli":"^6.26.0","babel-core":"^6.26.0","babel-eslint":"^8.0.0","babel-jest":"^21.0.2","babel-loader":"^7.1.2","babel-plugin-add-filehash":"^6.9.4","babel-plugin-detective":"^2.0.0","babel-plugin-module-resolver":"^2.7.1","babel-plugin-transform-async-to-generator":"^6.24.1","babel-plugin-transform-runtime":"^6.23.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.5.1","babel-preset-es2015":"^6.24.1","babel-preset-stage-2":"^6.24.1","cross-env":"^5.0.5","cross-spawn":"^5.1.0","css-loader":"^0.28.7","css-mqpacker":"^6.0.1","cssnano":"^3.10.0","eslint":"^4.6.1","eslint-config-standard":"^10.2.1","eslint-config-vue":"^2.0.2","eslint-friendly-formatter":"^3.0.0","eslint-loader":"^1.6.1","eslint-plugin-html":"^3.2.1","eslint-plugin-import":"^2.7.0","eslint-plugin-node":"^5.1.1","eslint-plugin-promise":"^3.4.0","eslint-plugin-pug":"^1.0.0","eslint-plugin-standard":"^3.0.1","eslint-plugin-vue":"^2.1.0","eventsource-polyfill":"^0.9.6","extract-text-webpack-plugin":"^3.0.0","friendly-errors-webpack-plugin":"^1.6.1","function-bind":"^1.1.1","husky":"^0.14.3","jest":"^21.1.0","jest-cli":"^21.1.0","jest-css-modules":"^1.1.0","jest-serializer-html":"^4.0.0","jest-vue-preprocessor":"^1.1.0","optimize-css-assets-webpack-plugin":"^3.2.0","optimize-js-plugin":"^0.0.4","postcss-loader":"^1.3.3","progress-bar-webpack-plugin":"^1.10.0","pug":"^2.0.0-rc.4","pug-loader":"^2.3.0","ress":"^1.1.1","rimraf":"^2.6.2","semver":"^5.4.1","serialize-javascript":"^1.3.0","style-loader":"^0.18.2","stylus":"^0.54.5","stylus-loader":"^3.0.1","uglifyjs-webpack-plugin":"^0.4.6","vue":"^2.5.2","vue-loader":"^13.3.0","vue-router":"^2.7.0","vue-server-renderer":"^2.5.2","vue-template-compiler":"^2.5.2","webpack":"^3.6.0","webpack-bundle-analyzer":"^2.9.0","webpack-bundle-size-analyzer":"^2.7.0","webpack-dev-server":"^2.8.2","webpack-merge":"^4.1.0","write-file-webpack-plugin":"^4.1.0"},"dependencies":{},"peerDependencies":{"vue":"^2.4.3"},"engines":{"node":">= 4.0.0","npm":">= 3.0.0"},"jest":{"verbose":false,"roots":["<rootDir>/src"],"moduleFileExtensions":["js","vue"],"moduleDirectories":["node_modules"],"moduleNameMapper":{"src/(.*)":"<rootDir>/src/$1"},"transform":{".*\\.(vue)$":"<rootDir>/node_modules/jest-vue-preprocessor","\\.(styl)$":"<rootDir>/node_modules/jest-css-modules",".*\\.(vue|js)$":"<rootDir>/node_modules/babel-jest"},"transformIgnorePatterns":["node_modules/(?!vue-router)"],"snapshotSerializers":["jest-serializer-html"]}}
 
 /***/ }),
 /* 27 */
@@ -3247,6 +3247,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "VTextField", function() { return __WEBPACK_IMPORTED_MODULE_10__VTextField__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__VToolbar__ = __webpack_require__(83);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "VToolbar", function() { return __WEBPACK_IMPORTED_MODULE_11__VToolbar__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__VChip__ = __webpack_require__(88);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "VChip", function() { return __WEBPACK_IMPORTED_MODULE_12__VChip__["a"]; });
+
 
 
 
@@ -8214,6 +8217,117 @@ __webpack_require__(85);
     return h(__WEBPACK_IMPORTED_MODULE_0__components_VBtn__["a" /* default */], d, defaultSlot || [h(__WEBPACK_IMPORTED_MODULE_1__components_VIcon__["a" /* default */], 'menu')]);
   }
 });
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VChip__ = __webpack_require__(89);
+
+
+__WEBPACK_IMPORTED_MODULE_0__VChip__["a" /* default */].install = function install(Vue) {
+  Vue.component(__WEBPACK_IMPORTED_MODULE_0__VChip__["a" /* default */].name, __WEBPACK_IMPORTED_MODULE_0__VChip__["a" /* default */]);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0__VChip__["a" /* default */]);
+
+/***/ }),
+/* 89 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__VIcon__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_colorable__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_themeable__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_toggleable__ = __webpack_require__(3);
+__webpack_require__(90);
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  name: 'v-chip',
+
+  components: {
+    VIcon: __WEBPACK_IMPORTED_MODULE_0__VIcon__["a" /* default */]
+  },
+
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_colorable__["a" /* default */], __WEBPACK_IMPORTED_MODULE_2__mixins_themeable__["a" /* default */], __WEBPACK_IMPORTED_MODULE_3__mixins_toggleable__["a" /* default */]],
+
+  props: {
+    close: Boolean,
+    disabled: Boolean,
+    label: Boolean,
+    outline: Boolean,
+    // Used for selects/tagging
+    selected: Boolean,
+    small: Boolean,
+    textColor: String,
+    value: {
+      type: Boolean,
+      default: true
+    }
+  },
+
+  computed: {
+    classes: function classes() {
+      var classes = this.addBackgroundColorClassChecks({
+        'chip': true,
+        'chip--disabled': this.disabled,
+        'chip--selected': this.selected,
+        'chip--label': this.label,
+        'chip--outline': this.outline,
+        'chip--small': this.small,
+        'chip--removable': this.close,
+        'theme--light': this.light,
+        'theme--dark': this.dark
+      });
+
+      return this.textColor || this.outline ? this.addTextColorClassChecks(classes, this.textColor ? 'textColor' : 'color') : classes;
+    }
+  },
+
+  render: function render(h) {
+    var _this = this;
+
+    var children = [this.$slots.default];
+    var data = {
+      'class': this.classes,
+      attrs: { tabindex: this.disabled ? -1 : 0 },
+      directives: [{
+        name: 'show',
+        value: this.isActive
+      }],
+      on: this.$listeners
+    };
+
+    if (this.close) {
+      var _data = {
+        staticClass: 'chip__close',
+        on: {
+          click: function click(e) {
+            e.stopPropagation();
+
+            _this.$emit('input', false);
+          }
+        }
+      };
+
+      children.push(h('div', _data, [h(__WEBPACK_IMPORTED_MODULE_0__VIcon__["a" /* default */], { props: { right: true } }, 'cancel')]));
+    }
+
+    return h('span', data, children);
+  }
+});
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
