@@ -1683,7 +1683,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__package_json__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__package_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__package_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__directives__ = __webpack_require__(99);
 __webpack_require__(23);
+
 
 
 
@@ -1692,7 +1694,8 @@ function Vuetify(Vue) {
   var Vuetify = __WEBPACK_IMPORTED_MODULE_2__components__["Vuetify"];
 
   Vue.use(Vuetify, {
-    components: __WEBPACK_IMPORTED_MODULE_2__components__
+    components: __WEBPACK_IMPORTED_MODULE_2__components__,
+    directives: __WEBPACK_IMPORTED_MODULE_3__directives__
   });
 }
 
@@ -8798,6 +8801,23 @@ __webpack_require__(98);
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 99 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["default"] = install;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ripple__ = __webpack_require__(5);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Ripple", function() { return __WEBPACK_IMPORTED_MODULE_0__ripple__["a"]; });
+
+
+
+
+function install(Vue) {
+  Vue.directive('ripple', __WEBPACK_IMPORTED_MODULE_0__ripple__["a" /* default */]);
+}
 
 /***/ })
 /******/ ]);
