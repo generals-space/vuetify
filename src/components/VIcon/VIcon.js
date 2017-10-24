@@ -81,9 +81,11 @@ export default {
 
     if (thirdPartyIcon) data.staticClass += ` ${iconName}`
     !(thirdPartyIcon || props.fa || props.mdi) && children.push(iconName)
-    return h('svg', data, [h('use', {
+    return h('svg', {
+      staticClass: 'icon'
+    }, [h('use', {
       attrs: {
-        'xlink:href': `#${children[0]}`
+        'xlink:href': `#${iconName}`
       }
     })])
   }
