@@ -112,7 +112,7 @@ theme(input-group, "input-group")
     transition: .4s $transition.fast-in-fast-out
     white-space: nowrap
     width: 100%
-    z-index: 0
+    z-index: 1
 
 /** Blocks */
 .input-group
@@ -121,6 +121,7 @@ theme(input-group, "input-group")
     flex: 1 0 100%
     min-width: 0
     min-height: $input-height
+    align-items: center
 
 /** Icons */
 .input-group
@@ -203,6 +204,9 @@ theme(input-group, "input-group")
 
         .input-group__input
           border-color: $theme.primary
+
+        .icon
+          transform: rotate(-180deg);
 
     &.input-group--focused
       &:not(.input-group--disabled)
