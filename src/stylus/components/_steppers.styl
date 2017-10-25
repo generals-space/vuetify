@@ -35,6 +35,9 @@ stepper($material)
         color: $material.stepper.completed
 
     &--inactive
+      .stepper__step__step
+        color: #fff
+        background-color: $material.text.disabled
       &.stepper__step--editable
         &:hover
           .stepper__step__step
@@ -60,7 +63,6 @@ theme(stepper, "stepper")
 .stepper
   overflow: hidden
   position: relative
-  elevation(2)
 
 .stepper
   &__header
@@ -73,6 +75,12 @@ theme(stepper, "stepper")
     .divider
       align-self: center
       margin: 0 -16px
+      background-color: rgba(0,0,0,.12)
+      border: none;
+      display: block;
+      height: 1px;
+      flex: 1;
+      width: 100%;
 
 .stepper
   &__items
@@ -109,6 +117,7 @@ theme(stepper, "stepper")
 
       .stepper__step__step
         background: $theme.primary
+        color: #fff
 
     &--editable
       cursor: pointer
@@ -157,7 +166,7 @@ theme(stepper, "stepper")
   &__content
     top: initial
     bottom: 0
-    padding: 16px
+    padding: 30px
     flex: 1
     // Chrome has an issue with overflow hidden for rendering
     // Originally used translateZ but this messes up fixed
@@ -166,11 +175,9 @@ theme(stepper, "stepper")
     // overflow: hidden
     width: 100%
 
-    .btn
-      margin-left: 0
-
   &--is-booted
-    .stepper__content, .stepper__wrapper
+    .stepper__content,
+    .stepper__wrapper
       transition: .4s $transition.ease-in-out
 
 .stepper

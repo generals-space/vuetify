@@ -4932,13 +4932,6 @@ p {
 .application--light a {
   color: #1976d2;
 }
-.application--dark {
-  background: #303030;
-  color: #fff;
-}
-.application--dark a {
-  color: #82b1ff;
-}
 .ripple__container {
   color: inherit;
   border-radius: inherit;
@@ -4972,66 +4965,6 @@ p {
 .ripple__animation--visible {
   opacity: 0.15;
 }
-.application--light .btn {
-  color: rgba(0,0,0,0.87);
-}
-.application--light .btn.btn--disabled {
-  color: rgba(0,0,0,0.26) !important;
-}
-.application--light .btn.btn--disabled .icon {
-  color: rgba(0,0,0,0.26) !important;
-}
-.application--light .btn.btn--disabled:not(.btn--icon):not(.btn--flat) {
-  background-color: rgba(0,0,0,0.12) !important;
-}
-.application--light .btn:not(.btn--icon):not(.btn--flat) {
-  background-color: #f5f5f5;
-}
-.application .theme--light.btn {
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--light.btn.btn--disabled {
-  color: rgba(0,0,0,0.26) !important;
-}
-.application .theme--light.btn.btn--disabled .icon {
-  color: rgba(0,0,0,0.26) !important;
-}
-.application .theme--light.btn.btn--disabled:not(.btn--icon):not(.btn--flat) {
-  background-color: rgba(0,0,0,0.12) !important;
-}
-.application .theme--light.btn:not(.btn--icon):not(.btn--flat) {
-  background-color: #f5f5f5;
-}
-.application--dark .btn {
-  color: #fff;
-}
-.application--dark .btn.btn--disabled {
-  color: rgba(255,255,255,0.3) !important;
-}
-.application--dark .btn.btn--disabled .icon {
-  color: rgba(255,255,255,0.3) !important;
-}
-.application--dark .btn.btn--disabled:not(.btn--icon):not(.btn--flat) {
-  background-color: rgba(255,255,255,0.12) !important;
-}
-.application--dark .btn:not(.btn--icon):not(.btn--flat) {
-  background-color: #212121;
-}
-.application .theme--dark.btn {
-  color: #fff;
-}
-.application .theme--dark.btn.btn--disabled {
-  color: rgba(255,255,255,0.3) !important;
-}
-.application .theme--dark.btn.btn--disabled .icon {
-  color: rgba(255,255,255,0.3) !important;
-}
-.application .theme--dark.btn.btn--disabled:not(.btn--icon):not(.btn--flat) {
-  background-color: rgba(255,255,255,0.12) !important;
-}
-.application .theme--dark.btn:not(.btn--icon):not(.btn--flat) {
-  background-color: #212121;
-}
 /** Base Spec */
 .btn {
   -webkit-box-align: center;
@@ -5050,8 +4983,6 @@ p {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 6px 8px;
-  min-width: 88px;
   outline: 0;
   text-transform: uppercase;
   text-decoration: none;
@@ -5063,6 +4994,7 @@ p {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  color: #fff;
 }
 /** Psuedo */
 .btn__content:before {
@@ -5371,29 +5303,11 @@ p {
   color: #fff;
 }
 /* Themes */
-.application--light .icon {
+.icon {
   color: rgba(0,0,0,0.54);
 }
-.application--light .icon.icon--disabled {
+.icon.icon--disabled {
   color: rgba(0,0,0,0.38) !important;
-}
-.application .theme--light.icon {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.icon.icon--disabled {
-  color: rgba(0,0,0,0.38) !important;
-}
-.application--dark .icon {
-  color: #fff;
-}
-.application--dark .icon.icon--disabled {
-  color: rgba(255,255,255,0.5) !important;
-}
-.application .theme--dark.icon {
-  color: #fff;
-}
-.application .theme--dark.icon.icon--disabled {
-  color: rgba(255,255,255,0.5) !important;
 }
 .icon {
   -webkit-box-align: center;
@@ -5424,77 +5338,23 @@ p {
   cursor: default;
 }
 /* Themes */
-.application--light .list {
+.list {
   background: #fff;
 }
-.application--light .list .list__tile:not(.list__tile--active) {
+.list .list__tile:not(.list__tile--active) {
   color: rgba(0,0,0,0.87);
 }
-.application--light .list .list__tile__sub-title {
+.list .list__tile__sub-title {
   color: rgba(0,0,0,0.54);
 }
-.application--light .list .subheader {
+.list .subheader {
   color: rgba(0,0,0,0.54);
 }
-.application--light .list .divider {
+.list .divider {
   background-color: rgba(0,0,0,0.12);
 }
-.application--light .list .list__tile__mask {
+.list .list__tile__mask {
   color: rgba(0,0,0,0.38);
-}
-.application .theme--light.list {
-  background: #fff;
-}
-.application .theme--light.list .list__tile:not(.list__tile--active) {
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--light.list .list__tile__sub-title {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.list .subheader {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.list .divider {
-  background-color: rgba(0,0,0,0.12);
-}
-.application .theme--light.list .list__tile__mask {
-  color: rgba(0,0,0,0.38);
-}
-.application--dark .list {
-  background: #424242;
-}
-.application--dark .list .list__tile:not(.list__tile--active) {
-  color: #fff;
-}
-.application--dark .list .list__tile__sub-title {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .list .subheader {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .list .divider {
-  background-color: rgba(255,255,255,0.12);
-}
-.application--dark .list .list__tile__mask {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.list {
-  background: #424242;
-}
-.application .theme--dark.list .list__tile:not(.list__tile--active) {
-  color: #fff;
-}
-.application .theme--dark.list .list__tile__sub-title {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.list .subheader {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.list .divider {
-  background-color: rgba(255,255,255,0.12);
-}
-.application .theme--dark.list .list__tile__mask {
-  color: rgba(255,255,255,0.5);
 }
 .list {
   list-style-type: none;
@@ -5870,61 +5730,19 @@ p {
           transform: none !important;
   pointer-events: auto;
 }
-.application--light .pagination__item {
+.pagination__item {
   background: #fff;
   color: #000;
 }
-.application--light .pagination__item--active {
+.pagination__item--active {
   color: #fff;
   background: #1976d2;
 }
-.application--light .pagination__navigation {
+.pagination__navigation {
   background: #fff;
 }
-.application--light .pagination__navigation .icon {
+.pagination__navigation .icon {
   color: rgba(0,0,0,0.54);
-}
-.application .theme--light.pagination__item {
-  background: #fff;
-  color: #000;
-}
-.application .theme--light.pagination__item--active {
-  color: #fff;
-  background: #1976d2;
-}
-.application .theme--light.pagination__navigation {
-  background: #fff;
-}
-.application .theme--light.pagination__navigation .icon {
-  color: rgba(0,0,0,0.54);
-}
-.application--dark .pagination__item {
-  background: #424242;
-  color: #fff;
-}
-.application--dark .pagination__item--active {
-  color: #fff;
-  background: #1976d2;
-}
-.application--dark .pagination__navigation {
-  background: #424242;
-}
-.application--dark .pagination__navigation .icon {
-  color: #fff;
-}
-.application .theme--dark.pagination__item {
-  background: #424242;
-  color: #fff;
-}
-.application .theme--dark.pagination__item--active {
-  color: #fff;
-  background: #1976d2;
-}
-.application .theme--dark.pagination__navigation {
-  background: #424242;
-}
-.application .theme--dark.pagination__navigation .icon {
-  color: #fff;
 }
 .pagination {
   -webkit-box-align: center;
@@ -6032,77 +5850,23 @@ p {
   height: 2rem;
   width: 2rem;
 }
-.application--light .input-group--text-field.input-group--text-field-box .input-group__input {
+.input-group--text-field.input-group--text-field-box .input-group__input {
   background: rgba(255,255,255,0.6);
 }
-.application--light .input-group--text-field input::-webkit-input-placeholder,
-.application--light .input-group--text-field textarea::-webkit-input-placeholder {
+.input-group--text-field input::-webkit-input-placeholder,
+.input-group--text-field textarea::-webkit-input-placeholder {
   color: rgba(0,0,0,0.38);
 }
-.application--light .input-group--text-field input:-ms-input-placeholder,
-.application--light .input-group--text-field textarea:-ms-input-placeholder {
+.input-group--text-field input:-ms-input-placeholder,
+.input-group--text-field textarea:-ms-input-placeholder {
   color: rgba(0,0,0,0.38);
 }
-.application--light .input-group--text-field input::placeholder,
-.application--light .input-group--text-field textarea::placeholder {
+.input-group--text-field input::placeholder,
+.input-group--text-field textarea::placeholder {
   color: rgba(0,0,0,0.38);
 }
-.application--light .input-group--text-field:not(.input-group--error) .input-group__counter {
+.input-group--text-field:not(.input-group--error) .input-group__counter {
   color: rgba(0,0,0,0.54);
-}
-.application .theme--light.input-group--text-field.input-group--text-field-box .input-group__input {
-  background: rgba(255,255,255,0.6);
-}
-.application .theme--light.input-group--text-field input::-webkit-input-placeholder,
-.application .theme--light.input-group--text-field textarea::-webkit-input-placeholder {
-  color: rgba(0,0,0,0.38);
-}
-.application .theme--light.input-group--text-field input:-ms-input-placeholder,
-.application .theme--light.input-group--text-field textarea:-ms-input-placeholder {
-  color: rgba(0,0,0,0.38);
-}
-.application .theme--light.input-group--text-field input::placeholder,
-.application .theme--light.input-group--text-field textarea::placeholder {
-  color: rgba(0,0,0,0.38);
-}
-.application .theme--light.input-group--text-field:not(.input-group--error) .input-group__counter {
-  color: rgba(0,0,0,0.54);
-}
-.application--dark .input-group--text-field.input-group--text-field-box .input-group__input {
-  background: rgba(255,255,255,0.1);
-}
-.application--dark .input-group--text-field input::-webkit-input-placeholder,
-.application--dark .input-group--text-field textarea::-webkit-input-placeholder {
-  color: rgba(255,255,255,0.5);
-}
-.application--dark .input-group--text-field input:-ms-input-placeholder,
-.application--dark .input-group--text-field textarea:-ms-input-placeholder {
-  color: rgba(255,255,255,0.5);
-}
-.application--dark .input-group--text-field input::placeholder,
-.application--dark .input-group--text-field textarea::placeholder {
-  color: rgba(255,255,255,0.5);
-}
-.application--dark .input-group--text-field:not(.input-group--error) .input-group__counter {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.input-group--text-field.input-group--text-field-box .input-group__input {
-  background: rgba(255,255,255,0.1);
-}
-.application .theme--dark.input-group--text-field input::-webkit-input-placeholder,
-.application .theme--dark.input-group--text-field textarea::-webkit-input-placeholder {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.input-group--text-field input:-ms-input-placeholder,
-.application .theme--dark.input-group--text-field textarea:-ms-input-placeholder {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.input-group--text-field input::placeholder,
-.application .theme--dark.input-group--text-field textarea::placeholder {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.input-group--text-field:not(.input-group--error) .input-group__counter {
-  color: rgba(255,255,255,0.7);
 }
 /** Label */
 .input-group--text-field label {
@@ -6354,253 +6118,67 @@ p {
   left: 56px;
 }
 /* Theme */
-.application--light .input-group input,
-.application--light .input-group textarea {
+.input-group input,
+.input-group textarea {
   color: rgba(0,0,0,0.87);
 }
-.application--light .input-group input:disabled,
-.application--light .input-group textarea:disabled {
+.input-group input:disabled,
+.input-group textarea:disabled {
   color: rgba(0,0,0,0.38);
 }
-.application--light .input-group:not(.input-group--error) .input-group__messages {
+.input-group:not(.input-group--error) .input-group__messages {
   color: rgba(0,0,0,0.54);
 }
-.application--light .input-group.input-group--textarea:not(.input-group--full-width) .input-group__input {
+.input-group.input-group--textarea:not(.input-group--full-width) .input-group__input {
   border: 2px solid rgba(0,0,0,0.54);
 }
-.application--light .input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active) {
+.input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active) {
   color: rgba(0,0,0,0.87);
 }
-.application--light .input-group:not(.input-group--error) label {
+.input-group:not(.input-group--error) label {
   color: rgba(0,0,0,0.54);
 }
-.application--light .input-group:not(.input-group--error).input-group--disabled label,
-.application--light .input-group:not(.input-group--error).input-group--disabled .input-group__selections__comma {
+.input-group:not(.input-group--error).input-group--disabled label,
+.input-group:not(.input-group--error).input-group--disabled .input-group__selections__comma {
   color: rgba(0,0,0,0.38);
 }
-.application--light .input-group:not(.input-group--error) .input-group__details:before {
+.input-group:not(.input-group--error) .input-group__details:before {
   background-color: rgba(0,0,0,0.42);
 }
-.application--light .input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__append-icon:not(:hover),
-.application--light .input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__prepend-icon:not(:hover) {
+.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__append-icon:not(:hover),
+.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__prepend-icon:not(:hover) {
   color: rgba(0,0,0,0.54);
 }
-.application--light .input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover .input-group__details:before {
+.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover .input-group__details:before {
   background-color: rgba(0,0,0,0.87);
 }
-.application--light .input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover.input-group--textarea:not(.input-group--full-width) .input-group__input {
+.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover.input-group--textarea:not(.input-group--full-width) .input-group__input {
   border-color: rgba(0,0,0,0.87);
 }
-.application--light .input-group.input-group--overflow .input-group__input:before,
-.application--light .input-group.input-group--segmented .input-group__input:before,
-.application--light .input-group.input-group--editable .input-group__input:before,
-.application--light .input-group.input-group--overflow .input-group__details:before,
-.application--light .input-group.input-group--segmented .input-group__details:before,
-.application--light .input-group.input-group--editable .input-group__details:before {
+.input-group.input-group--overflow .input-group__input:before,
+.input-group.input-group--segmented .input-group__input:before,
+.input-group.input-group--editable .input-group__input:before,
+.input-group.input-group--overflow .input-group__details:before,
+.input-group.input-group--segmented .input-group__details:before,
+.input-group.input-group--editable .input-group__details:before {
   background-color: rgba(0,0,0,0.12);
 }
-.application--light .input-group.input-group--disabled .input-group__input .input-group__append-icon,
-.application--light .input-group.input-group--disabled .input-group__input .input-group__prepend-icon {
+.input-group.input-group--disabled .input-group__input .input-group__append-icon,
+.input-group.input-group--disabled .input-group__input .input-group__prepend-icon {
   color: rgba(0,0,0,0.38);
 }
-.application--light .input-group.input-group--disabled .input-group__details:before {
+.input-group.input-group--disabled .input-group__details:before {
   background-color: transparent;
   background-image: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(0,0,0,0.38)), color-stop(33%, rgba(0,0,0,0.38)), color-stop(0, transparent));
   background-image: linear-gradient(to right, rgba(0,0,0,0.38) 0, rgba(0,0,0,0.38) 33%, transparent 0);
 }
-.application--light .input-group .input-group--text-field__prefix,
-.application--light .input-group .input-group--text-field__suffix {
+.input-group .input-group--text-field__prefix,
+.input-group .input-group--text-field__suffix {
   color: rgba(0,0,0,0.54);
 }
-.application--light .input-group .input-group--text-field.input-group--disabled__prefix,
-.application--light .input-group .input-group--text-field.input-group--disabled__suffix {
+.input-group .input-group--text-field.input-group--disabled__prefix,
+.input-group .input-group--text-field.input-group--disabled__suffix {
   color: rgba(0,0,0,0.38);
-}
-.application .theme--light.input-group input,
-.application .theme--light.input-group textarea {
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--light.input-group input:disabled,
-.application .theme--light.input-group textarea:disabled {
-  color: rgba(0,0,0,0.38);
-}
-.application .theme--light.input-group:not(.input-group--error) .input-group__messages {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.input-group.input-group--textarea:not(.input-group--full-width) .input-group__input {
-  border: 2px solid rgba(0,0,0,0.54);
-}
-.application .theme--light.input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active) {
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--light.input-group:not(.input-group--error) label {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.input-group:not(.input-group--error).input-group--disabled label,
-.application .theme--light.input-group:not(.input-group--error).input-group--disabled .input-group__selections__comma {
-  color: rgba(0,0,0,0.38);
-}
-.application .theme--light.input-group:not(.input-group--error) .input-group__details:before {
-  background-color: rgba(0,0,0,0.42);
-}
-.application .theme--light.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__append-icon:not(:hover),
-.application .theme--light.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__prepend-icon:not(:hover) {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover .input-group__details:before {
-  background-color: rgba(0,0,0,0.87);
-}
-.application .theme--light.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover.input-group--textarea:not(.input-group--full-width) .input-group__input {
-  border-color: rgba(0,0,0,0.87);
-}
-.application .theme--light.input-group.input-group--overflow .input-group__input:before,
-.application .theme--light.input-group.input-group--segmented .input-group__input:before,
-.application .theme--light.input-group.input-group--editable .input-group__input:before,
-.application .theme--light.input-group.input-group--overflow .input-group__details:before,
-.application .theme--light.input-group.input-group--segmented .input-group__details:before,
-.application .theme--light.input-group.input-group--editable .input-group__details:before {
-  background-color: rgba(0,0,0,0.12);
-}
-.application .theme--light.input-group.input-group--disabled .input-group__input .input-group__append-icon,
-.application .theme--light.input-group.input-group--disabled .input-group__input .input-group__prepend-icon {
-  color: rgba(0,0,0,0.38);
-}
-.application .theme--light.input-group.input-group--disabled .input-group__details:before {
-  background-color: transparent;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(0,0,0,0.38)), color-stop(33%, rgba(0,0,0,0.38)), color-stop(0, transparent));
-  background-image: linear-gradient(to right, rgba(0,0,0,0.38) 0, rgba(0,0,0,0.38) 33%, transparent 0);
-}
-.application .theme--light.input-group .input-group--text-field__prefix,
-.application .theme--light.input-group .input-group--text-field__suffix {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.input-group .input-group--text-field.input-group--disabled__prefix,
-.application .theme--light.input-group .input-group--text-field.input-group--disabled__suffix {
-  color: rgba(0,0,0,0.38);
-}
-.application--dark .input-group input,
-.application--dark .input-group textarea {
-  color: #fff;
-}
-.application--dark .input-group input:disabled,
-.application--dark .input-group textarea:disabled {
-  color: rgba(255,255,255,0.5);
-}
-.application--dark .input-group:not(.input-group--error) .input-group__messages {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .input-group.input-group--textarea:not(.input-group--full-width) .input-group__input {
-  border: 2px solid rgba(255,255,255,0.7);
-}
-.application--dark .input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active) {
-  color: #fff;
-}
-.application--dark .input-group:not(.input-group--error) label {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .input-group:not(.input-group--error).input-group--disabled label,
-.application--dark .input-group:not(.input-group--error).input-group--disabled .input-group__selections__comma {
-  color: rgba(255,255,255,0.5);
-}
-.application--dark .input-group:not(.input-group--error) .input-group__details:before {
-  background-color: rgba(255,255,255,0.7);
-}
-.application--dark .input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__append-icon:not(:hover),
-.application--dark .input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__prepend-icon:not(:hover) {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover .input-group__details:before {
-  background-color: #fff;
-}
-.application--dark .input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover.input-group--textarea:not(.input-group--full-width) .input-group__input {
-  border-color: #fff;
-}
-.application--dark .input-group.input-group--overflow .input-group__input:before,
-.application--dark .input-group.input-group--segmented .input-group__input:before,
-.application--dark .input-group.input-group--editable .input-group__input:before,
-.application--dark .input-group.input-group--overflow .input-group__details:before,
-.application--dark .input-group.input-group--segmented .input-group__details:before,
-.application--dark .input-group.input-group--editable .input-group__details:before {
-  background-color: rgba(255,255,255,0.12);
-}
-.application--dark .input-group.input-group--disabled .input-group__input .input-group__append-icon,
-.application--dark .input-group.input-group--disabled .input-group__input .input-group__prepend-icon {
-  color: rgba(255,255,255,0.5);
-}
-.application--dark .input-group.input-group--disabled .input-group__details:before {
-  background-color: transparent;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(255,255,255,0.5)), color-stop(33%, rgba(255,255,255,0.5)), color-stop(0, transparent));
-  background-image: linear-gradient(to right, rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 33%, transparent 0);
-}
-.application--dark .input-group .input-group--text-field__prefix,
-.application--dark .input-group .input-group--text-field__suffix {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .input-group .input-group--text-field.input-group--disabled__prefix,
-.application--dark .input-group .input-group--text-field.input-group--disabled__suffix {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.input-group input,
-.application .theme--dark.input-group textarea {
-  color: #fff;
-}
-.application .theme--dark.input-group input:disabled,
-.application .theme--dark.input-group textarea:disabled {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.input-group:not(.input-group--error) .input-group__messages {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.input-group.input-group--textarea:not(.input-group--full-width) .input-group__input {
-  border: 2px solid rgba(255,255,255,0.7);
-}
-.application .theme--dark.input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active) {
-  color: #fff;
-}
-.application .theme--dark.input-group:not(.input-group--error) label {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.input-group:not(.input-group--error).input-group--disabled label,
-.application .theme--dark.input-group:not(.input-group--error).input-group--disabled .input-group__selections__comma {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.input-group:not(.input-group--error) .input-group__details:before {
-  background-color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__append-icon:not(:hover),
-.application .theme--dark.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled) .input-group__input .input-group__prepend-icon:not(:hover) {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover .input-group__details:before {
-  background-color: #fff;
-}
-.application .theme--dark.input-group:not(.input-group--error):not(.input-group--focused):not(.input-group--disabled):not(.input-group--disabled):not(.input-group--overflow):not(.input-group--segmented):not(.input-group--editable):hover.input-group--textarea:not(.input-group--full-width) .input-group__input {
-  border-color: #fff;
-}
-.application .theme--dark.input-group.input-group--overflow .input-group__input:before,
-.application .theme--dark.input-group.input-group--segmented .input-group__input:before,
-.application .theme--dark.input-group.input-group--editable .input-group__input:before,
-.application .theme--dark.input-group.input-group--overflow .input-group__details:before,
-.application .theme--dark.input-group.input-group--segmented .input-group__details:before,
-.application .theme--dark.input-group.input-group--editable .input-group__details:before {
-  background-color: rgba(255,255,255,0.12);
-}
-.application .theme--dark.input-group.input-group--disabled .input-group__input .input-group__append-icon,
-.application .theme--dark.input-group.input-group--disabled .input-group__input .input-group__prepend-icon {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.input-group.input-group--disabled .input-group__details:before {
-  background-color: transparent;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(255,255,255,0.5)), color-stop(33%, rgba(255,255,255,0.5)), color-stop(0, transparent));
-  background-image: linear-gradient(to right, rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 33%, transparent 0);
-}
-.application .theme--dark.input-group .input-group--text-field__prefix,
-.application .theme--dark.input-group .input-group--text-field__suffix {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.input-group .input-group--text-field.input-group--disabled__prefix,
-.application .theme--dark.input-group .input-group--text-field.input-group--disabled__suffix {
-  color: rgba(255,255,255,0.5);
 }
 .input-group {
   display: -webkit-box;
@@ -7017,21 +6595,9 @@ p {
   border-radius: 0;
 }
 /* Themes */
-.application--light .card {
+.card {
   background-color: #fff;
   color: rgba(0,0,0,0.87);
-}
-.application .theme--light.card {
-  background-color: #fff;
-  color: rgba(0,0,0,0.87);
-}
-.application--dark .card {
-  background-color: #424242;
-  color: #fff;
-}
-.application .theme--dark.card {
-  background-color: #424242;
-  color: #fff;
 }
 .card {
   display: block;
@@ -7133,68 +6699,20 @@ p {
   margin: 0 4px;
 }
 /** Theme */
-.application--light .input-group--selection-controls label {
+.input-group--selection-controls label {
   color: rgba(0,0,0,0.87);
 }
-.application--light .input-group--selection-controls .icon--selection-control {
+.input-group--selection-controls .icon--selection-control {
   color: rgba(0,0,0,0.54);
 }
-.application--light .input-group--selection-controls.input-group--active .icon--selection-control {
+.input-group--selection-controls.input-group--active .icon--selection-control {
   color: inherit;
 }
-.application--light .input-group--selection-controls.input-group--disabled .input-group__input {
+.input-group--selection-controls.input-group--disabled .input-group__input {
   color: rgba(0,0,0,0.38);
 }
-.application--light .input-group--selection-controls.input-group--disabled .input-group__input .icon--radio,
-.application--light .input-group--selection-controls.input-group--disabled .input-group__input .icon--checkbox {
-  color: inherit;
-}
-.application .theme--light.input-group--selection-controls label {
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--light.input-group--selection-controls .icon--selection-control {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.input-group--selection-controls.input-group--active .icon--selection-control {
-  color: inherit;
-}
-.application .theme--light.input-group--selection-controls.input-group--disabled .input-group__input {
-  color: rgba(0,0,0,0.38);
-}
-.application .theme--light.input-group--selection-controls.input-group--disabled .input-group__input .icon--radio,
-.application .theme--light.input-group--selection-controls.input-group--disabled .input-group__input .icon--checkbox {
-  color: inherit;
-}
-.application--dark .input-group--selection-controls label {
-  color: #fff;
-}
-.application--dark .input-group--selection-controls .icon--selection-control {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .input-group--selection-controls.input-group--active .icon--selection-control {
-  color: inherit;
-}
-.application--dark .input-group--selection-controls.input-group--disabled .input-group__input {
-  color: rgba(255,255,255,0.5);
-}
-.application--dark .input-group--selection-controls.input-group--disabled .input-group__input .icon--radio,
-.application--dark .input-group--selection-controls.input-group--disabled .input-group__input .icon--checkbox {
-  color: inherit;
-}
-.application .theme--dark.input-group--selection-controls label {
-  color: #fff;
-}
-.application .theme--dark.input-group--selection-controls .icon--selection-control {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.input-group--selection-controls.input-group--active .icon--selection-control {
-  color: inherit;
-}
-.application .theme--dark.input-group--selection-controls.input-group--disabled .input-group__input {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.input-group--selection-controls.input-group--disabled .input-group__input .icon--radio,
-.application .theme--dark.input-group--selection-controls.input-group--disabled .input-group__input .icon--checkbox {
+.input-group--selection-controls.input-group--disabled .input-group__input .icon--radio,
+.input-group--selection-controls.input-group--disabled .input-group__input .icon--checkbox {
   color: inherit;
 }
 .input-group--selection-controls.input-group--tab-focused .input-group--selection-controls__ripple:before,
@@ -7433,33 +6951,12 @@ p {
   }
 }
 /* Theme */
-.application--light .toolbar {
+.toolbar {
   background-color: #f5f5f5;
   color: rgba(0,0,0,0.87);
 }
-.application--light .toolbar .btn:not(.btn--disabled) {
+.toolbar .btn:not(.btn--disabled) {
   color: rgba(0,0,0,0.54);
-}
-.application .theme--light.toolbar {
-  background-color: #f5f5f5;
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--light.toolbar .btn:not(.btn--disabled) {
-  color: rgba(0,0,0,0.54);
-}
-.application--dark .toolbar {
-  background-color: #212121;
-  color: #fff;
-}
-.application--dark .toolbar .btn:not(.btn--disabled) {
-  color: #fff;
-}
-.application .theme--dark.toolbar {
-  background-color: #212121;
-  color: #fff;
-}
-.application .theme--dark.toolbar .btn:not(.btn--disabled) {
-  color: #fff;
 }
 .toolbar {
   position: relative;
@@ -7603,60 +7100,18 @@ p {
     margin-right: 24px;
   }
 }
-.application--light .chip {
+.chip {
   background: #e0e0e0;
   color: rgba(0,0,0,0.87);
 }
-.application--light .chip__close {
+.chip__close {
   color: rgba(0,0,0,0.54);
 }
-.application--light .chip.chip--selected {
+.chip.chip--selected {
   background: #82b1ff;
   color: #fff;
 }
-.application--light .chip.chip--selected .chip__close {
-  color: #fff;
-}
-.application .theme--light.chip {
-  background: #e0e0e0;
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--light.chip__close {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.chip.chip--selected {
-  background: #82b1ff;
-  color: #fff;
-}
-.application .theme--light.chip.chip--selected .chip__close {
-  color: #fff;
-}
-.application--dark .chip {
-  background: #fff;
-  color: rgba(0,0,0,0.87);
-}
-.application--dark .chip__close {
-  color: #fff;
-}
-.application--dark .chip.chip--selected {
-  background: #82b1ff;
-  color: #fff;
-}
-.application--dark .chip.chip--selected .chip__close {
-  color: #fff;
-}
-.application .theme--dark.chip {
-  background: #fff;
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--dark.chip__close {
-  color: #fff;
-}
-.application .theme--dark.chip.chip--selected {
-  background: #82b1ff;
-  color: #fff;
-}
-.application .theme--dark.chip.chip--selected .chip__close {
+.chip.chip--selected .chip__close {
   color: #fff;
 }
 .chip {
@@ -7755,179 +7210,55 @@ p {
 .chip .icon--left {
   margin-right: 4px;
 }
-.application--light .stepper {
+.stepper {
   background: #fff;
 }
-.application--light .stepper .stepper__step:not(.stepper__step--active):not(.stepper__step--complete):not(.stepper__step--error) .stepper__step__step {
+.stepper .stepper__step:not(.stepper__step--active):not(.stepper__step--complete):not(.stepper__step--error) .stepper__step__step {
   background: rgba(0,0,0,0.38);
 }
-.application--light .stepper .stepper__step__step {
+.stepper .stepper__step__step {
   color: #fff;
 }
-.application--light .stepper .stepper__step__step .icon {
+.stepper .stepper__step__step .icon {
   color: #fff;
 }
-.application--light .stepper .stepper__header .divider {
+.stepper .stepper__header .divider {
   background: rgba(0,0,0,0.12);
 }
-.application--light .stepper .stepper__step--active .stepper__label {
+.stepper .stepper__step--active .stepper__label {
   text-shadow: 0px 0px 0px #000;
 }
-.application--light .stepper .stepper__step--editable:hover {
+.stepper .stepper__step--editable:hover {
   background: rgba(0,0,0,0.06);
 }
-.application--light .stepper .stepper__step--editable:hover .stepper__label {
+.stepper .stepper__step--editable:hover .stepper__label {
   text-shadow: 0px 0px 0px #000;
 }
-.application--light .stepper .stepper__step--complete .stepper__label {
+.stepper .stepper__step--complete .stepper__label {
   color: rgba(0,0,0,0.87);
 }
-.application--light .stepper .stepper__step--inactive.stepper__step--editable:hover .stepper__step__step {
+.stepper .stepper__step--inactive .stepper__step__step {
+  color: #fff;
+  background-color: rgba(0,0,0,0.38);
+}
+.stepper .stepper__step--inactive.stepper__step--editable:hover .stepper__step__step {
   background: rgba(0,0,0,0.54);
 }
-.application--light .stepper .stepper__label {
+.stepper .stepper__label {
   color: rgba(0,0,0,0.38);
 }
-.application--light .stepper .stepper__label small {
+.stepper .stepper__label small {
   color: rgba(0,0,0,0.54);
 }
-.application--light .stepper--non-linear .stepper__step:not(.stepper__step--complete) .stepper__label {
+.stepper--non-linear .stepper__step:not(.stepper__step--complete) .stepper__label {
   color: rgba(0,0,0,0.54);
 }
-.application--light .stepper--vertical .stepper__content:not(:last-child) {
+.stepper--vertical .stepper__content:not(:last-child) {
   border-left: 1px solid rgba(0,0,0,0.12);
-}
-.application .theme--light.stepper {
-  background: #fff;
-}
-.application .theme--light.stepper .stepper__step:not(.stepper__step--active):not(.stepper__step--complete):not(.stepper__step--error) .stepper__step__step {
-  background: rgba(0,0,0,0.38);
-}
-.application .theme--light.stepper .stepper__step__step {
-  color: #fff;
-}
-.application .theme--light.stepper .stepper__step__step .icon {
-  color: #fff;
-}
-.application .theme--light.stepper .stepper__header .divider {
-  background: rgba(0,0,0,0.12);
-}
-.application .theme--light.stepper .stepper__step--active .stepper__label {
-  text-shadow: 0px 0px 0px #000;
-}
-.application .theme--light.stepper .stepper__step--editable:hover {
-  background: rgba(0,0,0,0.06);
-}
-.application .theme--light.stepper .stepper__step--editable:hover .stepper__label {
-  text-shadow: 0px 0px 0px #000;
-}
-.application .theme--light.stepper .stepper__step--complete .stepper__label {
-  color: rgba(0,0,0,0.87);
-}
-.application .theme--light.stepper .stepper__step--inactive.stepper__step--editable:hover .stepper__step__step {
-  background: rgba(0,0,0,0.54);
-}
-.application .theme--light.stepper .stepper__label {
-  color: rgba(0,0,0,0.38);
-}
-.application .theme--light.stepper .stepper__label small {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.stepper--non-linear .stepper__step:not(.stepper__step--complete) .stepper__label {
-  color: rgba(0,0,0,0.54);
-}
-.application .theme--light.stepper--vertical .stepper__content:not(:last-child) {
-  border-left: 1px solid rgba(0,0,0,0.12);
-}
-.application--dark .stepper {
-  background: #303030;
-}
-.application--dark .stepper .stepper__step:not(.stepper__step--active):not(.stepper__step--complete):not(.stepper__step--error) .stepper__step__step {
-  background: rgba(255,255,255,0.5);
-}
-.application--dark .stepper .stepper__step__step {
-  color: #fff;
-}
-.application--dark .stepper .stepper__step__step .icon {
-  color: #fff;
-}
-.application--dark .stepper .stepper__header .divider {
-  background: rgba(255,255,255,0.12);
-}
-.application--dark .stepper .stepper__step--active .stepper__label {
-  text-shadow: 0px 0px 0px #fff;
-}
-.application--dark .stepper .stepper__step--editable:hover {
-  background: rgba(255,255,255,0.06);
-}
-.application--dark .stepper .stepper__step--editable:hover .stepper__label {
-  text-shadow: 0px 0px 0px #fff;
-}
-.application--dark .stepper .stepper__step--complete .stepper__label {
-  color: rgba(255,255,255,0.87);
-}
-.application--dark .stepper .stepper__step--inactive.stepper__step--editable:hover .stepper__step__step {
-  background: rgba(255,255,255,0.75);
-}
-.application--dark .stepper .stepper__label {
-  color: rgba(255,255,255,0.5);
-}
-.application--dark .stepper .stepper__label small {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .stepper--non-linear .stepper__step:not(.stepper__step--complete) .stepper__label {
-  color: rgba(255,255,255,0.7);
-}
-.application--dark .stepper--vertical .stepper__content:not(:last-child) {
-  border-left: 1px solid rgba(255,255,255,0.12);
-}
-.application .theme--dark.stepper {
-  background: #303030;
-}
-.application .theme--dark.stepper .stepper__step:not(.stepper__step--active):not(.stepper__step--complete):not(.stepper__step--error) .stepper__step__step {
-  background: rgba(255,255,255,0.5);
-}
-.application .theme--dark.stepper .stepper__step__step {
-  color: #fff;
-}
-.application .theme--dark.stepper .stepper__step__step .icon {
-  color: #fff;
-}
-.application .theme--dark.stepper .stepper__header .divider {
-  background: rgba(255,255,255,0.12);
-}
-.application .theme--dark.stepper .stepper__step--active .stepper__label {
-  text-shadow: 0px 0px 0px #fff;
-}
-.application .theme--dark.stepper .stepper__step--editable:hover {
-  background: rgba(255,255,255,0.06);
-}
-.application .theme--dark.stepper .stepper__step--editable:hover .stepper__label {
-  text-shadow: 0px 0px 0px #fff;
-}
-.application .theme--dark.stepper .stepper__step--complete .stepper__label {
-  color: rgba(255,255,255,0.87);
-}
-.application .theme--dark.stepper .stepper__step--inactive.stepper__step--editable:hover .stepper__step__step {
-  background: rgba(255,255,255,0.75);
-}
-.application .theme--dark.stepper .stepper__label {
-  color: rgba(255,255,255,0.5);
-}
-.application .theme--dark.stepper .stepper__label small {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.stepper--non-linear .stepper__step:not(.stepper__step--complete) .stepper__label {
-  color: rgba(255,255,255,0.7);
-}
-.application .theme--dark.stepper--vertical .stepper__content:not(:last-child) {
-  border-left: 1px solid rgba(255,255,255,0.12);
 }
 .stepper {
   overflow: hidden;
   position: relative;
-  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
-          box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
 }
 .stepper__header {
   -webkit-box-align: stretch;
@@ -7948,6 +7279,14 @@ p {
   -ms-flex-item-align: center;
       align-self: center;
   margin: 0 -16px;
+  background-color: rgba(0,0,0,0.12);
+  border: none;
+  display: block;
+  height: 1px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  width: 100%;
 }
 .stepper__items {
   position: relative;
@@ -7995,6 +7334,7 @@ p {
 }
 .stepper__step--active .stepper__step__step {
   background: #1976d2;
+  color: #fff;
 }
 .stepper__step--editable {
   cursor: pointer;
@@ -8047,14 +7387,11 @@ p {
 .stepper__content {
   top: initial;
   bottom: 0;
-  padding: 16px;
+  padding: 30px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
   width: 100%;
-}
-.stepper__content .btn {
-  margin-left: 0;
 }
 .stepper--is-booted .stepper__content,
 .stepper--is-booted .stepper__wrapper {
@@ -8110,17 +7447,8 @@ p {
     margin-right: 0;
   }
 }
-.application--light .divider {
+.divider {
   background-color: rgba(0,0,0,0.12);
-}
-.application .theme--light.divider {
-  background-color: rgba(0,0,0,0.12);
-}
-.application--dark .divider {
-  background-color: rgba(255,255,255,0.12);
-}
-.application .theme--dark.divider {
-  background-color: rgba(255,255,255,0.12);
 }
 .divider {
   border: none;

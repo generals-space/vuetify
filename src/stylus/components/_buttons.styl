@@ -2,23 +2,6 @@
 @import '../components/_ripples'
 @import '../theme'
 
-button($material)
-  color: $material.text.primary
-
-  &.btn--disabled
-    color: $material.buttons.disabled !important
-
-    .icon
-      color: $material.buttons.disabled !important
-
-    &:not(.btn--icon):not(.btn--flat)
-      background-color: $material.buttons.focused !important
-
-  &:not(.btn--icon):not(.btn--flat)
-    background-color: $material.app-bar
-
-theme(button, "btn")
-
 /** Base Spec */
 .btn
   align-items: center
@@ -29,8 +12,6 @@ theme(button, "btn")
   font-size: $button-font-size
   font-weight: $button-font-weight
   justify-content: center
-  margin: $button-margin
-  min-width: $button-min-width
   outline: 0
   text-transform: $button-text-transform
   text-decoration: none
@@ -38,6 +19,7 @@ theme(button, "btn")
   position: relative
   vertical-align: middle
   user-select: none
+  color: #fff
 
 
 /** Psuedo */
@@ -330,4 +312,4 @@ theme(button, "btn")
   &.error,
   &.warning,
   &.info
-    color: $material-dark.text.primary
+    color: #fff
