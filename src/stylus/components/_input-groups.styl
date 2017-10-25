@@ -199,16 +199,17 @@ theme(input-group, "input-group")
     &:not(.input-group--single-line):not(.input-group--error)
       &.input-group--focused
         label
-          color: inherit
+          color: $theme.primary
 
         .input-group__input
-          border-color: inherit
+          border-color: $theme.primary
 
     &.input-group--focused
       &:not(.input-group--disabled)
         .input-group__details
           &:after
             transform: scaleX(1)
+            color: $theme.primary
 
   // Required
   &--required
@@ -223,13 +224,20 @@ theme(input-group, "input-group")
   &.input-group--error
     label
       animation: shake .6s $transition.swing
+      color: $theme.error
 
     .input-group__messages
       color: inherit
 
     .input-group__details
       &:before
-        background-color: currentColor
+        background-color: $theme.error
+
+    &.input-group--focused
+      &:not(.input-group--disabled)
+        .input-group__details
+          &:after
+            color: $theme.error
 
 /** Details */
 .input-group
@@ -297,7 +305,7 @@ theme(input-group, "input-group")
 /** Error */
 .input-group
   .input-group__error
-    color: inherit
+    color: $theme.error
     flex: 1 0
     transition: .3s $transition.fast-in-fast-out
 

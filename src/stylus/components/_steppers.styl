@@ -108,7 +108,7 @@ theme(stepper, "stepper")
     align-items: center
     display: flex
     flex-direction: row
-    padding: 24px
+    padding: 30px
     position: relative
 
     &--active
@@ -159,7 +159,6 @@ theme(stepper, "stepper")
 
 .stepper
   &__wrapper
-    overflow: hidden
     transition: none
 
 .stepper
@@ -174,6 +173,7 @@ theme(stepper, "stepper")
     // Fix for #512 and #620
     // overflow: hidden
     width: 100%
+    box-sizing border-box
 
   &--is-booted
     .stepper__content,

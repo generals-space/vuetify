@@ -188,7 +188,7 @@ export default {
       this.$emit('focus', e)
     },
     keyDown (e) {
-      this.internalChange = true
+      // this.internalChange = true
     },
     genCounter () {
       return this.$createElement('div', {

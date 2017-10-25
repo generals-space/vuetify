@@ -647,6 +647,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     append: Boolean,
     disabled: Boolean,
     exact: Boolean,
+    exactActiveClass: String,
     href: [String, Object],
     to: [String, Object],
     nuxt: Boolean,
@@ -680,10 +681,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       }
 
       if (this.to) {
+        // Add a special activeClass hook
+        // for component level styles
+        var activeClass = this.activeClass;
+        var exactActiveClass = this.exactActiveClass || activeClass;
+
+        if (this.proxyClass) {
+          activeClass += ' ' + this.proxyClass;
+          exactActiveClass += ' ' + this.proxyClass;
+        }
+
         tag = this.nuxt ? 'nuxt-link' : 'router-link';
         data.props.to = this.to;
         data.props.exact = exact;
-        data.props.activeClass = this.activeClass;
+        data.props.activeClass = activeClass;
+        data.props.exactActiveClass = exactActiveClass;
         data.props.append = this.append;
         data.props.replace = this.replace;
       } else {
@@ -3686,7 +3698,7 @@ __webpack_require__(36);
         'btn--left': this.left,
         'btn--loader': this.loading,
         'btn--outline': this.outline,
-        'btn--depressed': this.depressed && !this.flat,
+        'btn--depressed': this.depressed && !this.flat || this.outline,
         'btn--right': this.right,
         'btn--round': this.round,
         'btn--router': this.to,
@@ -4390,10 +4402,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
   inheritAttrs: false,
 
+  data: function data() {
+    return {
+      proxyClass: 'list__tile--active'
+    };
+  },
+
   props: {
     activeClass: {
       type: String,
-      default: 'list__tile--active'
+      default: 'primary--text'
     },
     avatar: Boolean,
     inactive: Boolean,
@@ -4406,7 +4424,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'list__tile': true,
         'list__tile--link': this.isLink && !this.inactive,
         'list__tile--avatar': this.avatar,
-        'list__tile--disabled': this.disabled
+        'list__tile--disabled': this.disabled,
+        'list__tile--active': !this.to && this.isActive
       }, this.activeClass, this.isActive);
     },
     isLink: function isLink() {
@@ -7820,7 +7839,7 @@ __webpack_require__(19);
       this.$emit('focus', e);
     },
     keyDown: function keyDown(e) {
-      this.internalChange = true;
+      // this.internalChange = true
     },
     genCounter: function genCounter() {
       return this.$createElement('div', {
@@ -8023,12 +8042,16 @@ __webpack_require__(85);
     computedHeight: function computedHeight() {
       if (this.height) return parseInt(this.height);
       if (this.dense) return this.heights.dense;
+
       if (this.prominent || this.$vuetify.breakpoint.mdAndUp) return this.heights.desktop;
+
       if (this.$vuetify.breakpoint.width > this.$vuetify.breakpoint.height) return this.mobileLandscape;
 
       return this.heights.mobile;
     },
     computedMarginTop: function computedMarginTop() {
+      if (!this.app) return this.marginTop;
+
       return this.marginTop + this.$vuetify.application.bar;
     },
     classes: function classes() {
@@ -8067,11 +8090,16 @@ __webpack_require__(85);
       return this.$vuetify.application.right;
     },
     styles: function styles() {
-      return this.app && {
-        marginTop: this.computedMarginTop + 'px',
-        paddingLeft: this.paddingLeft + 'px',
-        paddingRight: this.paddingRight + 'px'
+      var style = {
+        marginTop: this.computedMarginTop + 'px'
       };
+
+      if (this.app) {
+        style.paddingRight = this.paddingRight + 'px';
+        style.paddingLeft = this.paddingLeft + 'px';
+      }
+
+      return style;
     }
   },
 

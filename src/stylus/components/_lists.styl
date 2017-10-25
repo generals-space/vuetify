@@ -5,9 +5,6 @@
 list($material)
   background: $material.cards
 
-  .list__tile:not(.list__tile--active)
-    color: $material.text.primary
-
   .list__tile__sub-title
     color: $material.text.secondary
 
@@ -24,7 +21,7 @@ theme(list, "list")
 
 .list
   list-style-type: none
-  padding: $list-top-padding 0 $list-bottom-padding
+  padding: 10px 0
   transition: height .4s $transition.fast-out-slow-in
 
   .input-group
@@ -34,13 +31,11 @@ theme(list, "list")
     margin-top: 0
 
   &__tile
-    font-size: $list-tile-font-size
     font-weight: $list-tile-font-weight
     display: flex
-    height: $list-item-single-height
     text-decoration: none
     align-items: center
-    padding: 0 16px
+    padding: 0 15px
     margin: 0
     transition: $primary-transition
     position: relative
@@ -61,7 +56,8 @@ theme(list, "list")
       cursor: pointer
 
     &--link:hover, &--highlighted
-      background: $material-twelve-percent-dark
+      background: rgba(0,0,0,.02)
+      text-decoration: none
 
     &__content,
     &__action,
@@ -91,7 +87,6 @@ theme(list, "list")
     &__action
       display: flex
       justify-content: flex-start
-      min-width: 56px
       align-items: center
 
       .input-group--selection-controls
@@ -103,6 +98,7 @@ theme(list, "list")
 
       .icon
         transition: $primary-transition
+        margin-right: 15px
 
       .btn //fix button padding if used
         padding 0
@@ -124,12 +120,14 @@ theme(list, "list")
 
     &__content
       text-align: left
-      flex: 1 1 auto
       overflow: hidden
       display: flex
-      align-items: flex-start
-      justify-content: center
-      flex-direction: column
+      align-items: center
+      padding-left 18px
+      flex: 1
+
+      .icon
+        margin-right 15px
 
       ~ .avatar
         justify-content: flex-end
@@ -223,26 +221,14 @@ theme(list, "list")
 
     .list__tile--active
       .list__tile__title
-        color: $theme.primary
+        color: #67757c
 
     &__header
       > li:first-child
         cursor: pointer
 
-        &:hover
-          background: $material-twelve-percent-dark
-
-      + .list--group
-        &:after
-          opacity: 1
-
       &--active
         .list__tile
-          background: $material-twelve-percent-dark
-
-          &:after
-            opacity: 1
-
           .list__tile__title
             color: inherit
 
