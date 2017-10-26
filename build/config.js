@@ -61,7 +61,7 @@ function genConfig (opts) {
       new OptimizeCssAssetsPlugin({
         assetNameRegExp: /\.css$/g,
         cssProcessor: require('cssnano'),
-        cssProcessorOptions: { discardComments: { removeAll: true }},
+        cssProcessorOptions: { safe: true, discardComments: { removeAll: true }},
         canPrint: false
       }),
       new webpack.BannerPlugin({

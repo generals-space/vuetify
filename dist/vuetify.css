@@ -2859,7 +2859,7 @@ p {
   left: 52px;
 }
 .snack {
-  background-color: #323232;
+  background-color: #00bcd4;
   position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2867,7 +2867,15 @@ p {
   height: 0;
   pointer-events: none;
   visibility: visible;
-  z-index: 7;
+  z-index: 200;
+}
+.snack .icon {
+  cursor: pointer;
+  margin-left: 10px;
+  fill-opacity: 0.6;
+}
+.snack--error {
+  background-color: #ef5350;
 }
 .snack--absolute {
   position: absolute;
@@ -2911,7 +2919,7 @@ p {
 }
 .snack__content {
   background-color: inherit;
-  padding: 14px 24px;
+  padding: 6px 15px;
   border-radius: 2px;
   pointer-events: auto;
   max-width: 568px;

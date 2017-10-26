@@ -1,13 +1,21 @@
 @import '../bootstrap'
 
 .snack
-  background-color: $snackbar-background-color
+  background-color: #00bcd4
   position: fixed
   display: flex
   height: 0
   pointer-events: none
   visibility: visible
-  z-index: 7
+  z-index: 200
+
+  .icon
+    cursor: pointer
+    margin-left 10px
+    fill-opacity: 0.6
+
+  &--error
+    background-color: $theme.error
 
   &--absolute
     position: absolute
@@ -47,7 +55,7 @@
 
   &__content
     background-color: inherit
-    padding: 14px 24px
+    padding: 6px 15px
     border-radius: 2px
     pointer-events: auto
     max-width: 568px
