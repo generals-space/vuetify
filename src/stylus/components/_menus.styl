@@ -24,6 +24,9 @@
     .toolbar__side-icon
       margin: 0
 
+    &--active .toolbar__title .icon
+      transform: rotate(-180deg)
+
   &__content
     position: absolute
     display: inline-block
@@ -46,6 +49,9 @@
     & > .card
       contain: content
       backface-visibility: hidden
+
+    .list__tile--link
+      height: 40px
 
   &-transition
     &-enter

@@ -20,13 +20,10 @@ theme(pagination, "pagination")
 
 .pagination
   align-items: center
-  align-items: center
   display: inline-flex
   list-style-type: none
   height: 40px
   margin: 0
-  overflow-x: auto
-  overflow-y: hidden
   max-width: 100%
   padding: 0
 
@@ -38,7 +35,8 @@ theme(pagination, "pagination")
     transition: .3s $transition.linear-out-slow-in
 
     &:hover
-      elevation(2)
+      elevation(4)
+      text-decoration: none
 
   &--circle
     .pagination__item,
@@ -56,7 +54,6 @@ theme(pagination, "pagination")
     display: inline-flex
     justify-content: center
     align-items: center
-    background: transparent
     height: 34px
     width: 34px
     margin: .3rem
@@ -64,6 +61,8 @@ theme(pagination, "pagination")
 
     &--active
       elevation(4)
+      background-color: $theme.primary
+      color: #fff
 
   &__navigation
     elevation(2)

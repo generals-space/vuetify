@@ -53,11 +53,13 @@ theme(list, "list")
       background-color: $material-twelve-percent-dark
 
     &--link
+      color: $list-color
       cursor: pointer
 
     &--link:hover, &--highlighted
       background: rgba(0,0,0,.02)
       text-decoration: none
+      color: $theme.primary
 
     &__content,
     &__action,
@@ -123,7 +125,6 @@ theme(list, "list")
       overflow: hidden
       display: flex
       align-items: center
-      padding-left 18px
       flex: 1
 
       .icon
@@ -136,7 +137,8 @@ theme(list, "list")
         justify-content: flex-end
 
     &--active
-      color: $list-tile-active-color
+      color: $theme.primary
+      background-color: rgba(0,0,0,.02)
 
       .list__tile__action:first-of-type
         .icon
