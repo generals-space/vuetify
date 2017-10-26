@@ -1003,7 +1003,6 @@ p {
       -ms-flex-pack: center;
           justify-content: center;
   outline: 0;
-  text-transform: uppercase;
   text-decoration: none;
   -webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), color 1ms;
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), color 1ms;
