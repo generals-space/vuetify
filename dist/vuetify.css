@@ -3509,5 +3509,101 @@ p {
   margin-left: 72px;
   width: calc(100% - 72px);
 }
+.carousel {
+  height: 180px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
+          box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
+}
+.carousel__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 100%;
+          flex: 1 0 100%;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
+}
+.carousel__left,
+.carousel__right {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.carousel__left .btn,
+.carousel__right .btn {
+  color: #fff;
+  margin: 0 !important;
+  height: 30px;
+  width: 30px;
+}
+.carousel__left .btn .icon,
+.carousel__right .btn .icon {
+  margin: 0;
+}
+.carousel__left .btn:hover,
+.carousel__right .btn:hover {
+  background: none;
+}
+.carousel__left {
+  left: 5px;
+}
+.carousel__right {
+  right: 5px;
+}
+.carousel__controls {
+  background: rgba(0,0,0,0.5);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  left: 0;
+  position: absolute;
+  height: 30px;
+  list-style-type: none;
+  width: 100%;
+  z-index: 1;
+}
+.carousel__controls__item {
+  color: #fff;
+  margin: 0 1rem !important;
+}
+.carousel__controls__item i {
+  opacity: 0.5;
+  -webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+.carousel__controls__item--active i {
+  opacity: 1;
+  vertical-align: middle;
+  font-size: 2rem !important;
+}
+.carousel__controls__item:hover {
+  background: none;
+}
+.carousel__controls__item:hover i {
+  opacity: 0.8;
+}
 
 /*# sourceMappingURL=vuetify.css.map*/
