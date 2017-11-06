@@ -50,7 +50,7 @@
     justify-content: center
     left: 0
     position: absolute
-    height: 30px
+    height: 50px
     list-style-type: none
     width: 100%
     z-index: 1
@@ -59,18 +59,20 @@
       color: #FFFFFF
       margin: 0 1rem !important
 
-      i
+      .icon
         opacity: .5
         transition: $primary-transition
+        margin 0
 
       &--active
-        i
+        .icon
           opacity: 1
           vertical-align: middle
-          font-size: 2rem !important
+          height: 18px
+          width: 18px
 
       &:hover
         background: none
 
-        i
+        .icon
           opacity: .8

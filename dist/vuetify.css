@@ -3580,7 +3580,7 @@ p {
           justify-content: center;
   left: 0;
   position: absolute;
-  height: 30px;
+  height: 50px;
   list-style-type: none;
   width: 100%;
   z-index: 1;
@@ -3589,20 +3589,22 @@ p {
   color: #fff;
   margin: 0 1rem !important;
 }
-.carousel__controls__item i {
+.carousel__controls__item .icon {
   opacity: 0.5;
   -webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  margin: 0;
 }
-.carousel__controls__item--active i {
+.carousel__controls__item--active .icon {
   opacity: 1;
   vertical-align: middle;
-  font-size: 2rem !important;
+  height: 18px;
+  width: 18px;
 }
 .carousel__controls__item:hover {
   background: none;
 }
-.carousel__controls__item:hover i {
+.carousel__controls__item:hover .icon {
   opacity: 0.8;
 }
 
