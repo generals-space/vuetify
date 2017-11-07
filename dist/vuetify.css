@@ -1868,6 +1868,11 @@ p {
   height: 2rem;
   width: 2rem;
 }
+@media (max-width: 768px) {
+  .pagination a {
+    margin: 2px;
+  }
+}
 .input-group--text-field.input-group--text-field-box .input-group__input {
   background: rgba(255,255,255,0.6);
 }
