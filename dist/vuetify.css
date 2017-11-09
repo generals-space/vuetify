@@ -1240,6 +1240,7 @@ p {
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
   pointer-events: none;
+  opacity: 0.8;
 }
 /** Sizes */
 .btn--small {
