@@ -4,7 +4,6 @@
     :class="{'editor--fullscreen': isFullScreen}"
     :style="`height: ${height || 'auto'}px`">
     <div class="editor__toolbar">
-      <span><v-icon>emoji</v-icon></span>
       <span @click="insert('**', '**')"><v-icon>bold</v-icon></span>
       <span @click="insert('*', '*')"><v-icon>italic</v-icon></span>
       <span @click="insert('> ', '')"><v-icon>quote</v-icon></span>

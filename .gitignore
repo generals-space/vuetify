@@ -4,13 +4,8 @@ node_modules/
 npm-debug.log
 .idea/
 coverage/
-Playground.vue
 report.html
 .vs/
-dev/*.js
-dev/*css
-!dev/index.js
-!dev/router.js
-!dev/prepare-commit-message.js
 /es5
 /release
+/dev/main.css

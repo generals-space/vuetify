@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-require('./symbol-defs')
+require('./symbol')
 
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)

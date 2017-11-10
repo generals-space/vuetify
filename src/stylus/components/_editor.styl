@@ -1,10 +1,10 @@
 .editor
   position: relative
-  background-color: #fff
+  background-color: #4a4a4a
   box-shadow: 0 0 4px rgba(0,0,0,.05)
   display: flex;
   flex-direction: column;
-  z-index 100;
+  z-index 10;
 
   &--fullscreen
     position: fixed;
@@ -26,9 +26,12 @@
       display: inline-block
       cursor: pointer
 
+      svg
+        color: #ddd
+
       &:hover,
       &.editor__icon--current
-        background-color: rgba(0,0,0,.54)
+        background-color: #313131
 
         svg
           color: #fff
@@ -43,10 +46,12 @@
     flex: 1
 
   &__markdown
-    border-left: 1px solid rgba(0,0,0,.05)
     padding: 10px
+    background-color #f6f6f6
+    box-shadow: inset 1px 0 rgba(128,128,128,0.06)
 
   &__textarea
+    background-color #fcfcfc
     textarea
       border: 0
       resize: none
