@@ -3615,7 +3615,7 @@ p {
 }
 .editor {
   position: relative;
-  background-color: #fff;
+  background-color: #4a4a4a;
   -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.05);
           box-shadow: 0 0 4px rgba(0,0,0,0.05);
   display: -webkit-box;
@@ -3625,7 +3625,7 @@ p {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  z-index: 100;
+  z-index: 10;
 }
 .editor--fullscreen {
   position: fixed;
@@ -3648,11 +3648,15 @@ p {
   display: inline-block;
   cursor: pointer;
 }
+.editor__toolbar > span svg,
+.editor__toolbar > a svg {
+  color: #ddd;
+}
 .editor__toolbar > span:hover,
 .editor__toolbar > a:hover,
 .editor__toolbar > span.editor__icon--current,
 .editor__toolbar > a.editor__icon--current {
-  background-color: rgba(0,0,0,0.54);
+  background-color: #313131;
 }
 .editor__toolbar > span:hover svg,
 .editor__toolbar > a:hover svg,
@@ -3676,8 +3680,13 @@ p {
           flex: 1;
 }
 .editor__markdown {
-  border-left: 1px solid rgba(0,0,0,0.05);
   padding: 10px;
+  background-color: #f6f6f6;
+  -webkit-box-shadow: inset 1px 0 rgba(128,128,128,0.06);
+          box-shadow: inset 1px 0 rgba(128,128,128,0.06);
+}
+.editor__textarea {
+  background-color: #fcfcfc;
 }
 .editor__textarea textarea {
   border: 0;

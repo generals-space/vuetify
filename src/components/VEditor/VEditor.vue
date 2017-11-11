@@ -18,10 +18,10 @@
       <a target="_blank" href="https://hacpai.com/guide/markdown"><v-icon>question</v-icon></a>
     </div>
     <div class="editor__content">
-      <div class="editor__textarea">
-        <textarea @keyup="parseMarkdown" ref="pipeEditor" v-model="editorText"></textarea>
+      <div class="editor__textarea" @scroll="syncScroll">
+        <textarea @input="parseMarkdown($event.target.value)" ref="pipeEditor" :value="value"></textarea>
       </div>
-      <div v-show="hasPreview" class="editor__markdown"></div>
+      <div v-show="hasPreview" class="editor__markdown" ref="pipeView"></div>
     </div>
   </div>
 </template>
@@ -33,7 +33,7 @@
   export default {
     name: 'v-editor',
     props: {
-      text: {
+      value: {
         type: String,
         required: true
       },
@@ -44,24 +44,22 @@
     },
     data () {
       return {
-        editorText: '',
         hasPreview: true,
         isFullScreen: false
       }
     },
     methods: {
+      syncScroll () {
+        if (!this.hasPreview) {
+          return
+        }
+      },
       insert (prefix, suffix) {
         insertTextAtCaret(this.$refs.pipeEditor, prefix, suffix)
       },
-      parseMarkdown () {
-        this.$emit('changed', {
-          text: this.editorText,
-          hasPreview: this.hasPreview
-        })
+      parseMarkdown (text) {
+        this.$emit('input', text, this.hasPreview)
       }
-    },
-    mounted () {
-      this.$set(this, 'editorText', this.text)
     }
   }
 </script>

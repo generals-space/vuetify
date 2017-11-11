@@ -9430,7 +9430,6 @@ module.exports = function normalizeComponent (
 //
 //
 //
-//
 
 __webpack_require__(108);
 
@@ -9438,7 +9437,7 @@ __webpack_require__(108);
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'v-editor',
   props: {
-    text: {
+    value: {
       type: String,
       required: true
     },
@@ -9449,25 +9448,23 @@ __webpack_require__(108);
   },
   data: function data() {
     return {
-      editorText: '',
       hasPreview: true,
       isFullScreen: false
     };
   },
 
   methods: {
+    syncScroll: function syncScroll() {
+      if (!this.hasPreview) {
+        return;
+      }
+    },
     insert: function insert(prefix, suffix) {
       Object(__WEBPACK_IMPORTED_MODULE_0__tool__["a" /* insertTextAtCaret */])(this.$refs.pipeEditor, prefix, suffix);
     },
-    parseMarkdown: function parseMarkdown() {
-      this.$emit('changed', {
-        text: this.editorText,
-        hasPreview: this.hasPreview
-      });
+    parseMarkdown: function parseMarkdown(text) {
+      this.$emit('input', text, this.hasPreview);
     }
-  },
-  mounted: function mounted() {
-    this.$set(this, 'editorText', this.text);
   }
 });
 
@@ -9516,7 +9513,7 @@ var insertTextAtCaret = function insertTextAtCaret(textarea, prefix, suffix) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor",class:{'editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"editor__toolbar"},[_c('span',[_c('v-icon',[_vm._v("emoji")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',[_c('v-icon',[_vm._v("upload")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{class:{'editor__icon--current' : _vm.hasPreview},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{attrs:{"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1)]),_vm._v(" "),_c('div',{staticClass:"editor__content"},[_c('div',{staticClass:"editor__textarea"},[_c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.editorText),expression:"editorText"}],ref:"pipeEditor",domProps:{"value":(_vm.editorText)},on:{"keyup":_vm.parseMarkdown,"input":function($event){if($event.target.composing){ return; }_vm.editorText=$event.target.value}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],staticClass:"editor__markdown"})])])}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor",class:{'editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"editor__toolbar"},[_c('span',{on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',[_c('v-icon',[_vm._v("upload")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{class:{'editor__icon--current' : _vm.hasPreview},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{attrs:{"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1)]),_vm._v(" "),_c('div',{staticClass:"editor__content"},[_c('div',{staticClass:"editor__textarea",on:{"scroll":_vm.syncScroll}},[_c('textarea',{ref:"pipeEditor",domProps:{"value":_vm.value},on:{"input":function($event){_vm.parseMarkdown($event.target.value)}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"pipeView",staticClass:"editor__markdown"})])])}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
