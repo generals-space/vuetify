@@ -3680,6 +3680,7 @@ p {
           flex: 1;
 }
 .editor__markdown {
+  overflow: auto;
   padding: 10px;
   background-color: #f6f6f6;
   -webkit-box-shadow: inset 1px 0 rgba(128,128,128,0.06);

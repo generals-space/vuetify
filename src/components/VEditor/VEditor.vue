@@ -18,13 +18,17 @@
       <a target="_blank" href="https://hacpai.com/guide/markdown"><v-icon>question</v-icon></a>
     </div>
     <div class="editor__content">
-      <div class="editor__textarea" @scroll="syncScroll">
-        <textarea @input="parseMarkdown($event.target.value)" ref="pipeEditor" :value="value"></textarea>
+      <div class="editor__textarea">
+        <textarea
+          @scroll="syncScroll"
+          @input="parseMarkdown($event.target.value)"
+          ref="pipeEditor"
+          :value="value"></textarea>
       </div>
       <div v-show="hasPreview" class="editor__markdown" ref="pipeView"></div>
     </div>
   </div>
-</template>
+</template>l
 
 <script>
   require('../../stylus/components/_editor.styl')
@@ -49,16 +53,26 @@
       }
     },
     methods: {
-      syncScroll () {
+      syncScroll (event) {
         if (!this.hasPreview) {
           return
+        }
+        const textScrollTop = event.target.scrollTop
+        const textHeight = event.target.clientHeight
+        const textScrollHeight = event.target.scrollHeight
+        if ((textScrollTop / textHeight > 0.5)) {
+          this.$refs.pipeView.scrollTop = (textScrollTop + textHeight) *
+            this.$refs.pipeView.scrollHeight / textScrollHeight - textHeight
+        } else {
+          this.$refs.pipeView.scrollTop = textScrollTop *
+            this.$refs.pipeView.scrollHeight / textScrollHeight
         }
       },
       insert (prefix, suffix) {
         insertTextAtCaret(this.$refs.pipeEditor, prefix, suffix)
       },
       parseMarkdown (text) {
-        this.$emit('input', text, this.hasPreview)
+        this.$emit('input', text)
       }
     }
   }

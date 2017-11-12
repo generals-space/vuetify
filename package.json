@@ -22,7 +22,7 @@
     "test": "cross-env NODE_ENV=test jest -i",
     "lint": "eslint --fix --ext .js,.vue src",
     "preparecommitmsg": "node dev/prepare-commit-message.js",
-    "precommit": "yarn run lint && yarn test",
+    "precommit-": "yarn run lint && yarn test",
     "prepush": "yarn run lint && yarn test"
   },
   "description": "Vue.js 2 Semantic Component Framework",
