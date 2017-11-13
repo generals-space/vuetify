@@ -65,7 +65,13 @@ module.exports = {
     publicPath: '/dev/',
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || '8080',
-    disableHostCheck: true
+    disableHostCheck: true,
+    proxy: {
+      '/blogs': {
+        target: 'http://localhost:5897',
+        secure: false
+      }
+    }
   },
   plugins: [
     new ExtractTextPlugin({

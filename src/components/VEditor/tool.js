@@ -29,12 +29,21 @@ export const insertTextAtCaret = (textarea, prefix, suffix) => {
   textarea.focus()
 }
 
-export const ajaxUpload = (url, formData, cb) => {
+export const ajaxUpload = (url, files, cb) => {
+  const formData = new FormData()
+  let errorCode = 0
+  for (let iMax = files.length, i = 0; i < iMax; i++) {
+    if (files[i].size > 1024 * 1024 * 20) {
+      errorCode = -1 // too big
+    } else {
+      formData.append('file[]', files[i])
+    }
+  }
   const xhr = new XMLHttpRequest()
   xhr.open('POST', url)
   xhr.onreadystatechange = function () {
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-      cb(xhr.responseText)
+      cb(JSON.parse(xhr.responseText), errorCode)
     }
   }
   xhr.send(formData)

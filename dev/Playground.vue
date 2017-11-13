@@ -1,8 +1,10 @@
 <template>
   <v-app>
     <v-editor
+      uploadURL="/blogs/Vanessa/upload"
       v-model="text"
       style="width: 768px;margin: 50px auto;"
+      @error="sendError"
       @input="update"></v-editor>
   </v-app>
 </template>
@@ -13,8 +15,11 @@
       text: 'pipe editor'
     }),
     methods: {
-      update() {
-        console.log(arguments, this.text)
+      sendError (msg) {
+        console.log(msg)
+      },
+      update(value) {
+        console.log(value)
       }
     }
   }

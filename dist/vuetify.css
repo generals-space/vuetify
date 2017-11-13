@@ -3643,6 +3643,22 @@ p {
   display: -ms-flexbox;
   display: flex;
 }
+.editor__toolbar form {
+  overflow: hidden;
+  position: relative;
+}
+.editor__toolbar form label {
+  height: 36px;
+  width: 36px;
+  display: block;
+}
+.editor__toolbar form input {
+  position: absolute;
+  width: 1px;
+  opacity: 0.001;
+  height: 16px;
+  overflow: hidden;
+}
 .editor__toolbar > span,
 .editor__toolbar > a {
   width: 36px;
