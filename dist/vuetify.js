@@ -1695,7 +1695,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__package_json__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__package_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__package_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__directives__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__directives__ = __webpack_require__(119);
 __webpack_require__(23);
 
 
@@ -3230,7 +3230,142 @@ process.umask = function() { return 0; };
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"vuetify","version":"1.0.0","author":{"name":"John Leider","email":"john@vuetifyjs.com"},"license":"MIT","homepage":"http://vuetifyjs.com","main":"dist/vuetify.js","unpkg":"dist/vuetify.js","types":"index.d.ts","scripts":{"watch":"cross-env TARGET=development webpack --config build/config.js --progress --hide-modules --watch","dev":"cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js --open --hot","build":"npm run build:dist && npm run build:es5","build:dev":"cross-env NODE_ENV=production node build/webpack.dev.config.js","build:dist":"rimraf dist && cross-env NODE_ENV=production webpack --config build/config.js --progress --hide-modules","build:es5":"rimraf es5 && cross-env NODE_ENV=es5 babel src --out-dir es5","debug-build":"node --inspect --debug-brk build/config.js","debug:test":"./node_modules/.bin/cross-env NODE_ENV=test node --inspect --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand --verbose","test":"cross-env NODE_ENV=test jest -i","lint":"eslint --fix --ext .js,.vue src","preparecommitmsg":"node dev/prepare-commit-message.js","precommit":"yarn run lint && yarn test","prepush":"yarn run lint && yarn test"},"description":"Vue.js 2 Semantic Component Framework","devDependencies":{"autoprefixer":"^7.1.4","avoriaz":"^4.1.0","babel-cli":"^6.26.0","babel-core":"^6.26.0","babel-eslint":"^8.0.0","babel-jest":"^21.0.2","babel-loader":"^7.1.2","babel-plugin-add-filehash":"^6.9.4","babel-plugin-detective":"^2.0.0","babel-plugin-module-resolver":"^2.7.1","babel-plugin-transform-async-to-generator":"^6.24.1","babel-plugin-transform-runtime":"^6.23.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.5.1","babel-preset-es2015":"^6.24.1","babel-preset-stage-2":"^6.24.1","cross-env":"^5.0.5","cross-spawn":"^5.1.0","css-loader":"^0.28.7","css-mqpacker":"^6.0.1","cssnano":"^3.10.0","eslint":"^4.6.1","eslint-config-standard":"^10.2.1","eslint-config-vue":"^2.0.2","eslint-friendly-formatter":"^3.0.0","eslint-loader":"^1.6.1","eslint-plugin-html":"^3.2.1","eslint-plugin-import":"^2.7.0","eslint-plugin-node":"^5.1.1","eslint-plugin-promise":"^3.4.0","eslint-plugin-pug":"^1.0.0","eslint-plugin-standard":"^3.0.1","eslint-plugin-vue":"^2.1.0","eventsource-polyfill":"^0.9.6","extract-text-webpack-plugin":"^3.0.0","friendly-errors-webpack-plugin":"^1.6.1","function-bind":"^1.1.1","husky":"^0.14.3","jest":"^21.1.0","jest-cli":"^21.1.0","jest-css-modules":"^1.1.0","jest-serializer-html":"^4.0.0","jest-vue-preprocessor":"^1.1.0","optimize-css-assets-webpack-plugin":"^3.2.0","optimize-js-plugin":"^0.0.4","postcss-loader":"^1.3.3","progress-bar-webpack-plugin":"^1.10.0","pug":"^2.0.0-rc.4","pug-loader":"^2.3.0","ress":"^1.1.1","rimraf":"^2.6.2","semver":"^5.4.1","serialize-javascript":"^1.3.0","style-loader":"^0.18.2","stylus":"^0.54.5","stylus-loader":"^3.0.1","uglifyjs-webpack-plugin":"^0.4.6","vue":"^2.5.2","vue-loader":"^13.3.0","vue-router":"^2.7.0","vue-server-renderer":"^2.5.2","vue-template-compiler":"^2.5.2","webpack":"^3.6.0","webpack-bundle-analyzer":"^2.9.0","webpack-bundle-size-analyzer":"^2.7.0","webpack-dev-server":"^2.8.2","webpack-merge":"^4.1.0","write-file-webpack-plugin":"^4.1.0"},"dependencies":{},"peerDependencies":{"vue":"^2.4.3"},"engines":{"node":">= 4.0.0","npm":">= 3.0.0"},"jest":{"verbose":false,"roots":["<rootDir>/src"],"moduleFileExtensions":["js","vue"],"moduleDirectories":["node_modules"],"moduleNameMapper":{"src/(.*)":"<rootDir>/src/$1"},"transform":{".*\\.(vue)$":"<rootDir>/node_modules/jest-vue-preprocessor","\\.(styl)$":"<rootDir>/node_modules/jest-css-modules",".*\\.(vue|js)$":"<rootDir>/node_modules/babel-jest"},"transformIgnorePatterns":["node_modules/(?!vue-router)"],"snapshotSerializers":["jest-serializer-html"]}}
+module.exports = {
+	"name": "vuetify",
+	"version": "1.0.0",
+	"author": {
+		"name": "John Leider",
+		"email": "john@vuetifyjs.com"
+	},
+	"license": "MIT",
+	"homepage": "http://vuetifyjs.com",
+	"main": "dist/vuetify.js",
+	"unpkg": "dist/vuetify.js",
+	"types": "index.d.ts",
+	"scripts": {
+		"watch": "cross-env TARGET=development webpack --config build/config.js --progress --hide-modules --watch",
+		"dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js --open --hot",
+		"build": "npm run build:dist && npm run build:es5",
+		"build:dev": "cross-env NODE_ENV=production node build/webpack.dev.config.js",
+		"build:dist": "rimraf dist && cross-env NODE_ENV=production webpack --config build/config.js --progress --hide-modules",
+		"build:es5": "rimraf es5 && cross-env NODE_ENV=es5 babel src --out-dir es5",
+		"debug-build": "node --inspect --debug-brk build/config.js",
+		"debug:test": "./node_modules/.bin/cross-env NODE_ENV=test node --inspect --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand --verbose",
+		"test": "cross-env NODE_ENV=test jest -i",
+		"lint": "eslint --fix --ext .js,.vue src",
+		"preparecommitmsg": "node dev/prepare-commit-message.js",
+		"precommit-": "yarn run lint && yarn test",
+		"prepush-": "yarn run lint && yarn test"
+	},
+	"description": "Vue.js 2 Semantic Component Framework",
+	"devDependencies": {
+		"autoprefixer": "^7.1.4",
+		"avoriaz": "^4.1.0",
+		"babel-cli": "^6.26.0",
+		"babel-core": "^6.26.0",
+		"babel-eslint": "^8.0.0",
+		"babel-jest": "^21.0.2",
+		"babel-loader": "^7.1.2",
+		"babel-plugin-add-filehash": "^6.9.4",
+		"babel-plugin-detective": "^2.0.0",
+		"babel-plugin-module-resolver": "^2.7.1",
+		"babel-plugin-transform-async-to-generator": "^6.24.1",
+		"babel-plugin-transform-runtime": "^6.23.0",
+		"babel-polyfill": "^6.26.0",
+		"babel-preset-env": "^1.5.1",
+		"babel-preset-es2015": "^6.24.1",
+		"babel-preset-stage-2": "^6.24.1",
+		"cross-env": "^5.0.5",
+		"cross-spawn": "^5.1.0",
+		"css-loader": "^0.28.7",
+		"css-mqpacker": "^6.0.1",
+		"cssnano": "^3.10.0",
+		"eslint": "^4.6.1",
+		"eslint-config-standard": "^10.2.1",
+		"eslint-config-vue": "^2.0.2",
+		"eslint-friendly-formatter": "^3.0.0",
+		"eslint-loader": "^1.6.1",
+		"eslint-plugin-html": "^3.2.1",
+		"eslint-plugin-import": "^2.7.0",
+		"eslint-plugin-node": "^5.1.1",
+		"eslint-plugin-promise": "^3.4.0",
+		"eslint-plugin-pug": "^1.0.0",
+		"eslint-plugin-standard": "^3.0.1",
+		"eslint-plugin-vue": "^2.1.0",
+		"eventsource-polyfill": "^0.9.6",
+		"extract-text-webpack-plugin": "^3.0.0",
+		"friendly-errors-webpack-plugin": "^1.6.1",
+		"function-bind": "^1.1.1",
+		"husky": "^0.14.3",
+		"jest": "^21.1.0",
+		"jest-cli": "^21.1.0",
+		"jest-css-modules": "^1.1.0",
+		"jest-serializer-html": "^4.0.0",
+		"jest-vue-preprocessor": "^1.1.0",
+		"optimize-css-assets-webpack-plugin": "^3.2.0",
+		"optimize-js-plugin": "^0.0.4",
+		"postcss-loader": "^1.3.3",
+		"progress-bar-webpack-plugin": "^1.10.0",
+		"pug": "^2.0.0-rc.4",
+		"pug-loader": "^2.3.0",
+		"ress": "^1.1.1",
+		"rimraf": "^2.6.2",
+		"semver": "^5.4.1",
+		"serialize-javascript": "^1.3.0",
+		"style-loader": "^0.18.2",
+		"stylus": "^0.54.5",
+		"stylus-loader": "^3.0.1",
+		"uglifyjs-webpack-plugin": "^0.4.6",
+		"vue": "^2.5.2",
+		"vue-loader": "^13.3.0",
+		"vue-router": "^2.7.0",
+		"vue-server-renderer": "^2.5.2",
+		"vue-template-compiler": "^2.5.2",
+		"webpack": "^3.6.0",
+		"webpack-bundle-analyzer": "^2.9.0",
+		"webpack-bundle-size-analyzer": "^2.7.0",
+		"webpack-dev-server": "^2.8.2",
+		"webpack-merge": "^4.1.0",
+		"write-file-webpack-plugin": "^4.1.0"
+	},
+	"dependencies": {
+		"to-markdown": "^3.1.0"
+	},
+	"peerDependencies": {
+		"vue": "^2.4.3"
+	},
+	"engines": {
+		"node": ">= 4.0.0",
+		"npm": ">= 3.0.0"
+	},
+	"jest": {
+		"verbose": false,
+		"roots": [
+			"<rootDir>/src"
+		],
+		"moduleFileExtensions": [
+			"js",
+			"vue"
+		],
+		"moduleDirectories": [
+			"node_modules"
+		],
+		"moduleNameMapper": {
+			"src/(.*)": "<rootDir>/src/$1"
+		},
+		"transform": {
+			".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor",
+			"\\.(styl)$": "<rootDir>/node_modules/jest-css-modules",
+			".*\\.(vue|js)$": "<rootDir>/node_modules/babel-jest"
+		},
+		"transformIgnorePatterns": [
+			"node_modules/(?!vue-router)"
+		],
+		"snapshotSerializers": [
+			"jest-serializer-html"
+		]
+	}
+};
 
 /***/ }),
 /* 27 */
@@ -9261,7 +9396,7 @@ __WEBPACK_IMPORTED_MODULE_0__VEditor_vue__["a" /* default */].install = function
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_VEditor_vue__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_ad4fc310_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_VEditor_vue__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_ad4fc310_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_VEditor_vue__ = __webpack_require__(118);
 var normalizeComponent = __webpack_require__(106)
 /* script */
 
@@ -9401,7 +9536,10 @@ module.exports = function normalizeComponent (
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tool__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_to_markdown__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_to_markdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_to_markdown__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tool__ = __webpack_require__(117);
+//
 //
 //
 //
@@ -9438,6 +9576,7 @@ module.exports = function normalizeComponent (
 __webpack_require__(108);
 
 
+
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'v-editor',
   props: {
@@ -9458,6 +9597,33 @@ __webpack_require__(108);
   },
 
   methods: {
+    pasteToMarkdown: function pasteToMarkdown(event) {
+      if (event.clipboardData.getData("text/html").replace(/(^\s*)|(\s*)$/g, '') === '') {
+        return;
+      }
+      var hasCode = false;
+      var markdownStr = __WEBPACK_IMPORTED_MODULE_0_to_markdown___default()(event.clipboardData.getData("text/html"), {
+        converters: [{
+          filter: ['pre', 'code'],
+          replacement: function replacement(content) {
+            if (content.split('\n').length > 1) {
+              hasCode = true;
+            }
+            return '`' + content + '`';
+          }
+        }],
+        gfm: true
+      });
+
+      if (hasCode) {
+        event.target.value = event.clipboardData.getData("text/plain");
+      } else {
+        var div = document.createElement('div');
+        div.innerHTML = markdownStr;
+        markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/ /g, ' ').replace(/(^\s*)|(\s*)$/g, '');
+        event.target.value = markdownStr;
+      }
+    },
     syncScroll: function syncScroll(event) {
       if (!this.hasPreview) {
         return;
@@ -9472,7 +9638,7 @@ __webpack_require__(108);
       }
     },
     insert: function insert(prefix, suffix) {
-      Object(__WEBPACK_IMPORTED_MODULE_0__tool__["a" /* insertTextAtCaret */])(this.$refs.pipeEditor, prefix, suffix);
+      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* insertTextAtCaret */])(this.$refs.pipeEditor, prefix, suffix);
     },
     parseMarkdown: function parseMarkdown(text) {
       this.$emit('input', text);
@@ -9488,6 +9654,833 @@ __webpack_require__(108);
 
 /***/ }),
 /* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * to-markdown - an HTML to Markdown converter
+ *
+ * Copyright 2011+, Dom Christie
+ * Licenced under the MIT licence
+ *
+ */
+
+
+
+var toMarkdown
+var converters
+var mdConverters = __webpack_require__(110)
+var gfmConverters = __webpack_require__(111)
+var HtmlParser = __webpack_require__(112)
+var collapse = __webpack_require__(114)
+
+/*
+ * Utilities
+ */
+
+var blocks = ['address', 'article', 'aside', 'audio', 'blockquote', 'body',
+  'canvas', 'center', 'dd', 'dir', 'div', 'dl', 'dt', 'fieldset', 'figcaption',
+  'figure', 'footer', 'form', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'header', 'hgroup', 'hr', 'html', 'isindex', 'li', 'main', 'menu', 'nav',
+  'noframes', 'noscript', 'ol', 'output', 'p', 'pre', 'section', 'table',
+  'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'ul'
+]
+
+function isBlock (node) {
+  return blocks.indexOf(node.nodeName.toLowerCase()) !== -1
+}
+
+var voids = [
+  'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input',
+  'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'
+]
+
+function isVoid (node) {
+  return voids.indexOf(node.nodeName.toLowerCase()) !== -1
+}
+
+function htmlToDom (string) {
+  var tree = new HtmlParser().parseFromString(string, 'text/html')
+  collapse(tree.documentElement, isBlock)
+  return tree
+}
+
+/*
+ * Flattens DOM tree into single array
+ */
+
+function bfsOrder (node) {
+  var inqueue = [node]
+  var outqueue = []
+  var elem
+  var children
+  var i
+
+  while (inqueue.length > 0) {
+    elem = inqueue.shift()
+    outqueue.push(elem)
+    children = elem.childNodes
+    for (i = 0; i < children.length; i++) {
+      if (children[i].nodeType === 1) inqueue.push(children[i])
+    }
+  }
+  outqueue.shift()
+  return outqueue
+}
+
+/*
+ * Contructs a Markdown string of replacement text for a given node
+ */
+
+function getContent (node) {
+  var text = ''
+  for (var i = 0; i < node.childNodes.length; i++) {
+    if (node.childNodes[i].nodeType === 1) {
+      text += node.childNodes[i]._replacement
+    } else if (node.childNodes[i].nodeType === 3) {
+      text += node.childNodes[i].data
+    } else continue
+  }
+  return text
+}
+
+/*
+ * Returns the HTML string of an element with its contents converted
+ */
+
+function outer (node, content) {
+  return node.cloneNode(false).outerHTML.replace('><', '>' + content + '<')
+}
+
+function canConvert (node, filter) {
+  if (typeof filter === 'string') {
+    return filter === node.nodeName.toLowerCase()
+  }
+  if (Array.isArray(filter)) {
+    return filter.indexOf(node.nodeName.toLowerCase()) !== -1
+  } else if (typeof filter === 'function') {
+    return filter.call(toMarkdown, node)
+  } else {
+    throw new TypeError('`filter` needs to be a string, array, or function')
+  }
+}
+
+function isFlankedByWhitespace (side, node) {
+  var sibling
+  var regExp
+  var isFlanked
+
+  if (side === 'left') {
+    sibling = node.previousSibling
+    regExp = / $/
+  } else {
+    sibling = node.nextSibling
+    regExp = /^ /
+  }
+
+  if (sibling) {
+    if (sibling.nodeType === 3) {
+      isFlanked = regExp.test(sibling.nodeValue)
+    } else if (sibling.nodeType === 1 && !isBlock(sibling)) {
+      isFlanked = regExp.test(sibling.textContent)
+    }
+  }
+  return isFlanked
+}
+
+function flankingWhitespace (node, content) {
+  var leading = ''
+  var trailing = ''
+
+  if (!isBlock(node)) {
+    var hasLeading = /^[ \r\n\t]/.test(content)
+    var hasTrailing = /[ \r\n\t]$/.test(content)
+
+    if (hasLeading && !isFlankedByWhitespace('left', node)) {
+      leading = ' '
+    }
+    if (hasTrailing && !isFlankedByWhitespace('right', node)) {
+      trailing = ' '
+    }
+  }
+
+  return { leading: leading, trailing: trailing }
+}
+
+/*
+ * Finds a Markdown converter, gets the replacement, and sets it on
+ * `_replacement`
+ */
+
+function process (node) {
+  var replacement
+  var content = getContent(node)
+
+  // Remove blank nodes
+  if (!isVoid(node) && !/A|TH|TD/.test(node.nodeName) && /^\s*$/i.test(content)) {
+    node._replacement = ''
+    return
+  }
+
+  for (var i = 0; i < converters.length; i++) {
+    var converter = converters[i]
+
+    if (canConvert(node, converter.filter)) {
+      if (typeof converter.replacement !== 'function') {
+        throw new TypeError(
+          '`replacement` needs to be a function that returns a string'
+        )
+      }
+
+      var whitespace = flankingWhitespace(node, content)
+
+      if (whitespace.leading || whitespace.trailing) {
+        content = content.trim()
+      }
+      replacement = whitespace.leading +
+        converter.replacement.call(toMarkdown, content, node) +
+        whitespace.trailing
+      break
+    }
+  }
+
+  node._replacement = replacement
+}
+
+toMarkdown = function (input, options) {
+  options = options || {}
+
+  if (typeof input !== 'string') {
+    throw new TypeError(input + ' is not a string')
+  }
+
+  if (input === '') {
+    return ''
+  }
+
+  // Escape potential ol triggers
+  input = input.replace(/(\d+)\. /g, '$1\\. ')
+
+  var clone = htmlToDom(input).body
+  var nodes = bfsOrder(clone)
+  var output
+
+  converters = mdConverters.slice(0)
+  if (options.gfm) {
+    converters = gfmConverters.concat(converters)
+  }
+
+  if (options.converters) {
+    converters = options.converters.concat(converters)
+  }
+
+  // Process through nodes in reverse (so deepest child elements are first).
+  for (var i = nodes.length - 1; i >= 0; i--) {
+    process(nodes[i])
+  }
+  output = getContent(clone)
+
+  return output.replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, '')
+    .replace(/\n\s+\n/g, '\n\n')
+    .replace(/\n{3,}/g, '\n\n')
+}
+
+toMarkdown.isBlock = isBlock
+toMarkdown.isVoid = isVoid
+toMarkdown.outer = outer
+
+module.exports = toMarkdown
+
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = [
+  {
+    filter: 'p',
+    replacement: function (content) {
+      return '\n\n' + content + '\n\n'
+    }
+  },
+
+  {
+    filter: 'br',
+    replacement: function () {
+      return '  \n'
+    }
+  },
+
+  {
+    filter: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+    replacement: function (content, node) {
+      var hLevel = node.nodeName.charAt(1)
+      var hPrefix = ''
+      for (var i = 0; i < hLevel; i++) {
+        hPrefix += '#'
+      }
+      return '\n\n' + hPrefix + ' ' + content + '\n\n'
+    }
+  },
+
+  {
+    filter: 'hr',
+    replacement: function () {
+      return '\n\n* * *\n\n'
+    }
+  },
+
+  {
+    filter: ['em', 'i'],
+    replacement: function (content) {
+      return '_' + content + '_'
+    }
+  },
+
+  {
+    filter: ['strong', 'b'],
+    replacement: function (content) {
+      return '**' + content + '**'
+    }
+  },
+
+  // Inline code
+  {
+    filter: function (node) {
+      var hasSiblings = node.previousSibling || node.nextSibling
+      var isCodeBlock = node.parentNode.nodeName === 'PRE' && !hasSiblings
+
+      return node.nodeName === 'CODE' && !isCodeBlock
+    },
+    replacement: function (content) {
+      return '`' + content + '`'
+    }
+  },
+
+  {
+    filter: function (node) {
+      return node.nodeName === 'A' && node.getAttribute('href')
+    },
+    replacement: function (content, node) {
+      var titlePart = node.title ? ' "' + node.title + '"' : ''
+      return '[' + content + '](' + node.getAttribute('href') + titlePart + ')'
+    }
+  },
+
+  {
+    filter: 'img',
+    replacement: function (content, node) {
+      var alt = node.alt || ''
+      var src = node.getAttribute('src') || ''
+      var title = node.title || ''
+      var titlePart = title ? ' "' + title + '"' : ''
+      return src ? '![' + alt + ']' + '(' + src + titlePart + ')' : ''
+    }
+  },
+
+  // Code blocks
+  {
+    filter: function (node) {
+      return node.nodeName === 'PRE' && node.firstChild.nodeName === 'CODE'
+    },
+    replacement: function (content, node) {
+      return '\n\n    ' + node.firstChild.textContent.replace(/\n/g, '\n    ') + '\n\n'
+    }
+  },
+
+  {
+    filter: 'blockquote',
+    replacement: function (content) {
+      content = content.trim()
+      content = content.replace(/\n{3,}/g, '\n\n')
+      content = content.replace(/^/gm, '> ')
+      return '\n\n' + content + '\n\n'
+    }
+  },
+
+  {
+    filter: 'li',
+    replacement: function (content, node) {
+      content = content.replace(/^\s+/, '').replace(/\n/gm, '\n    ')
+      var prefix = '*   '
+      var parent = node.parentNode
+      if (parent.nodeName === 'OL') {
+        var start = parent.getAttribute('start')
+        var index = Array.prototype.indexOf.call(parent.children, node)
+        prefix = (start ? Number(start) + index : index + 1) + '.  '
+      }
+
+      return prefix + content
+    }
+  },
+
+  {
+    filter: ['ul', 'ol'],
+    replacement: function (content, node) {
+      var strings = []
+      for (var i = 0; i < node.childNodes.length; i++) {
+        strings.push(node.childNodes[i]._replacement)
+      }
+
+      if (/li/i.test(node.parentNode.nodeName)) {
+        return '\n' + strings.join('\n')
+      }
+      return '\n\n' + strings.join('\n') + '\n\n'
+    }
+  },
+
+  {
+    filter: function (node) {
+      return this.isBlock(node)
+    },
+    replacement: function (content, node) {
+      return '\n\n' + this.outer(node, content) + '\n\n'
+    }
+  },
+
+  // Anything else!
+  {
+    filter: function () {
+      return true
+    },
+    replacement: function (content, node) {
+      return this.outer(node, content)
+    }
+  }
+]
+
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function cell (content, node) {
+  var index = Array.prototype.indexOf.call(node.parentNode.childNodes, node)
+  var prefix = ' '
+  if (index === 0) prefix = '| '
+  return prefix + content + ' |'
+}
+
+var highlightRegEx = /highlight highlight-(\S+)/
+
+module.exports = [
+  {
+    filter: 'br',
+    replacement: function () {
+      return '\n'
+    }
+  },
+  {
+    filter: ['del', 's', 'strike'],
+    replacement: function (content) {
+      return '~~' + content + '~~'
+    }
+  },
+
+  {
+    filter: function (node) {
+      return node.type === 'checkbox' && node.parentNode.nodeName === 'LI'
+    },
+    replacement: function (content, node) {
+      return (node.checked ? '[x]' : '[ ]') + ' '
+    }
+  },
+
+  {
+    filter: ['th', 'td'],
+    replacement: function (content, node) {
+      return cell(content, node)
+    }
+  },
+
+  {
+    filter: 'tr',
+    replacement: function (content, node) {
+      var borderCells = ''
+      var alignMap = { left: ':--', right: '--:', center: ':-:' }
+
+      if (node.parentNode.nodeName === 'THEAD') {
+        for (var i = 0; i < node.childNodes.length; i++) {
+          var align = node.childNodes[i].attributes.align
+          var border = '---'
+
+          if (align) border = alignMap[align.value] || border
+
+          borderCells += cell(border, node.childNodes[i])
+        }
+      }
+      return '\n' + content + (borderCells ? '\n' + borderCells : '')
+    }
+  },
+
+  {
+    filter: 'table',
+    replacement: function (content) {
+      return '\n\n' + content + '\n\n'
+    }
+  },
+
+  {
+    filter: ['thead', 'tbody', 'tfoot'],
+    replacement: function (content) {
+      return content
+    }
+  },
+
+  // Fenced code blocks
+  {
+    filter: function (node) {
+      return node.nodeName === 'PRE' &&
+      node.firstChild &&
+      node.firstChild.nodeName === 'CODE'
+    },
+    replacement: function (content, node) {
+      return '\n\n```\n' + node.firstChild.textContent + '\n```\n\n'
+    }
+  },
+
+  // Syntax-highlighted code blocks
+  {
+    filter: function (node) {
+      return node.nodeName === 'PRE' &&
+      node.parentNode.nodeName === 'DIV' &&
+      highlightRegEx.test(node.parentNode.className)
+    },
+    replacement: function (content, node) {
+      var language = node.parentNode.className.match(highlightRegEx)[1]
+      return '\n\n```' + language + '\n' + node.textContent + '\n```\n\n'
+    }
+  },
+
+  {
+    filter: function (node) {
+      return node.nodeName === 'DIV' &&
+      highlightRegEx.test(node.className)
+    },
+    replacement: function (content) {
+      return '\n\n' + content + '\n\n'
+    }
+  }
+]
+
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ * Set up window for Node.js
+ */
+
+var _window = (typeof window !== 'undefined' ? window : this)
+
+/*
+ * Parsing HTML strings
+ */
+
+function canParseHtmlNatively () {
+  var Parser = _window.DOMParser
+  var canParse = false
+
+  // Adapted from https://gist.github.com/1129031
+  // Firefox/Opera/IE throw errors on unsupported types
+  try {
+    // WebKit returns null on unsupported types
+    if (new Parser().parseFromString('', 'text/html')) {
+      canParse = true
+    }
+  } catch (e) {}
+
+  return canParse
+}
+
+function createHtmlParser () {
+  var Parser = function () {}
+
+  // For Node.js environments
+  if (typeof document === 'undefined') {
+    var jsdom = __webpack_require__(113)
+    Parser.prototype.parseFromString = function (string) {
+      return jsdom.jsdom(string, {
+        features: {
+          FetchExternalResources: [],
+          ProcessExternalResources: false
+        }
+      })
+    }
+  } else {
+    if (!shouldUseActiveX()) {
+      Parser.prototype.parseFromString = function (string) {
+        var doc = document.implementation.createHTMLDocument('')
+        doc.open()
+        doc.write(string)
+        doc.close()
+        return doc
+      }
+    } else {
+      Parser.prototype.parseFromString = function (string) {
+        var doc = new window.ActiveXObject('htmlfile')
+        doc.designMode = 'on' // disable on-page scripts
+        doc.open()
+        doc.write(string)
+        doc.close()
+        return doc
+      }
+    }
+  }
+  return Parser
+}
+
+function shouldUseActiveX () {
+  var useActiveX = false
+
+  try {
+    document.implementation.createHTMLDocument('').open()
+  } catch (e) {
+    if (window.ActiveXObject) useActiveX = true
+  }
+
+  return useActiveX
+}
+
+module.exports = canParseHtmlNatively() ? _window.DOMParser : createHtmlParser()
+
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+/* 114 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var voidElements = __webpack_require__(115);
+Object.keys(voidElements).forEach(function (name) {
+  voidElements[name.toUpperCase()] = 1;
+});
+
+var blockElements = {};
+__webpack_require__(116).forEach(function (name) {
+  blockElements[name.toUpperCase()] = 1;
+});
+
+/**
+ * isBlockElem(node) determines if the given node is a block element.
+ *
+ * @param {Node} node
+ * @return {Boolean}
+ */
+function isBlockElem(node) {
+  return !!(node && blockElements[node.nodeName]);
+}
+
+/**
+ * isVoid(node) determines if the given node is a void element.
+ *
+ * @param {Node} node
+ * @return {Boolean}
+ */
+function isVoid(node) {
+  return !!(node && voidElements[node.nodeName]);
+}
+
+/**
+ * whitespace(elem [, isBlock]) removes extraneous whitespace from an
+ * the given element. The function isBlock may optionally be passed in
+ * to determine whether or not an element is a block element; if none
+ * is provided, defaults to using the list of block elements provided
+ * by the `block-elements` module.
+ *
+ * @param {Node} elem
+ * @param {Function} blockTest
+ */
+function collapseWhitespace(elem, isBlock) {
+  if (!elem.firstChild || elem.nodeName === 'PRE') return;
+
+  if (typeof isBlock !== 'function') {
+    isBlock = isBlockElem;
+  }
+
+  var prevText = null;
+  var prevVoid = false;
+
+  var prev = null;
+  var node = next(prev, elem);
+
+  while (node !== elem) {
+    if (node.nodeType === 3) {
+      // Node.TEXT_NODE
+      var text = node.data.replace(/[ \r\n\t]+/g, ' ');
+
+      if ((!prevText || / $/.test(prevText.data)) && !prevVoid && text[0] === ' ') {
+        text = text.substr(1);
+      }
+
+      // `text` might be empty at this point.
+      if (!text) {
+        node = remove(node);
+        continue;
+      }
+
+      node.data = text;
+      prevText = node;
+    } else if (node.nodeType === 1) {
+      // Node.ELEMENT_NODE
+      if (isBlock(node) || node.nodeName === 'BR') {
+        if (prevText) {
+          prevText.data = prevText.data.replace(/ $/, '');
+        }
+
+        prevText = null;
+        prevVoid = false;
+      } else if (isVoid(node)) {
+        // Avoid trimming space around non-block, non-BR void elements.
+        prevText = null;
+        prevVoid = true;
+      }
+    } else {
+      node = remove(node);
+      continue;
+    }
+
+    var nextNode = next(prev, node);
+    prev = node;
+    node = nextNode;
+  }
+
+  if (prevText) {
+    prevText.data = prevText.data.replace(/ $/, '');
+    if (!prevText.data) {
+      remove(prevText);
+    }
+  }
+}
+
+/**
+ * remove(node) removes the given node from the DOM and returns the
+ * next node in the sequence.
+ *
+ * @param {Node} node
+ * @return {Node} node
+ */
+function remove(node) {
+  var next = node.nextSibling || node.parentNode;
+
+  node.parentNode.removeChild(node);
+
+  return next;
+}
+
+/**
+ * next(prev, current) returns the next node in the sequence, given the
+ * current and previous nodes.
+ *
+ * @param {Node} prev
+ * @param {Node} current
+ * @return {Node}
+ */
+function next(prev, current) {
+  if (prev && prev.parentNode === current || current.nodeName === 'PRE') {
+    return current.nextSibling || current.parentNode;
+  }
+
+  return current.firstChild || current.nextSibling || current.parentNode;
+}
+
+module.exports = collapseWhitespace;
+
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports) {
+
+/**
+ * This file automatically generated from `pre-publish.js`.
+ * Do not manually edit.
+ */
+
+module.exports = {
+  "area": true,
+  "base": true,
+  "br": true,
+  "col": true,
+  "embed": true,
+  "hr": true,
+  "img": true,
+  "input": true,
+  "keygen": true,
+  "link": true,
+  "menuitem": true,
+  "meta": true,
+  "param": true,
+  "source": true,
+  "track": true,
+  "wbr": true
+};
+
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports) {
+
+/**
+ * This file automatically generated from `build.js`.
+ * Do not manually edit.
+ */
+
+module.exports = [
+  "address",
+  "article",
+  "aside",
+  "blockquote",
+  "canvas",
+  "dd",
+  "div",
+  "dl",
+  "dt",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "header",
+  "hgroup",
+  "hr",
+  "li",
+  "main",
+  "nav",
+  "noscript",
+  "ol",
+  "output",
+  "p",
+  "pre",
+  "section",
+  "table",
+  "tfoot",
+  "ul",
+  "video"
+];
+
+
+/***/ }),
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9521,17 +10514,17 @@ var insertTextAtCaret = function insertTextAtCaret(textarea, prefix, suffix) {
 };
 
 /***/ }),
-/* 110 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor",class:{'editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"editor__toolbar"},[_c('span',{on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',[_c('v-icon',[_vm._v("upload")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{class:{'editor__icon--current' : _vm.hasPreview},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{attrs:{"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1)]),_vm._v(" "),_c('div',{staticClass:"editor__content"},[_c('div',{staticClass:"editor__textarea"},[_c('textarea',{ref:"pipeEditor",domProps:{"value":_vm.value},on:{"scroll":_vm.syncScroll,"input":function($event){_vm.parseMarkdown($event.target.value)}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"pipeView",staticClass:"editor__markdown"})])])}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor",class:{'editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"editor__toolbar"},[_c('span',{on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',[_c('v-icon',[_vm._v("upload")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{class:{'editor__icon--current' : _vm.hasPreview},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{attrs:{"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1)]),_vm._v(" "),_c('div',{staticClass:"editor__content"},[_c('div',{staticClass:"editor__textarea"},[_c('textarea',{ref:"pipeEditor",domProps:{"value":_vm.value},on:{"paste":function($event){$event.preventDefault();_vm.pasteToMarkdown($event)},"scroll":_vm.syncScroll,"input":function($event){_vm.parseMarkdown($event.target.value)}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"pipeView",staticClass:"editor__markdown"})])])}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ }),
-/* 111 */
+/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

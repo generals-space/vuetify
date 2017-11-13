@@ -20,6 +20,7 @@
     <div class="editor__content">
       <div class="editor__textarea">
         <textarea
+          @paste.prevent="pasteToMarkdown"
           @scroll="syncScroll"
           @input="parseMarkdown($event.target.value)"
           ref="pipeEditor"
@@ -32,6 +33,7 @@
 
 <script>
   require('../../stylus/components/_editor.styl')
+  import toMarkdown from 'to-markdown'
   import { insertTextAtCaret } from './tool'
 
   export default {
@@ -53,6 +55,33 @@
       }
     },
     methods: {
+      pasteToMarkdown (event) {
+        if (event.clipboardData.getData("text/html").replace(/(^\s*)|(\s*)$/g, '') === '') {
+          return
+        }
+        let hasCode = false
+        let markdownStr = toMarkdown(event.clipboardData.getData("text/html"), {
+          converters: [{
+            filter: ['pre', 'code'],
+            replacement: function(content) {
+              if (content.split('\n').length > 1) {
+                hasCode = true
+              }
+              return '`' + content + '`'
+            }
+          }],
+          gfm: true
+        });
+
+        if (hasCode) {
+          event.target.value = event.clipboardData.getData("text/plain")
+        } else {
+          const div = document.createElement('div')
+          div.innerHTML = markdownStr
+          markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/ /g, ' ').replace(/(^\s*)|(\s*)$/g, '')
+          event.target.value = markdownStr
+        }
+      },
       syncScroll (event) {
         if (!this.hasPreview) {
           return

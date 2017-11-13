@@ -96,7 +96,9 @@
     "webpack-merge": "^4.1.0",
     "write-file-webpack-plugin": "^4.1.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "to-markdown": "^3.1.0"
+  },
   "peerDependencies": {
     "vue": "^2.4.3"
   },
