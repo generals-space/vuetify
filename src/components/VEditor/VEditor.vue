@@ -15,7 +15,9 @@
         @click="hasPreview = !hasPreview"
         :class="{'editor__icon--current' : hasPreview}"><v-icon>view</v-icon></span>
       <span @click="isFullScreen = !isFullScreen"><v-icon>{{ isFullScreen ? 'contract' : 'fullscreen' }}</v-icon></span>
-      <a target="_blank" href="https://hacpai.com/guide/markdown"><v-icon>question</v-icon></a>
+      <a target="_blank" href="https://hacpai.com/guide/markdown">
+        <v-icon>question</v-icon>
+      </a>
     </div>
     <div class="editor__content">
       <div class="editor__textarea">
@@ -34,7 +36,7 @@
 <script>
   require('../../stylus/components/_editor.styl')
   import toMarkdown from 'to-markdown'
-  import { insertTextAtCaret } from './tool'
+  import {insertTextAtCaret} from './tool'
 
   export default {
     name: 'v-editor',
@@ -51,7 +53,8 @@
     data () {
       return {
         hasPreview: true,
-        isFullScreen: false
+        isFullScreen: false,
+        debounceTimeout: undefined
       }
     },
     methods: {
@@ -63,7 +66,7 @@
         let markdownStr = toMarkdown(event.clipboardData.getData("text/html"), {
           converters: [{
             filter: ['pre', 'code'],
-            replacement: function(content) {
+            replacement: function (content) {
               if (content.split('\n').length > 1) {
                 hasCode = true
               }
@@ -101,7 +104,13 @@
         insertTextAtCaret(this.$refs.pipeEditor, prefix, suffix)
       },
       parseMarkdown (text) {
-        this.$emit('input', text)
+        let debounce = 1000
+        if (this.debounceTimeout) {
+          clearTimeout(this.debounceTimeout)
+        }
+        this.debounceTimeout = setTimeout(() => {
+          this.$emit('input', text)
+        }, debounce)
       }
     }
   }

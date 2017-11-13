@@ -9572,6 +9572,8 @@ module.exports = function normalizeComponent (
 //
 //
 //
+//
+//
 
 __webpack_require__(108);
 
@@ -9592,7 +9594,8 @@ __webpack_require__(108);
   data: function data() {
     return {
       hasPreview: true,
-      isFullScreen: false
+      isFullScreen: false,
+      debounceTimeout: undefined
     };
   },
 
@@ -9641,7 +9644,15 @@ __webpack_require__(108);
       Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* insertTextAtCaret */])(this.$refs.pipeEditor, prefix, suffix);
     },
     parseMarkdown: function parseMarkdown(text) {
-      this.$emit('input', text);
+      var _this = this;
+
+      var debounce = 1000;
+      if (this.debounceTimeout) {
+        clearTimeout(this.debounceTimeout);
+      }
+      this.debounceTimeout = setTimeout(function () {
+        _this.$emit('input', text);
+      }, debounce);
     }
   }
 });

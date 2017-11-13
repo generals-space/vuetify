@@ -3631,8 +3631,10 @@ p {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100% !important;
   left: 0;
+  margin: 0 !important;
+  z-index: 20;
 }
 .editor__toolbar {
   line-height: 36px;
