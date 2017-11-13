@@ -36,11 +36,15 @@
 <script>
   require('../../stylus/components/_editor.styl')
   import toMarkdown from 'to-markdown'
-  import {insertTextAtCaret} from './tool'
+  import {insertTextAtCaret, ajaxUpload} from './tool'
 
   export default {
     name: 'v-editor',
     props: {
+      uploadURL: {
+        type: String,
+        required: false
+      },
       value: {
         type: String,
         required: true
@@ -59,6 +63,16 @@
     },
     methods: {
       pasteToMarkdown (event) {
+        if (event.clipboardData.files.length > 0) {
+          if (!this.uploadURL) {
+            return
+          }
+          ajaxUpload(this.uploadURL, event.clipboardData.files, (response) => {
+            console.log(response)
+          })
+          return
+        }
+
         if (event.clipboardData.getData("text/html").replace(/(^\s*)|(\s*)$/g, '') === '') {
           return
         }
@@ -75,7 +89,6 @@
           }],
           gfm: true
         });
-
         if (hasCode) {
           event.target.value = event.clipboardData.getData("text/plain")
         } else {

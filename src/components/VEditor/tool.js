@@ -28,3 +28,14 @@ export const insertTextAtCaret = (textarea, prefix, suffix) => {
   }
   textarea.focus()
 }
+
+export const ajaxUpload = (url, formData, cb) => {
+  const xhr = new XMLHttpRequest()
+  xhr.open('POST', url)
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      cb(xhr.responseText)
+    }
+  }
+  xhr.send(formData)
+}
