@@ -8,7 +8,14 @@
       <span @click="insert('*', '*')"><v-icon>italic</v-icon></span>
       <span @click="insert('> ', '')"><v-icon>quote</v-icon></span>
       <span @click="insert('[', '](http://)')"><v-icon>link</v-icon></span>
-      <span><v-icon>upload</v-icon></span>
+      <span>
+        <form method="POST" enctype="multipart/form-data">
+          <label>
+            <v-icon>upload</v-icon>
+            <input type="file"/>
+          </label>
+        </form>
+      </span>
       <span @click="insert('* ', '')"><v-icon>unordered-list</v-icon></span>
       <span @click="insert('1. ', '')"><v-icon>ordered-list</v-icon></span>
       <span
@@ -31,7 +38,7 @@
       <div v-show="hasPreview" class="editor__markdown" ref="pipeView"></div>
     </div>
   </div>
-</template>l
+</template>
 
 <script>
   require('../../stylus/components/_editor.styl')
