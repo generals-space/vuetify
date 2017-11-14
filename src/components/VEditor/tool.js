@@ -1,5 +1,4 @@
 export const insertTextAtCaret = (textarea, prefix, suffix) => {
-  textarea.focus()
   if (typeof textarea.selectionStart === 'number' && typeof textarea.selectionEnd === 'number') {
     const startPos = textarea.selectionStart
     const endPos = textarea.selectionEnd

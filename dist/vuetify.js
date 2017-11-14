@@ -9446,7 +9446,6 @@ module.exports = function normalizeComponent (
 //
 //
 //
-//
 
 __webpack_require__(108);
 
@@ -9488,7 +9487,7 @@ __webpack_require__(108);
     return {
       hasPreview: true,
       isFullScreen: false,
-      debounceTimeout: undefined
+      timerId: undefined
     };
   },
 
@@ -9496,9 +9495,11 @@ __webpack_require__(108);
     selectFile: function selectFile(event) {
       var _this = this;
 
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, '![](Uploading...)', '');
+      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.target.files, this.uploadMax, this.loadingLabel, this.overLabel), '');
+      this.$refs.pipeEditor.blur();
       Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, function (response) {
-        _this.$refs.pipeEditor.value = _this.$refs.pipeEditor.value.replace('![](Uploading...)', '\n![](' + response.data + ') \n');
+        _this.$refs.pipeEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this.$refs.pipeEditor.value, _this.loadingLabel, _this.errorLabel);
+        _this.$refs.pipeEditor.focus();
       }, this.uploadMax);
     },
     dragFile: function dragFile(event) {
@@ -9509,8 +9510,10 @@ __webpack_require__(108);
         return;
       }
       Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(files, this.uploadMax, this.loadingLabel, this.overLabel), '');
+      this.$refs.pipeEditor.blur();
       Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, files, function (response) {
         _this2.$refs.pipeEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this2.$refs.pipeEditor.value, _this2.loadingLabel, _this2.errorLabel);
+        _this2.$refs.pipeEditor.focus();
       }, this.uploadMax);
     },
     pasteToMarkdown: function pasteToMarkdown(event) {
@@ -9521,10 +9524,11 @@ __webpack_require__(108);
         if (!this.uploadURL) {
           return;
         }
-
-        Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, '![](Uploading...)', '');
+        this.$refs.pipeEditor.blur();
+        Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.loadingLabel, this.overLabel), '');
         Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, function (response) {
-          _this3.$refs.pipeEditor.value = _this3.$refs.pipeEditor.value.replace('![](Uploading...)', '\n![](' + response.data + ') \n');
+          _this3.$refs.pipeEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this3.$refs.pipeEditor.value, _this3.loadingLabel, _this3.errorLabel);
+          _this3.$refs.pipeEditor.focus();
         }, this.uploadMax);
         return;
       }
@@ -9575,12 +9579,13 @@ __webpack_require__(108);
       var _this4 = this;
 
       var debounce = 1000;
-      if (this.debounceTimeout) {
-        clearTimeout(this.debounceTimeout);
+      if (this.timerId !== undefined) {
+        clearTimeout(this.timerId);
       }
-      this.debounceTimeout = setTimeout(function () {
+      this.$set(this, 'timerId', undefined);
+      this.$set(this, 'timerId', setTimeout(function () {
         _this4.$emit('input', text);
-      }, debounce);
+      }, debounce));
     }
   }
 });
@@ -10428,7 +10433,6 @@ module.exports = [
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return genUploading; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return genUploaded; });
 var insertTextAtCaret = function insertTextAtCaret(textarea, prefix, suffix) {
-  textarea.focus();
   if (typeof textarea.selectionStart === 'number' && typeof textarea.selectionEnd === 'number') {
     var startPos = textarea.selectionStart;
     var endPos = textarea.selectionEnd;
@@ -10510,7 +10514,7 @@ var genUploaded = function genUploaded(response, text) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor",class:{'editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"editor__toolbar"},[_c('span',{on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',[_c('form',{attrs:{"method":"POST","enctype":"multipart/form-data","action":"/blogs/Vanessa/upload"}},[_c('label',[_c('v-icon',[_vm._v("upload")]),_vm._v(" "),_c('input',{attrs:{"type":"file"},on:{"change":_vm.selectFile}})],1)])]),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{class:{'editor__icon--current' : _vm.hasPreview},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{attrs:{"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1)]),_vm._v(" "),_c('div',{staticClass:"editor__content"},[_c('div',{staticClass:"editor__textarea"},[_c('textarea',{ref:"pipeEditor",domProps:{"value":_vm.value},on:{"paste":function($event){$event.preventDefault();_vm.pasteToMarkdown($event)},"drop":function($event){$event.preventDefault();_vm.dragFile($event)},"scroll":_vm.syncScroll,"input":function($event){_vm.parseMarkdown($event.target.value)}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"pipeView",staticClass:"editor__markdown"})])])}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor",class:{'editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"editor__toolbar"},[_c('span',{on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',[_c('label',[_c('v-icon',[_vm._v("upload")]),_vm._v(" "),_c('input',{attrs:{"multiple":"multiple","type":"file"},on:{"change":_vm.selectFile}})],1)]),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{class:{'editor__icon--current' : _vm.hasPreview},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{attrs:{"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1)]),_vm._v(" "),_c('div',{staticClass:"editor__content"},[_c('div',{staticClass:"editor__textarea"},[_c('textarea',{ref:"pipeEditor",domProps:{"value":_vm.value},on:{"paste":function($event){$event.preventDefault();_vm.pasteToMarkdown($event)},"drop":function($event){$event.preventDefault();_vm.dragFile($event)},"scroll":_vm.syncScroll,"input":function($event){_vm.parseMarkdown($event.target.value)},"focus":function($event){_vm.parseMarkdown($event.target.value)}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"pipeView",staticClass:"editor__markdown"})])])}
 var staticRenderFns = []
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);

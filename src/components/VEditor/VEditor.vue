@@ -9,12 +9,10 @@
       <span @click="insert('> ', '')"><v-icon>quote</v-icon></span>
       <span @click="insert('[', '](http://)')"><v-icon>link</v-icon></span>
       <span>
-        <form method="POST" enctype="multipart/form-data" action="/blogs/Vanessa/upload">
-          <label>
-            <v-icon>upload</v-icon>
-            <input @change="selectFile" type="file"/>
-          </label>
-        </form>
+        <label>
+          <v-icon>upload</v-icon>
+          <input multiple="multiple" @change="selectFile" type="file"/>
+        </label>
       </span>
       <span @click="insert('* ', '')"><v-icon>unordered-list</v-icon></span>
       <span @click="insert('1. ', '')"><v-icon>ordered-list</v-icon></span>
@@ -33,6 +31,7 @@
           @drop.prevent="dragFile"
           @scroll="syncScroll"
           @input="parseMarkdown($event.target.value)"
+          @focus="parseMarkdown($event.target.value)"
           ref="pipeEditor"
           :value="value"></textarea>
       </div>
@@ -82,14 +81,19 @@
       return {
         hasPreview: true,
         isFullScreen: false,
-        debounceTimeout: undefined
+        timerId: undefined
       }
     },
     methods: {
       selectFile (event) {
-        insertTextAtCaret(this.$refs.pipeEditor, '![](Uploading...)', '')
+        insertTextAtCaret(this.$refs.pipeEditor,
+          genUploading(event.target.files, this.uploadMax, this.loadingLabel, this.overLabel), '')
+        this.$refs.pipeEditor.blur()
         ajaxUpload(this.uploadURL, event.target.files, (response) => {
-          this.$refs.pipeEditor.value = this.$refs.pipeEditor.value.replace('![](Uploading...)', `\n![](${response.data}) \n`)
+          this.$refs.pipeEditor.value = genUploaded(response.data, this.$refs.pipeEditor.value,
+            this.loadingLabel, this.errorLabel)
+          // and upper blur, it's can emit to input
+          this.$refs.pipeEditor.focus()
         }, this.uploadMax)
       },
       dragFile (event) {
@@ -99,9 +103,11 @@
         }
         insertTextAtCaret(this.$refs.pipeEditor,
           genUploading(files, this.uploadMax, this.loadingLabel, this.overLabel), '')
+        this.$refs.pipeEditor.blur()
         ajaxUpload(this.uploadURL, files, (response) => {
           this.$refs.pipeEditor.value = genUploaded(response.data, this.$refs.pipeEditor.value,
             this.loadingLabel, this.errorLabel)
+          this.$refs.pipeEditor.focus()
         }, this.uploadMax)
       },
       pasteToMarkdown (event) {
@@ -110,10 +116,13 @@
           if (!this.uploadURL) {
             return
           }
-
-          insertTextAtCaret(this.$refs.pipeEditor, '![](Uploading...)', '')
+          this.$refs.pipeEditor.blur()
+          insertTextAtCaret(this.$refs.pipeEditor,
+            genUploading(event.clipboardData.files, this.uploadMax, this.loadingLabel, this.overLabel), '')
           ajaxUpload(this.uploadURL, event.clipboardData.files, (response) => {
-            this.$refs.pipeEditor.value = this.$refs.pipeEditor.value.replace('![](Uploading...)', `\n![](${response.data}) \n`)
+            this.$refs.pipeEditor.value = genUploaded(response.data, this.$refs.pipeEditor.value,
+              this.loadingLabel, this.errorLabel)
+            this.$refs.pipeEditor.focus()
           }, this.uploadMax)
           return
         }
@@ -164,12 +173,13 @@
       },
       parseMarkdown (text) {
         const debounce = 1000
-        if (this.debounceTimeout) {
-          clearTimeout(this.debounceTimeout)
+        if (this.timerId !== undefined) {
+          clearTimeout(this.timerId)
         }
-        this.debounceTimeout = setTimeout(() => {
+        this.$set(this, 'timerId', undefined)
+        this.$set(this, 'timerId', setTimeout(() => {
           this.$emit('input', text)
-        }, debounce)
+        }, debounce))
       }
     }
   }

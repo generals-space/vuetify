@@ -3643,16 +3643,14 @@ p {
   display: -ms-flexbox;
   display: flex;
 }
-.editor__toolbar form {
+.editor__toolbar label {
   overflow: hidden;
   position: relative;
-}
-.editor__toolbar form label {
   height: 36px;
   width: 36px;
   display: block;
 }
-.editor__toolbar form input {
+.editor__toolbar label input {
   position: absolute;
   width: 1px;
   opacity: 0.001;

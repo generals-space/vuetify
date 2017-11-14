@@ -16,7 +16,7 @@
     }),
     methods: {
       update(value) {
-        console.log(value)
+        console.log('input', value)
       }
     }
   }
