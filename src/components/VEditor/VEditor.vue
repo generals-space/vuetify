@@ -12,7 +12,7 @@
         <form method="POST" enctype="multipart/form-data" action="/blogs/Vanessa/upload">
           <label>
             <v-icon>upload</v-icon>
-            <input type="file"/>
+            <input @change="selectFile" type="file"/>
           </label>
         </form>
       </span>
@@ -53,6 +53,10 @@
         type: String,
         required: false
       },
+      uploadMax: {
+        type: Number,
+        required: false
+      },
       value: {
         type: String,
         required: true
@@ -70,6 +74,16 @@
       }
     },
     methods: {
+      selectFile (event) {
+        insertTextAtCaret(this.$refs.pipeEditor, '![](Uploading...)', '')
+        ajaxUpload(this.uploadURL, event.target.files, (response, msg) => {
+          if (msg === 0) {
+            this.$refs.pipeEditor.value = this.$refs.pipeEditor.value.replace('![](Uploading...)', `\n![](${response.data}) \n`)
+          } else {
+            this.$emit('error', msg)
+          }
+        }, this.uploadMax)
+      },
       dragFile (event) {
         const files = event.dataTransfer.files
         if (files.length === 0) {
@@ -82,7 +96,7 @@
           } else {
             this.$emit('error', msg)
           }
-        })
+        }, this.uploadMax)
       },
       pasteToMarkdown (event) {
         if (event.clipboardData.files.length > 0) {
@@ -98,7 +112,7 @@
             } else {
               this.$emit('error', msg)
             }
-          })
+          }, this.uploadMax)
           return
         }
 

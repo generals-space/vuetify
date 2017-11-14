@@ -29,12 +29,14 @@ export const insertTextAtCaret = (textarea, prefix, suffix) => {
   textarea.focus()
 }
 
-export const ajaxUpload = (url, files, cb) => {
+export const ajaxUpload = (url, files, cb, maxSize = 5) => {
   const formData = new FormData()
   let errorCode = 0
   for (let iMax = files.length, i = 0; i < iMax; i++) {
-    if (files[i].size > 1024 * 1024 * 20) {
+    if (files[i].size > 1024 * 1024 * maxSize) {
       errorCode = -1 // too big
+    } else if (files[i].type.indexOf('image') < 0) {
+      errorCode = -2 // type error
     } else {
       formData.append('file[]', files[i])
     }
