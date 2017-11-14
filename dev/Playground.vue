@@ -5,7 +5,6 @@
       :uploadMax="10"
       v-model="text"
       style="width: 768px;margin: 50px auto;"
-      @error="sendError"
       @input="update"></v-editor>
   </v-app>
 </template>
@@ -16,9 +15,6 @@
       text: 'pipe editor'
     }),
     methods: {
-      sendError (msg) {
-        console.log(msg)
-      },
       update(value) {
         console.log(value)
       }

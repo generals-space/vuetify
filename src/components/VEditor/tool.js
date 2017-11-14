@@ -29,15 +29,10 @@ export const insertTextAtCaret = (textarea, prefix, suffix) => {
   textarea.focus()
 }
 
-export const ajaxUpload = (url, files, cb, maxSize = 5) => {
+export const ajaxUpload = (url, files, cb, uploadMax = 5) => {
   const formData = new FormData()
-  let errorCode = 0
   for (let iMax = files.length, i = 0; i < iMax; i++) {
-    if (files[i].size > 1024 * 1024 * maxSize) {
-      errorCode = -1 // too big
-    } else if (files[i].type.indexOf('image') < 0) {
-      errorCode = -2 // type error
-    } else {
+    if (files[i].size <= 1024 * 1024 * uploadMax) {
       formData.append('file[]', files[i])
     }
   }
@@ -45,8 +40,34 @@ export const ajaxUpload = (url, files, cb, maxSize = 5) => {
   xhr.open('POST', url)
   xhr.onreadystatechange = function () {
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-      cb(JSON.parse(xhr.responseText), errorCode)
+      cb(JSON.parse(xhr.responseText))
     }
   }
   xhr.send(formData)
+}
+
+export const genUploading = (files, uploadMax = 5, loadingLabel = 'Uploading', overLabel = 'Over') => {
+  let uploadingStr = ''
+  for (let iMax = files.length, i = 0; i < iMax; i++) {
+    const tag = files[i].type.indexOf('image') === -1 ? '' : '!'
+    if (files[i].size > 1024 * 1024 * uploadMax) {
+      uploadingStr += `\n${tag}[${files[i].name}](${overLabel} ${uploadMax}MB)\n`
+    } else {
+      uploadingStr += `\n${tag}[${files[i].name}](${loadingLabel})\n`
+    }
+  }
+  return uploadingStr
+}
+
+export const genUploaded = (response, text, loadingLabel = 'Uploading', errorLabel = 'Error') => {
+  response.errFiles.forEach((data) => {
+    text = text.replace(`[${data}](${loadingLabel})\n`,
+      `[${data}](${errorLabel})\n`)
+  })
+
+  Object.keys(response.succMap).forEach((key) => {
+    text = text.replace(`[${key}](${loadingLabel})\n`,
+      `[${key}](${response.succMap[key]})\n`)
+  })
+  return text
 }

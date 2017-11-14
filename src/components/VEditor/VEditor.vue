@@ -44,12 +44,24 @@
 <script>
   require('../../stylus/components/_editor.styl')
   import toMarkdown from 'to-markdown'
-  import { insertTextAtCaret, ajaxUpload } from './tool'
+  import { insertTextAtCaret, ajaxUpload, genUploading, genUploaded } from './tool'
 
   export default {
     name: 'v-editor',
     props: {
       uploadURL: {
+        type: String,
+        required: false
+      },
+      loadingLabel: {
+        type: String,
+        required: false
+      },
+      errorLabel: {
+        type: String,
+        required: false
+      },
+      overLabel: {
         type: String,
         required: false
       },
@@ -76,12 +88,8 @@
     methods: {
       selectFile (event) {
         insertTextAtCaret(this.$refs.pipeEditor, '![](Uploading...)', '')
-        ajaxUpload(this.uploadURL, event.target.files, (response, msg) => {
-          if (msg === 0) {
-            this.$refs.pipeEditor.value = this.$refs.pipeEditor.value.replace('![](Uploading...)', `\n![](${response.data}) \n`)
-          } else {
-            this.$emit('error', msg)
-          }
+        ajaxUpload(this.uploadURL, event.target.files, (response) => {
+          this.$refs.pipeEditor.value = this.$refs.pipeEditor.value.replace('![](Uploading...)', `\n![](${response.data}) \n`)
         }, this.uploadMax)
       },
       dragFile (event) {
@@ -89,13 +97,11 @@
         if (files.length === 0) {
           return
         }
-        insertTextAtCaret(this.$refs.pipeEditor, '![](Uploading...)', '')
-        ajaxUpload(this.uploadURL, files, (response, msg) => {
-          if (msg === 0) {
-            this.$refs.pipeEditor.value = this.$refs.pipeEditor.value.replace('![](Uploading...)', `\n![](${response.data}) \n`)
-          } else {
-            this.$emit('error', msg)
-          }
+        insertTextAtCaret(this.$refs.pipeEditor,
+          genUploading(files, this.uploadMax, this.loadingLabel, this.overLabel), '')
+        ajaxUpload(this.uploadURL, files, (response) => {
+          this.$refs.pipeEditor.value = genUploaded(response.data, this.$refs.pipeEditor.value,
+            this.loadingLabel, this.errorLabel)
         }, this.uploadMax)
       },
       pasteToMarkdown (event) {
@@ -106,12 +112,8 @@
           }
 
           insertTextAtCaret(this.$refs.pipeEditor, '![](Uploading...)', '')
-          ajaxUpload(this.uploadURL, event.clipboardData.files, (response, msg) => {
-            if (msg === 0) {
-              this.$refs.pipeEditor.value = this.$refs.pipeEditor.value.replace('![](Uploading...)', `\n![](${response.data}) \n`)
-            } else {
-              this.$emit('error', msg)
-            }
+          ajaxUpload(this.uploadURL, event.clipboardData.files, (response) => {
+            this.$refs.pipeEditor.value = this.$refs.pipeEditor.value.replace('![](Uploading...)', `\n![](${response.data}) \n`)
           }, this.uploadMax)
           return
         }
