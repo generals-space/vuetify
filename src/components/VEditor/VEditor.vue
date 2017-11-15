@@ -111,46 +111,42 @@
         }, this.uploadMax)
       },
       pasteToMarkdown (event) {
-        if (event.clipboardData.files.length > 0) {
-          // upload file
-          if (!this.uploadURL) {
-            return
-          }
-          this.$refs.pipeEditor.blur()
-          insertTextAtCaret(this.$refs.pipeEditor,
-            genUploading(event.clipboardData.files, this.uploadMax, this.loadingLabel, this.overLabel), '')
-          ajaxUpload(this.uploadURL, event.clipboardData.files, (response) => {
-            this.$refs.pipeEditor.value = genUploaded(response.data, this.$refs.pipeEditor.value,
-              this.loadingLabel, this.errorLabel)
-            this.$refs.pipeEditor.focus()
-          }, this.uploadMax)
-          return
-        }
-
-        if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') === '') {
-          return
-        }
-
-        let hasCode = false
-        let markdownStr = toMarkdown(event.clipboardData.getData('text/html'), {
-          converters: [{
-            filter: ['pre', 'code'],
-            replacement: function (content) {
-              if (content.split('\n').length > 1) {
-                hasCode = true
+        event.target.blur()
+        if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') !== '') {
+          let hasCode = false
+          let markdownStr = toMarkdown(event.clipboardData.getData('text/html'), {
+            converters: [{
+              filter: ['pre', 'code'],
+              replacement: function (content) {
+                if (content.split('\n').length > 1) {
+                  hasCode = true
+                }
+                return '`' + content + '`'
               }
-              return '`' + content + '`'
-            }
-          }],
-          gfm: true
-        })
-        if (hasCode) {
-          event.target.value = event.clipboardData.getData('text/plain')
-        } else {
-          const div = document.createElement('div')
-          div.innerHTML = markdownStr
-          markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '')
-          event.target.value = markdownStr
+            }],
+            gfm: true
+          })
+          if (hasCode) {
+            insertTextAtCaret(event.target, event.clipboardData.getData('text/plain'), '')
+          } else {
+            const div = document.createElement('div')
+            div.innerHTML = markdownStr
+            markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '')
+            insertTextAtCaret(event.target, markdownStr, '')
+          }
+        } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '') {
+          insertTextAtCaret(event.target, event.clipboardData.getData('text/plain'), '')
+        } else if (event.clipboardData.files.length > 0) {
+          // upload file
+          if (this.uploadURL) {
+            insertTextAtCaret(this.$refs.pipeEditor,
+              genUploading(event.clipboardData.files, this.uploadMax, this.loadingLabel, this.overLabel), '')
+            ajaxUpload(this.uploadURL, event.clipboardData.files, (response) => {
+              event.target.value = genUploaded(response.data, event.target.value,
+                this.loadingLabel, this.errorLabel)
+              event.target.focus()
+            }, this.uploadMax)
+          }
         }
       },
       syncScroll (event) {
