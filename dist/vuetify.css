@@ -3625,7 +3625,6 @@ p {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  z-index: 10;
 }
 .editor--fullscreen {
   position: fixed;

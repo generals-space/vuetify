@@ -3230,7 +3230,142 @@ process.umask = function() { return 0; };
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"vuetify","version":"1.0.0","author":{"name":"John Leider","email":"john@vuetifyjs.com"},"license":"MIT","homepage":"http://vuetifyjs.com","main":"dist/vuetify.js","unpkg":"dist/vuetify.js","types":"index.d.ts","scripts":{"watch":"cross-env TARGET=development webpack --config build/config.js --progress --hide-modules --watch","dev":"cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js --open --hot","build":"npm run build:dist && npm run build:es5","build:dev":"cross-env NODE_ENV=production node build/webpack.dev.config.js","build:dist":"rimraf dist && cross-env NODE_ENV=production webpack --config build/config.js --progress --hide-modules","build:es5":"rimraf es5 && cross-env NODE_ENV=es5 babel src --out-dir es5","debug-build":"node --inspect --debug-brk build/config.js","debug:test":"./node_modules/.bin/cross-env NODE_ENV=test node --inspect --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand --verbose","test":"cross-env NODE_ENV=test jest -i","lint":"eslint --fix --ext .js,.vue src","preparecommitmsg":"node dev/prepare-commit-message.js","precommit-":"yarn run lint && yarn test","prepush-":"yarn run lint && yarn test"},"description":"Vue.js 2 Semantic Component Framework","devDependencies":{"autoprefixer":"^7.1.4","avoriaz":"^4.1.0","babel-cli":"^6.26.0","babel-core":"^6.26.0","babel-eslint":"^8.0.0","babel-jest":"^21.0.2","babel-loader":"^7.1.2","babel-plugin-add-filehash":"^6.9.4","babel-plugin-detective":"^2.0.0","babel-plugin-module-resolver":"^2.7.1","babel-plugin-transform-async-to-generator":"^6.24.1","babel-plugin-transform-runtime":"^6.23.0","babel-polyfill":"^6.26.0","babel-preset-env":"^1.5.1","babel-preset-es2015":"^6.24.1","babel-preset-stage-2":"^6.24.1","cross-env":"^5.0.5","cross-spawn":"^5.1.0","css-loader":"^0.28.7","css-mqpacker":"^6.0.1","cssnano":"^3.10.0","eslint":"^4.6.1","eslint-config-standard":"^10.2.1","eslint-config-vue":"^2.0.2","eslint-friendly-formatter":"^3.0.0","eslint-loader":"^1.6.1","eslint-plugin-html":"^3.2.1","eslint-plugin-import":"^2.7.0","eslint-plugin-node":"^5.1.1","eslint-plugin-promise":"^3.4.0","eslint-plugin-pug":"^1.0.0","eslint-plugin-standard":"^3.0.1","eslint-plugin-vue":"^2.1.0","eventsource-polyfill":"^0.9.6","extract-text-webpack-plugin":"^3.0.0","friendly-errors-webpack-plugin":"^1.6.1","function-bind":"^1.1.1","husky":"^0.14.3","jest":"^21.1.0","jest-cli":"^21.1.0","jest-css-modules":"^1.1.0","jest-serializer-html":"^4.0.0","jest-vue-preprocessor":"^1.1.0","optimize-css-assets-webpack-plugin":"^3.2.0","optimize-js-plugin":"^0.0.4","postcss-loader":"^1.3.3","progress-bar-webpack-plugin":"^1.10.0","pug":"^2.0.0-rc.4","pug-loader":"^2.3.0","ress":"^1.1.1","rimraf":"^2.6.2","semver":"^5.4.1","serialize-javascript":"^1.3.0","style-loader":"^0.18.2","stylus":"^0.54.5","stylus-loader":"^3.0.1","uglifyjs-webpack-plugin":"^0.4.6","vue":"^2.5.2","vue-loader":"^13.3.0","vue-router":"^2.7.0","vue-server-renderer":"^2.5.2","vue-template-compiler":"^2.5.2","webpack":"^3.6.0","webpack-bundle-analyzer":"^2.9.0","webpack-bundle-size-analyzer":"^2.7.0","webpack-dev-server":"^2.8.2","webpack-merge":"^4.1.0","write-file-webpack-plugin":"^4.1.0"},"dependencies":{"to-markdown":"^3.1.0"},"peerDependencies":{"vue":"^2.4.3"},"engines":{"node":">= 4.0.0","npm":">= 3.0.0"},"jest":{"verbose":false,"roots":["<rootDir>/src"],"moduleFileExtensions":["js","vue"],"moduleDirectories":["node_modules"],"moduleNameMapper":{"src/(.*)":"<rootDir>/src/$1"},"transform":{".*\\.(vue)$":"<rootDir>/node_modules/jest-vue-preprocessor","\\.(styl)$":"<rootDir>/node_modules/jest-css-modules",".*\\.(vue|js)$":"<rootDir>/node_modules/babel-jest"},"transformIgnorePatterns":["node_modules/(?!vue-router)"],"snapshotSerializers":["jest-serializer-html"]}}
+module.exports = {
+	"name": "vuetify",
+	"version": "1.0.0",
+	"author": {
+		"name": "John Leider",
+		"email": "john@vuetifyjs.com"
+	},
+	"license": "MIT",
+	"homepage": "http://vuetifyjs.com",
+	"main": "dist/vuetify.js",
+	"unpkg": "dist/vuetify.js",
+	"types": "index.d.ts",
+	"scripts": {
+		"watch": "cross-env TARGET=development webpack --config build/config.js --progress --hide-modules --watch",
+		"dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.config.js --open --hot",
+		"build": "npm run build:dist && npm run build:es5",
+		"build:dev": "cross-env NODE_ENV=production node build/webpack.dev.config.js",
+		"build:dist": "rimraf dist && cross-env NODE_ENV=production webpack --config build/config.js --progress --hide-modules",
+		"build:es5": "rimraf es5 && cross-env NODE_ENV=es5 babel src --out-dir es5",
+		"debug-build": "node --inspect --debug-brk build/config.js",
+		"debug:test": "./node_modules/.bin/cross-env NODE_ENV=test node --inspect --inspect-brk ./node_modules/jest/bin/jest.js --no-cache --runInBand --verbose",
+		"test": "cross-env NODE_ENV=test jest -i",
+		"lint": "eslint --fix --ext .js,.vue src",
+		"preparecommitmsg": "node dev/prepare-commit-message.js",
+		"precommit-": "yarn run lint && yarn test",
+		"prepush-": "yarn run lint && yarn test"
+	},
+	"description": "Vue.js 2 Semantic Component Framework",
+	"devDependencies": {
+		"autoprefixer": "^7.1.4",
+		"avoriaz": "^4.1.0",
+		"babel-cli": "^6.26.0",
+		"babel-core": "^6.26.0",
+		"babel-eslint": "^8.0.0",
+		"babel-jest": "^21.0.2",
+		"babel-loader": "^7.1.2",
+		"babel-plugin-add-filehash": "^6.9.4",
+		"babel-plugin-detective": "^2.0.0",
+		"babel-plugin-module-resolver": "^2.7.1",
+		"babel-plugin-transform-async-to-generator": "^6.24.1",
+		"babel-plugin-transform-runtime": "^6.23.0",
+		"babel-polyfill": "^6.26.0",
+		"babel-preset-env": "^1.5.1",
+		"babel-preset-es2015": "^6.24.1",
+		"babel-preset-stage-2": "^6.24.1",
+		"cross-env": "^5.0.5",
+		"cross-spawn": "^5.1.0",
+		"css-loader": "^0.28.7",
+		"css-mqpacker": "^6.0.1",
+		"cssnano": "^3.10.0",
+		"eslint": "^4.6.1",
+		"eslint-config-standard": "^10.2.1",
+		"eslint-config-vue": "^2.0.2",
+		"eslint-friendly-formatter": "^3.0.0",
+		"eslint-loader": "^1.6.1",
+		"eslint-plugin-html": "^3.2.1",
+		"eslint-plugin-import": "^2.7.0",
+		"eslint-plugin-node": "^5.1.1",
+		"eslint-plugin-promise": "^3.4.0",
+		"eslint-plugin-pug": "^1.0.0",
+		"eslint-plugin-standard": "^3.0.1",
+		"eslint-plugin-vue": "^2.1.0",
+		"eventsource-polyfill": "^0.9.6",
+		"extract-text-webpack-plugin": "^3.0.0",
+		"friendly-errors-webpack-plugin": "^1.6.1",
+		"function-bind": "^1.1.1",
+		"husky": "^0.14.3",
+		"jest": "^21.1.0",
+		"jest-cli": "^21.1.0",
+		"jest-css-modules": "^1.1.0",
+		"jest-serializer-html": "^4.0.0",
+		"jest-vue-preprocessor": "^1.1.0",
+		"optimize-css-assets-webpack-plugin": "^3.2.0",
+		"optimize-js-plugin": "^0.0.4",
+		"postcss-loader": "^1.3.3",
+		"progress-bar-webpack-plugin": "^1.10.0",
+		"pug": "^2.0.0-rc.4",
+		"pug-loader": "^2.3.0",
+		"ress": "^1.1.1",
+		"rimraf": "^2.6.2",
+		"semver": "^5.4.1",
+		"serialize-javascript": "^1.3.0",
+		"style-loader": "^0.18.2",
+		"stylus": "^0.54.5",
+		"stylus-loader": "^3.0.1",
+		"uglifyjs-webpack-plugin": "^0.4.6",
+		"vue": "^2.5.2",
+		"vue-loader": "^13.3.0",
+		"vue-router": "^2.7.0",
+		"vue-server-renderer": "^2.5.2",
+		"vue-template-compiler": "^2.5.2",
+		"webpack": "^3.6.0",
+		"webpack-bundle-analyzer": "^2.9.0",
+		"webpack-bundle-size-analyzer": "^2.7.0",
+		"webpack-dev-server": "^2.8.2",
+		"webpack-merge": "^4.1.0",
+		"write-file-webpack-plugin": "^4.1.0"
+	},
+	"dependencies": {
+		"to-markdown": "^3.1.0"
+	},
+	"peerDependencies": {
+		"vue": "^2.4.3"
+	},
+	"engines": {
+		"node": ">= 4.0.0",
+		"npm": ">= 3.0.0"
+	},
+	"jest": {
+		"verbose": false,
+		"roots": [
+			"<rootDir>/src"
+		],
+		"moduleFileExtensions": [
+			"js",
+			"vue"
+		],
+		"moduleDirectories": [
+			"node_modules"
+		],
+		"moduleNameMapper": {
+			"src/(.*)": "<rootDir>/src/$1"
+		},
+		"transform": {
+			".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor",
+			"\\.(styl)$": "<rootDir>/node_modules/jest-css-modules",
+			".*\\.(vue|js)$": "<rootDir>/node_modules/babel-jest"
+		},
+		"transformIgnorePatterns": [
+			"node_modules/(?!vue-router)"
+		],
+		"snapshotSerializers": [
+			"jest-serializer-html"
+		]
+	}
+};
 
 /***/ }),
 /* 27 */
@@ -9499,6 +9634,7 @@ __webpack_require__(108);
       this.$refs.pipeEditor.blur();
       Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, function (response) {
         _this.$refs.pipeEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this.$refs.pipeEditor.value, _this.loadingLabel, _this.errorLabel);
+        // and upper blur, it's can emit to input
         _this.$refs.pipeEditor.focus();
       }, this.uploadMax);
     },
@@ -9519,44 +9655,40 @@ __webpack_require__(108);
     pasteToMarkdown: function pasteToMarkdown(event) {
       var _this3 = this;
 
-      if (event.clipboardData.files.length > 0) {
-        // upload file
-        if (!this.uploadURL) {
-          return;
-        }
-        this.$refs.pipeEditor.blur();
-        Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.loadingLabel, this.overLabel), '');
-        Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, function (response) {
-          _this3.$refs.pipeEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this3.$refs.pipeEditor.value, _this3.loadingLabel, _this3.errorLabel);
-          _this3.$refs.pipeEditor.focus();
-        }, this.uploadMax);
-        return;
-      }
-
-      if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') === '') {
-        return;
-      }
-
-      var hasCode = false;
-      var markdownStr = __WEBPACK_IMPORTED_MODULE_0_to_markdown___default()(event.clipboardData.getData('text/html'), {
-        converters: [{
-          filter: ['pre', 'code'],
-          replacement: function replacement(content) {
-            if (content.split('\n').length > 1) {
-              hasCode = true;
+      event.target.blur();
+      if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') !== '') {
+        var hasCode = false;
+        var markdownStr = __WEBPACK_IMPORTED_MODULE_0_to_markdown___default()(event.clipboardData.getData('text/html'), {
+          converters: [{
+            filter: ['pre', 'code'],
+            replacement: function replacement(content) {
+              if (content.split('\n').length > 1) {
+                hasCode = true;
+              }
+              return '`' + content + '`';
             }
-            return '`' + content + '`';
-          }
-        }],
-        gfm: true
-      });
-      if (hasCode) {
-        event.target.value = event.clipboardData.getData('text/plain');
-      } else {
-        var div = document.createElement('div');
-        div.innerHTML = markdownStr;
-        markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '');
-        event.target.value = markdownStr;
+          }],
+          gfm: true
+        });
+        if (hasCode) {
+          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '');
+        } else {
+          var div = document.createElement('div');
+          div.innerHTML = markdownStr;
+          markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '');
+          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, markdownStr, '');
+        }
+      } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '') {
+        Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '');
+      } else if (event.clipboardData.files.length > 0) {
+        // upload file
+        if (this.uploadURL) {
+          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.loadingLabel, this.overLabel), '');
+          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, function (response) {
+            event.target.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, event.target.value, _this3.loadingLabel, _this3.errorLabel);
+            event.target.focus();
+          }, this.uploadMax);
+        }
       }
     },
     syncScroll: function syncScroll(event) {
