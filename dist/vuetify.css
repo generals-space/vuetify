@@ -3646,6 +3646,10 @@ p {
   display: -ms-flexbox;
   display: flex;
   border-bottom: 1px solid rgba(128,128,128,0.06);
+  overflow: auto;
+}
+.b3log-editor__toolbar::-webkit-scrollbar {
+  display: none;
 }
 .b3log-editor__toolbar > span,
 .b3log-editor__toolbar > a {

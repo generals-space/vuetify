@@ -24,7 +24,13 @@
   &__toolbar {
     line-height: 34px;
     display: flex;
-    border-bottom: 1px solid rgba(128,128,128,0.06);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.06);
+    overflow: auto
+
+    &::-webkit-scrollbar {
+
+      display: none
+    }
 
     & > span,
     & > a {
@@ -93,12 +99,12 @@
       font-size: 15px;
       padding: 10px;
       height: 100%;
-      font-family: Courier, Menlo, "Helvetica Neue", "Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif;
+      font-family: Courier, Menlo, "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
       line-height: 18px;
       color: #3b3e43;
 
       &::placeholder {
-        font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif
+        font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif
       }
     }
   }
@@ -107,7 +113,7 @@
     background-color: #fff;
     line-height: 21px;
     position: absolute;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     padding: 5px 0;
 
@@ -122,7 +128,7 @@
       cursor: pointer;
 
       &:hover,
-      &.b3log-editor__hints--current{
+      &.b3log-editor__hints--current {
         background-color: #4285f4;
         color: #fff;
         text-shadow: none;
@@ -143,7 +149,7 @@
     background-color: #fff;
     line-height: 21px;
     position: absolute;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
 
     span {
