@@ -9,23 +9,23 @@
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="$refs.b3logEmojiPanel.style.display = 'block'"><v-icon>emoji</v-icon></span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.bold)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="insert('**', '**')"><v-icon>bold</v-icon></span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.italic)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="insert('*', '*')"><v-icon>italic</v-icon></span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.quote)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="insert('> ', '')"><v-icon>quote</v-icon></span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.link)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="insert('[', '](http://)')"><v-icon>link</v-icon></span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.upload)"
         class="pipe-tooltipped pipe-tooltipped--ne">
         <label>
           <v-icon>upload</v-icon>
@@ -33,24 +33,24 @@
         </label>
       </span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.unorderedList)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="insert('* ', '')"><v-icon>unordered-list</v-icon></span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.orderedList)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="insert('1. ', '')"><v-icon>ordered-list</v-icon></span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.view)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="hasPreview = !hasPreview"
         :class="{'b3log-editor__icon--current' : hasPreview}"><v-icon>view</v-icon></span>
       <span
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.fullscreen)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         @click="isFullScreen = !isFullScreen"><v-icon>{{ isFullScreen ? 'contract' : 'fullscreen' }}</v-icon></span>
       <a
-        :aria-label="label.bold"
+        :aria-label="convertHotKey(label.question)"
         class="pipe-tooltipped pipe-tooltipped--ne"
         target="_blank"
         href="https://hacpai.com/guide/markdown">
@@ -73,6 +73,7 @@
           @drop.prevent="dragFile"
           @scroll="syncScroll"
           ref="b3logEditor"
+          @input="_debounceChange"
           @focus="$refs.b3logEmojiPanel.style.display = 'none'"
           :value="value"></textarea>
       </div>
@@ -254,6 +255,9 @@
         insertTextAtCaret(this.$refs.b3logEditor, prefix, suffix, hasReplaced)
         this._debounceChange()
       }
+    },
+    mounted() {
+      this._debounceChange()
     }
   }
 </script>
