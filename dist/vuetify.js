@@ -9581,6 +9581,47 @@ module.exports = function normalizeComponent (
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 __webpack_require__(108);
 
@@ -9589,21 +9630,29 @@ __webpack_require__(108);
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'v-editor',
   props: {
+    placeholder: {
+      type: String,
+      required: false
+    },
     uploadURL: {
       type: String,
       required: false
     },
-    loadingLabel: {
-      type: String,
-      required: false
-    },
-    errorLabel: {
-      type: String,
-      required: false
-    },
-    overLabel: {
-      type: String,
-      required: false
+    label: {
+      loading: undefined,
+      over: undefined,
+      error: undefined,
+      emoji: undefined,
+      bold: undefined,
+      italic: undefined,
+      quote: undefined,
+      link: undefined,
+      upload: undefined,
+      unorderedList: undefined,
+      orderedList: undefined,
+      view: undefined,
+      fullscreen: undefined,
+      question: undefined
     },
     uploadMax: {
       type: Number,
@@ -9616,46 +9665,68 @@ __webpack_require__(108);
     height: {
       type: Number,
       required: false
+    },
+    fetchUpload: {
+      type: Function,
+      required: false
     }
   },
   data: function data() {
     return {
       hasPreview: true,
       isFullScreen: false,
-      timerId: undefined
+      timerId: undefined,
+      emoji: ['😄', '😂', '😭', '😋', '🎉', '❤️', '👍', '👌', '🙏', '😱', '😈', '👊', '😍']
     };
   },
 
   methods: {
-    selectFile: function selectFile(event) {
+    convertHotKey: function convertHotKey(v) {
+      if (v) {
+        if (/Mac/.test(navigator.platform)) {
+          return v.replace('ctrl', '⌘').replace('shift', '⇧');
+        }
+        return v;
+      }
+      return '';
+    },
+    _debounceChange: function _debounceChange() {
       var _this = this;
 
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.target.files, this.uploadMax, this.loadingLabel, this.overLabel), '');
-      this.$refs.pipeEditor.blur();
+      var debounce = 1000;
+      if (this.timerId !== undefined) {
+        clearTimeout(this.timerId);
+      }
+      this.$set(this, 'timerId', undefined);
+      this.$set(this, 'timerId', setTimeout(function () {
+        _this.$emit('change', _this.$refs.b3logEditor.value, _this.hasPreview ? _this.$refs.b3logView : undefined);
+      }, debounce));
+    },
+    selectFile: function selectFile(event) {
+      var _this2 = this;
+
+      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.target.files, this.uploadMax, this.label.loading, this.label.over), '');
       Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, function (response) {
-        _this.$refs.pipeEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this.$refs.pipeEditor.value, _this.loadingLabel, _this.errorLabel);
-        // and upper blur, it's can emit to input
-        _this.$refs.pipeEditor.focus();
+        _this2.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this2.$refs.b3logEditor.value, _this2.label.loading, _this2.label.error);
+        _this2._debounceChange();
       }, this.uploadMax);
     },
     dragFile: function dragFile(event) {
-      var _this2 = this;
+      var _this3 = this;
 
       var files = event.dataTransfer.files;
       if (files.length === 0) {
         return;
       }
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(files, this.uploadMax, this.loadingLabel, this.overLabel), '');
-      this.$refs.pipeEditor.blur();
+      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(files, this.uploadMax, this.label.loading, this.label.over), '');
       Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, files, function (response) {
-        _this2.$refs.pipeEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this2.$refs.pipeEditor.value, _this2.loadingLabel, _this2.errorLabel);
-        _this2.$refs.pipeEditor.focus();
+        _this3.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this3.$refs.b3logEditor.value, _this3.label.loading, _this3.label.error);
+        _this3._debounceChange();
       }, this.uploadMax);
     },
     pasteToMarkdown: function pasteToMarkdown(event) {
-      var _this3 = this;
+      var _this4 = this;
 
-      event.target.blur();
       if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') !== '') {
         var hasCode = false;
         var markdownStr = __WEBPACK_IMPORTED_MODULE_0_to_markdown___default()(event.clipboardData.getData('text/html'), {
@@ -9667,26 +9738,42 @@ __webpack_require__(108);
               }
               return '`' + content + '`';
             }
+          }, {
+            filter: ['img'],
+            replacement: function replacement(content, target) {
+              if (1 === target.attributes.length) {
+                return '';
+              }
+
+              _this4.fetchUpload && _this4.fetchUpload(target.src, function (originalURL, url) {
+                event.target.value = event.target.value.replace(originalURL, url);
+              });
+
+              return '![' + target.alt + '](' + target.src + ')';
+            }
           }],
           gfm: true
         });
         if (hasCode) {
-          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '');
+          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '', true);
+          this._debounceChange();
         } else {
           var div = document.createElement('div');
           div.innerHTML = markdownStr;
-          markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '');
+          markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '', true);
           Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, markdownStr, '');
+          this._debounceChange();
         }
-      } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '') {
-        Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '');
+      } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '' && event.clipboardData.files.length === 0) {
+        Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '', true);
+        this._debounceChange();
       } else if (event.clipboardData.files.length > 0) {
         // upload file
         if (this.uploadURL) {
-          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.loadingLabel, this.overLabel), '');
+          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true);
           Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, function (response) {
-            event.target.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, event.target.value, _this3.loadingLabel, _this3.errorLabel);
-            event.target.focus();
+            event.target.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, event.target.value, _this4.label.loading, _this4.label.error);
+            _this4._debounceChange();
           }, this.uploadMax);
         }
       }
@@ -9699,25 +9786,14 @@ __webpack_require__(108);
       var textHeight = event.target.clientHeight;
       var textScrollHeight = event.target.scrollHeight;
       if (textScrollTop / textHeight > 0.5) {
-        this.$refs.pipeView.scrollTop = (textScrollTop + textHeight) * this.$refs.pipeView.scrollHeight / textScrollHeight - textHeight;
+        this.$refs.b3logView.scrollTop = (textScrollTop + textHeight) * this.$refs.b3logView.scrollHeight / textScrollHeight - textHeight;
       } else {
-        this.$refs.pipeView.scrollTop = textScrollTop * this.$refs.pipeView.scrollHeight / textScrollHeight;
+        this.$refs.b3logView.scrollTop = textScrollTop * this.$refs.b3logView.scrollHeight / textScrollHeight;
       }
     },
-    insert: function insert(prefix, suffix) {
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.pipeEditor, prefix, suffix);
-    },
-    parseMarkdown: function parseMarkdown(text) {
-      var _this4 = this;
-
-      var debounce = 1000;
-      if (this.timerId !== undefined) {
-        clearTimeout(this.timerId);
-      }
-      this.$set(this, 'timerId', undefined);
-      this.$set(this, 'timerId', setTimeout(function () {
-        _this4.$emit('input', text);
-      }, debounce));
+    insert: function insert(prefix, suffix, hasReplaced) {
+      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, prefix, suffix, hasReplaced);
+      this._debounceChange();
     }
   }
 });
@@ -10564,7 +10640,13 @@ module.exports = [
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ajaxUpload; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return genUploading; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return genUploaded; });
-var insertTextAtCaret = function insertTextAtCaret(textarea, prefix, suffix) {
+/**
+ * @fileOverview editor tool
+ *
+ * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
+ * @version 0.1.0.0, Nov 29, 2017
+ */
+var insertTextAtCaret = function insertTextAtCaret(textarea, prefix, suffix, replace) {
   if (typeof textarea.selectionStart === 'number' && typeof textarea.selectionEnd === 'number') {
     var startPos = textarea.selectionStart;
     var endPos = textarea.selectionEnd;
@@ -10575,16 +10657,21 @@ var insertTextAtCaret = function insertTextAtCaret(textarea, prefix, suffix) {
       textarea.selectionStart = startPos + prefix.length;
       textarea.selectionEnd = startPos + prefix.length;
     } else {
-      if (tmpStr.substring(startPos - prefix.length, startPos) === prefix && tmpStr.substring(endPos, endPos + suffix.length) === suffix) {
-        // broke circle, avoid repeat
-        textarea.value = tmpStr.substring(0, startPos - prefix.length) + tmpStr.substring(startPos, endPos) + tmpStr.substring(endPos + suffix.length, tmpStr.length);
-        textarea.selectionStart = startPos - prefix.length;
-        textarea.selectionEnd = endPos - prefix.length;
+      if (replace) {
+        textarea.value = tmpStr.substring(0, startPos) + prefix + suffix + tmpStr.substring(endPos, tmpStr.length);
+        textarea.selectionStart = textarea.selectionEnd = startPos + (endPos - startPos + prefix.length);
       } else {
-        // insert
-        textarea.value = tmpStr.substring(0, startPos) + prefix + tmpStr.substring(startPos, endPos) + suffix + tmpStr.substring(endPos, tmpStr.length);
-        textarea.selectionStart = startPos + prefix.length;
-        textarea.selectionEnd = startPos + (endPos - startPos + prefix.length);
+        if (tmpStr.substring(startPos - prefix.length, startPos) === prefix && tmpStr.substring(endPos, endPos + suffix.length) === suffix) {
+          // broke circle, avoid repeat
+          textarea.value = tmpStr.substring(0, startPos - prefix.length) + tmpStr.substring(startPos, endPos) + tmpStr.substring(endPos + suffix.length, tmpStr.length);
+          textarea.selectionStart = startPos - prefix.length;
+          textarea.selectionEnd = endPos - prefix.length;
+        } else {
+          // insert
+          textarea.value = tmpStr.substring(0, startPos) + prefix + tmpStr.substring(startPos, endPos) + suffix + tmpStr.substring(endPos, tmpStr.length);
+          textarea.selectionStart = startPos + prefix.length;
+          textarea.selectionEnd = startPos + (endPos - startPos + prefix.length);
+        }
       }
     }
   }
@@ -10646,8 +10733,8 @@ var genUploaded = function genUploaded(response, text) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"editor",class:{'editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"editor__toolbar"},[_c('span',{on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',[_c('label',[_c('v-icon',[_vm._v("upload")]),_vm._v(" "),_c('input',{attrs:{"multiple":"multiple","type":"file"},on:{"change":_vm.selectFile}})],1)]),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{class:{'editor__icon--current' : _vm.hasPreview},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{attrs:{"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1)]),_vm._v(" "),_c('div',{staticClass:"editor__content"},[_c('div',{staticClass:"editor__textarea"},[_c('textarea',{ref:"pipeEditor",domProps:{"value":_vm.value},on:{"paste":function($event){$event.preventDefault();_vm.pasteToMarkdown($event)},"drop":function($event){$event.preventDefault();_vm.dragFile($event)},"scroll":_vm.syncScroll,"input":function($event){_vm.parseMarkdown($event.target.value)},"focus":function($event){_vm.parseMarkdown($event.target.value)}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"pipeView",staticClass:"editor__markdown"})])])}
-var staticRenderFns = []
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"b3log-editor",class:{'b3log-editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"b3log-editor__toolbar"},[_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.emoji)},on:{"click":function($event){_vm.$refs.b3logEmojiPanel.style.display = 'block'}}},[_c('v-icon',[_vm._v("emoji")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold},on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold},on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold},on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold},on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold}},[_c('label',[_c('v-icon',[_vm._v("upload")]),_vm._v(" "),_c('input',{attrs:{"multiple":"multiple","type":"file"},on:{"change":_vm.selectFile}})],1)]),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold},on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold},on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",class:{'b3log-editor__icon--current' : _vm.hasPreview},attrs:{"aria-label":_vm.label.bold},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold},on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.label.bold,"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1),_vm._v(" "),_c('div',{ref:"b3logEmojiPanel",staticClass:"b3log-editor__emoji"},[_c('div',_vm._l((_vm.emoji),function(item){return _c('span',{on:{"click":function($event){_vm.insert((item + " "), '', true);}}},[_vm._v(_vm._s(item))])})),_vm._v(" "),_vm._m(0)])]),_vm._v(" "),_c('div',{staticClass:"b3log-editor__content"},[_c('div',{staticClass:"b3log-editor__textarea"},[_c('textarea',{ref:"b3logEditor",attrs:{"placeholder":_vm.placeholder || ''},domProps:{"value":_vm.value},on:{"paste":function($event){$event.preventDefault();_vm.pasteToMarkdown($event)},"drop":function($event){$event.preventDefault();_vm.dragFile($event)},"scroll":_vm.syncScroll,"focus":function($event){_vm.$refs.b3logEmojiPanel.style.display = 'none'}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"b3logView",staticClass:"b3log-editor__markdown"})])])}
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"b3log-editor__emoji-tip"},[_c('a',{attrs:{"href":"https://www.webpagefx.com/tools/emoji-cheat-sheet/","target":"_blank"}},[_vm._v("EMOJI CHEAT SHEET")])])}]
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 

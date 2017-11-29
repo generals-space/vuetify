@@ -3613,9 +3613,15 @@ p {
 .carousel__controls__item:hover .icon {
   opacity: 0.8;
 }
-.editor {
+/**
+ * editor
+ *
+ * @author <a href="http://vanessa.b3log.org">Liyuan Li</ta>
+ * @version 0.1.0.0, Nov 29, 2017
+ */
+.b3log-editor {
   position: relative;
-  background-color: #4a4a4a;
+  background-color: #fff;
   -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.05);
           box-shadow: 0 0 4px rgba(0,0,0,0.05);
   display: -webkit-box;
@@ -3626,85 +3632,79 @@ p {
       -ms-flex-direction: column;
           flex-direction: column;
 }
-.editor--fullscreen {
+.b3log-editor--fullscreen {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 100% !important;
   left: 0;
-  margin: 0 !important;
-  z-index: 20;
+  height: 100% !important;
+  z-index: 90;
 }
-.editor__toolbar {
-  line-height: 36px;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+.b3log-editor__toolbar {
+  line-height: 34px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  border-bottom: 1px solid rgba(128,128,128,0.06);
 }
-.editor__toolbar label {
+.b3log-editor__toolbar > span,
+.b3log-editor__toolbar > a {
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+}
+.b3log-editor__toolbar > span svg,
+.b3log-editor__toolbar > a svg {
+  color: #616161;
+  float: left;
+  margin: 10px 8px;
+}
+.b3log-editor__toolbar > span:hover svg,
+.b3log-editor__toolbar > a:hover svg,
+.b3log-editor__toolbar > span.b3log-editor__icon--current svg,
+.b3log-editor__toolbar > a.b3log-editor__icon--current svg {
+  color: #4285f4;
+}
+.b3log-editor__toolbar label {
   overflow: hidden;
   position: relative;
-  height: 36px;
-  width: 36px;
+  height: 34px;
+  width: 30px;
   display: block;
 }
-.editor__toolbar label input {
+.b3log-editor__toolbar label input {
   position: absolute;
   width: 1px;
   opacity: 0.001;
   height: 16px;
   overflow: hidden;
 }
-.editor__toolbar > span,
-.editor__toolbar > a {
-  width: 36px;
-  text-align: center;
-  display: inline-block;
-  cursor: pointer;
-}
-.editor__toolbar > span svg,
-.editor__toolbar > a svg {
-  color: #ddd;
-}
-.editor__toolbar > span:hover,
-.editor__toolbar > a:hover,
-.editor__toolbar > span.editor__icon--current,
-.editor__toolbar > a.editor__icon--current {
-  background-color: #313131;
-}
-.editor__toolbar > span:hover svg,
-.editor__toolbar > a:hover svg,
-.editor__toolbar > span.editor__icon--current svg,
-.editor__toolbar > a.editor__icon--current svg {
-  color: #fff;
-}
-.editor__content {
+.b3log-editor__content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  min-height: 200px;
+  min-height: 60px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
-.editor__textarea,
-.editor__markdown {
+.b3log-editor__textarea,
+.b3log-editor__markdown {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
-.editor__markdown {
+.b3log-editor__markdown {
   overflow: auto;
   padding: 10px;
   background-color: #f6f6f6;
   -webkit-box-shadow: inset 1px 0 rgba(128,128,128,0.06);
           box-shadow: inset 1px 0 rgba(128,128,128,0.06);
 }
-.editor__textarea {
+.b3log-editor__textarea {
   background-color: #fcfcfc;
 }
-.editor__textarea textarea {
+.b3log-editor__textarea textarea {
   border: 0;
   resize: none;
   width: 100%;
@@ -3714,6 +3714,66 @@ p {
   font-size: 15px;
   padding: 10px;
   height: 100%;
+  font-family: Courier, Menlo, "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+  line-height: 18px;
+  color: #3b3e43;
+}
+.b3log-editor__textarea textarea::-webkit-input-placeholder {
+  font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+}
+.b3log-editor__textarea textarea:-ms-input-placeholder {
+  font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+}
+.b3log-editor__textarea textarea::placeholder {
+  font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+}
+.b3log-editor__hints {
+  background-color: #fff;
+  line-height: 21px;
+  position: absolute;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+          box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  border-radius: 3px;
+  padding: 5px 0;
+}
+.b3log-editor__hints li {
+  list-style: none;
+  padding: 0 10px;
+  border-bottom: 1px solid #eee;
+  display: block;
+  text-shadow: 0 1px 0 #fff;
+  color: #616161;
+  line-height: 30px;
+  cursor: pointer;
+}
+.b3log-editor__hints li:hover,
+.b3log-editor__hints li.b3log-editor__hints--current {
+  background-color: #4285f4;
+  color: #fff;
+  text-shadow: none;
+}
+.b3log-editor__hints li:last-child {
+  border-bottom: 0;
+}
+.b3log-editor__emoji {
+  display: none;
+  padding: 5px;
+  top: 28px;
+  left: 5px;
+  max-width: 300px;
+  background-color: #fff;
+  line-height: 21px;
+  position: absolute;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+          box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+.b3log-editor__emoji span {
+  margin-right: 5px;
+  cursor: pointer;
+}
+.b3log-editor__emoji-tip {
+  text-align: right;
 }
 
 /*# sourceMappingURL=vuetify.css.map*/
