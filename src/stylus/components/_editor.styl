@@ -25,10 +25,8 @@
     line-height: 34px;
     display: flex;
     border-bottom: 1px solid rgba(128, 128, 128, 0.06);
-    overflow: auto
 
     &::-webkit-scrollbar {
-
       display: none
     }
 
@@ -160,5 +158,11 @@
     &-tip {
       text-align: right;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .b3log-editor__toolbar {
+    overflow: auto;
   }
 }

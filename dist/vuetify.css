@@ -3646,7 +3646,6 @@ p {
   display: -ms-flexbox;
   display: flex;
   border-bottom: 1px solid rgba(128,128,128,0.06);
-  overflow: auto;
 }
 .b3log-editor__toolbar::-webkit-scrollbar {
   display: none;
@@ -3778,6 +3777,11 @@ p {
 }
 .b3log-editor__emoji-tip {
   text-align: right;
+}
+@media (max-width: 768px) {
+  .b3log-editor__toolbar {
+    overflow: auto;
+  }
 }
 
 /*# sourceMappingURL=vuetify.css.map*/
