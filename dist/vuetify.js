@@ -1695,7 +1695,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__package_json__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__package_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__package_json__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__directives__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__directives__ = __webpack_require__(120);
 __webpack_require__(23);
 
 
@@ -9396,7 +9396,7 @@ __WEBPACK_IMPORTED_MODULE_0__VEditor_vue__["a" /* default */].install = function
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_VEditor_vue__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_ad4fc310_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_VEditor_vue__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_ad4fc310_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_VEditor_vue__ = __webpack_require__(119);
 var normalizeComponent = __webpack_require__(106)
 /* script */
 
@@ -9538,7 +9538,20 @@ module.exports = function normalizeComponent (
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_to_markdown__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_to_markdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_to_markdown__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__tool__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__emoji_json__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__emoji_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__emoji_json__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tool__ = __webpack_require__(118);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -9628,6 +9641,7 @@ __webpack_require__(108);
 
 
 
+
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'v-editor',
   props: {
@@ -9651,9 +9665,9 @@ __webpack_require__(108);
       upload: undefined,
       unorderedList: undefined,
       orderedList: undefined,
-      view: undefined,
+      preview: undefined,
       fullscreen: undefined,
-      question: undefined
+      help: undefined
     },
     uploadMax: {
       type: Number,
@@ -9674,14 +9688,189 @@ __webpack_require__(108);
   },
   data: function data() {
     return {
+      textareaValue: '',
+      hintX: 0,
+      hintY: 0,
+      showHint: false,
+      currentHintIndex: 0,
+      showEmojiPanel: false,
+      hintData: [],
       hasPreview: true,
       isFullScreen: false,
       timerId: undefined,
-      emoji: ['😄', '😂', '😭', '😋', '🎉', '❤️', '👍', '👌', '🙏', '😱', '😈', '👊', '😍']
+      emoji: {
+        "smile": "😄",
+        "joy": "😂",
+        "+1": "👍",
+        "scream": "😱",
+        "smiling_imp": "😈",
+        "sob": "😭",
+        "yum": "😋",
+        "tada": "🎉",
+        "ok_hand": "👌",
+        "pray": "🙏",
+        "punch": "👊",
+        "heart_eyes": "😍"
+      }
     };
   },
 
   methods: {
+    shiftHotkey: function shiftHotkey(event) {
+      console.log(event);
+    },
+    hotkey: function hotkey(event) {
+      switch (event.key) {
+        case '/':
+          this.$set(this, 'showEmojiPanel', !this.showEmojiPanel);
+          event.preventDefault();
+          break;
+        case 'b':
+          this.insert('**', '**');
+          event.preventDefault();
+          break;
+        case 'i':
+          this.insert('*', '*');
+          event.preventDefault();
+          break;
+        case 'e':
+          this.insert('> ', '');
+          event.preventDefault();
+          break;
+        case 'k':
+          this.insert('[', '](http://)');
+          event.preventDefault();
+          break;
+        case 'l':
+          this.insert('* ', '');
+          event.preventDefault();
+          break;
+        case 'd':
+          this.$set(this, 'hasPreview', !this.hasPreview);
+          event.preventDefault();
+          break;
+        case 'A':
+          if (event.shiftKey) {
+            this.$set(this, 'isFullScreen', !this.isFullScreen);
+            event.preventDefault();
+          }
+          break;
+        case 'L':
+          if (event.shiftKey) {
+            this.insert('1. ', '');
+            event.preventDefault();
+          }
+          break;
+        default:
+          break;
+      }
+    },
+    selectHint: function selectHint(event) {
+      // at hints action
+      if (!this.showHint) {
+        return;
+      }
+      if (event.keyCode === 40) {
+        // down
+        event.preventDefault();
+        if (this.currentHintIndex === this.hintData.length - 1) {
+          this.currentHintIndex = 0;
+        } else {
+          this.currentHintIndex++;
+        }
+      } else if (event.keyCode === 38) {
+        // up
+        event.preventDefault();
+        if (this.currentHintIndex === 0) {
+          this.currentHintIndex = this.hintData.length - 1;
+        } else {
+          this.currentHintIndex--;
+        }
+      } else if (event.keyCode === 13) {
+        // enter
+        event.preventDefault();
+        this.$set(this, 'showHint', false);
+
+        var valueArray = event.target.value.substr(0, event.target.selectionStart).split(':')[0];
+        event.target.value = valueArray + this.hintData[this.currentHintIndex].value + ' ' + event.target.value.substr(event.target.selectionStart);
+        event.target.selectionEnd = event.target.selectionStart = valueArray.length + 3;
+        this.$set(this, 'textareaValue', event.target.value);
+        this._debounceChange();
+      }
+    },
+    insertHint: function insertHint(value) {
+      var valueArray = this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionStart).split(':')[0];
+      this.$refs.b3logEditor.value = valueArray + value + this.$refs.b3logEditor.value.substr(this.$refs.b3logEditor.selectionStart);
+      this.$refs.b3logEditor.selectionEnd = this.$refs.b3logEditor.selectionStart = valueArray.length + 3;
+      this.$set(this, 'showHint', false);
+      this.$set(this, 'textareaValue', this.$refs.b3logEditor.value);
+      this.$refs.b3logEditor.focus();
+      this._debounceChange();
+    },
+    input: function input(event) {
+      var _this = this;
+
+      // at and emoji hints
+      var valueArray = event.target.value.substr(0, event.target.selectionStart).split('\n');
+      var xValue = valueArray.slice(-1).pop();
+
+      var genHintsHTML = function genHintsHTML(data) {
+        if (data.length === 0) {
+          _this.$set(_this, 'showHint', false);
+          return;
+        }
+        var zhReg = xValue.match(/[\u4E00-\u9FA5\uF900-\uFA2D\uFF00-\uFFEF]/g);
+        var zhLength = zhReg === null ? 0 : zhReg.length;
+        _this.$set(_this, 'hintX', zhLength * 15 + (xValue.length - zhLength) * 9 + 10 + event.target.scrollLeft);
+        _this.$set(_this, 'hintY', valueArray.length * 18 + 35 - event.target.scrollTop);
+        _this.$set(_this, 'currentHintIndex', 0);
+
+        _this.$set(_this, 'showHint', true);
+      };
+
+      var getSearchKey = function getSearchKey(splitChar) {
+        var xAtArray = xValue.split(splitChar);
+        var searchKey = undefined;
+        if (xAtArray.length > 1) {
+          if (xAtArray.length === 2 && xAtArray[0] === '') {
+            if ((xAtArray[1] === '' || xAtArray[1].trim() !== '') && xAtArray[1].indexOf(' ') === -1 && xAtArray[1].length < 33) {
+              searchKey = xAtArray[1];
+            }
+          } else {
+            var prefAt = xAtArray[xAtArray.length - 2];
+            var currentAt = xAtArray.slice(-1).pop();
+            if (prefAt.slice(-1) === ' ' && currentAt.indexOf(' ') === -1 && (currentAt === '' || currentAt.trim() !== '') && currentAt.length < 33) {
+              searchKey = currentAt;
+            }
+          }
+        }
+        return searchKey;
+      };
+
+      var searchEmoji = getSearchKey(':');
+      if (searchEmoji === undefined) {
+        this.$set(this, 'showHint', false);
+      } else {
+        var matchEmoji = [];
+        var emojies = searchEmoji === '' ? this.emoji : __WEBPACK_IMPORTED_MODULE_1__emoji_json___default.a;
+        Object.keys(emojies).forEach(function (key) {
+          if (matchEmoji.length > 4) {
+            return;
+          }
+          if (key.indexOf(searchEmoji.toLowerCase()) > -1) {
+            var emojiItem = {
+              value: emojies[key],
+              label: key
+            };
+            matchEmoji.push(emojiItem);
+          }
+        });
+        this.$set(this, 'hintData', matchEmoji);
+        genHintsHTML(matchEmoji);
+      }
+      this.$set(this, 'textareaValue', event.target.value);
+      this._debounceChange();
+    },
     convertHotKey: function convertHotKey(v) {
       if (v) {
         if (/Mac/.test(navigator.platform)) {
@@ -9692,7 +9881,7 @@ __webpack_require__(108);
       return '';
     },
     _debounceChange: function _debounceChange() {
-      var _this = this;
+      var _this2 = this;
 
       var debounce = 1000;
       if (this.timerId !== undefined) {
@@ -9700,33 +9889,33 @@ __webpack_require__(108);
       }
       this.$set(this, 'timerId', undefined);
       this.$set(this, 'timerId', setTimeout(function () {
-        _this.$emit('change', _this.$refs.b3logEditor.value, _this.hasPreview ? _this.$refs.b3logView : undefined);
+        _this2.$emit('change', _this2.$refs.b3logEditor.value, _this2.hasPreview ? _this2.$refs.b3logView : undefined);
       }, debounce));
     },
     selectFile: function selectFile(event) {
-      var _this2 = this;
+      var _this3 = this;
 
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.target.files, this.uploadMax, this.label.loading, this.label.over), '');
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, function (response) {
-        _this2.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this2.$refs.b3logEditor.value, _this2.label.loading, _this2.label.error);
-        _this2._debounceChange();
+      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(event.target.files, this.uploadMax, this.label.loading, this.label.over), '');
+      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, function (response) {
+        _this3.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, _this3.$refs.b3logEditor.value, _this3.label.loading, _this3.label.error);
+        _this3._debounceChange();
       }, this.uploadMax);
     },
     dragFile: function dragFile(event) {
-      var _this3 = this;
+      var _this4 = this;
 
       var files = event.dataTransfer.files;
       if (files.length === 0) {
         return;
       }
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(files, this.uploadMax, this.label.loading, this.label.over), '');
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, files, function (response) {
-        _this3.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, _this3.$refs.b3logEditor.value, _this3.label.loading, _this3.label.error);
-        _this3._debounceChange();
+      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(files, this.uploadMax, this.label.loading, this.label.over), '');
+      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, files, function (response) {
+        _this4.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, _this4.$refs.b3logEditor.value, _this4.label.loading, _this4.label.error);
+        _this4._debounceChange();
       }, this.uploadMax);
     },
     pasteToMarkdown: function pasteToMarkdown(event) {
-      var _this4 = this;
+      var _this5 = this;
 
       if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') !== '') {
         var hasCode = false;
@@ -9746,7 +9935,7 @@ __webpack_require__(108);
                 return '';
               }
 
-              _this4.fetchUpload && _this4.fetchUpload(target.src, function (originalURL, url) {
+              _this5.fetchUpload && _this5.fetchUpload(target.src, function (originalURL, url) {
                 event.target.value = event.target.value.replace(originalURL, url);
               });
 
@@ -9756,25 +9945,25 @@ __webpack_require__(108);
           gfm: true
         });
         if (hasCode) {
-          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '', true);
+          Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '', true);
           this._debounceChange();
         } else {
           var div = document.createElement('div');
           div.innerHTML = markdownStr;
           markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '', true);
-          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, markdownStr, '');
+          Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(event.target, markdownStr, '');
           this._debounceChange();
         }
       } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '' && event.clipboardData.files.length === 0) {
-        Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '', true);
+        Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '', true);
         this._debounceChange();
       } else if (event.clipboardData.files.length > 0) {
         // upload file
         if (this.uploadURL) {
-          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_1__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true);
-          Object(__WEBPACK_IMPORTED_MODULE_1__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, function (response) {
-            event.target.value = Object(__WEBPACK_IMPORTED_MODULE_1__tool__["b" /* genUploaded */])(response.data, event.target.value, _this4.label.loading, _this4.label.error);
-            _this4._debounceChange();
+          Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true);
+          Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, function (response) {
+            event.target.value = Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, event.target.value, _this5.label.loading, _this5.label.error);
+            _this5._debounceChange();
           }, this.uploadMax);
         }
       }
@@ -9793,11 +9982,12 @@ __webpack_require__(108);
       }
     },
     insert: function insert(prefix, suffix, hasReplaced) {
-      Object(__WEBPACK_IMPORTED_MODULE_1__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, prefix, suffix, hasReplaced);
+      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, prefix, suffix, hasReplaced);
       this._debounceChange();
     }
   },
   mounted: function mounted() {
+    this.$set(this, 'textareaValue', this.value);
     this._debounceChange();
   }
 });
@@ -10637,6 +10827,883 @@ module.exports = [
 
 /***/ }),
 /* 117 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"100": "💯",
+	"1234": "🔢",
+	"+1": "👍",
+	"-1": "👎",
+	"8ball": "🎱",
+	"a": "🅰",
+	"ab": "🆎",
+	"abc": "🔤",
+	"abcd": "🔡",
+	"accept": "🉑",
+	"aerial_tramway": "🚡",
+	"airplane": "✈",
+	"alarm_clock": "⏰",
+	"alien": "👽",
+	"ambulance": "🚑",
+	"anchor": "⚓",
+	"angel": "👼",
+	"anger": "💢",
+	"angry": "😠",
+	"anguished": "😧",
+	"ant": "🐜",
+	"apple": "🍎",
+	"aquarius": "♒",
+	"aries": "♈",
+	"arrows_clockwise": "🔃",
+	"arrows_counterclockwise": "🔄",
+	"arrow_backward": "◀",
+	"arrow_double_down": "⏬",
+	"arrow_double_up": "⏫",
+	"arrow_down": "⬇",
+	"arrow_down_small": "🔽",
+	"arrow_forward": "▶",
+	"arrow_heading_down": "⤵",
+	"arrow_heading_up": "⤴",
+	"arrow_left": "⬅",
+	"arrow_lower_left": "↙",
+	"arrow_lower_right": "↘",
+	"arrow_right": "➡",
+	"arrow_right_hook": "↪",
+	"arrow_up": "⬆",
+	"arrow_upper_left": "↖",
+	"arrow_upper_right": "↗",
+	"arrow_up_down": "↕",
+	"arrow_up_small": "🔼",
+	"art": "🎨",
+	"articulated_lorry": "🚛",
+	"astonished": "😲",
+	"atm": "🏧",
+	"b": "🅱",
+	"baby": "👶",
+	"baby_bottle": "🍼",
+	"baby_chick": "🐤",
+	"baby_symbol": "🚼",
+	"back": "🔙",
+	"baggage_claim": "🛄",
+	"balloon": "🎈",
+	"ballot_box_with_check": "☑",
+	"bamboo": "🎍",
+	"banana": "🍌",
+	"bangbang": "‼",
+	"bank": "🏦",
+	"barber": "💈",
+	"bar_chart": "📊",
+	"baseball": "⚾",
+	"basketball": "🏀",
+	"bath": "🛀",
+	"bathtub": "🛁",
+	"battery": "🔋",
+	"bear": "🐻",
+	"bee": "🐝",
+	"beer": "🍺",
+	"beers": "🍻",
+	"beetle": "🐞",
+	"beginner": "🔰",
+	"bell": "🔔",
+	"bento": "🍱",
+	"bicyclist": "🚴",
+	"bike": "🚲",
+	"bikini": "👙",
+	"bird": "🐦",
+	"birthday": "🎂",
+	"black_circle": "⚫",
+	"black_joker": "🃏",
+	"black_large_square": "⬛",
+	"black_medium_small_square": "◾",
+	"black_medium_square": "◼",
+	"black_nib": "✒",
+	"black_small_square": "▪",
+	"black_square_button": "🔲",
+	"blossom": "🌼",
+	"blowfish": "🐡",
+	"blue_book": "📘",
+	"blue_car": "🚙",
+	"blue_heart": "💙",
+	"blush": "😊",
+	"boar": "🐗",
+	"boat": "⛵",
+	"bomb": "💣",
+	"book": "📖",
+	"bookmark": "🔖",
+	"bookmark_tabs": "📑",
+	"books": "📚",
+	"boom": "💥",
+	"boot": "👢",
+	"bouquet": "💐",
+	"bow": "🙇",
+	"bowling": "🎳",
+	"boy": "👦",
+	"bread": "🍞",
+	"bride_with_veil": "👰",
+	"bridge_at_night": "🌉",
+	"briefcase": "💼",
+	"broken_heart": "💔",
+	"bug": "🐛",
+	"bulb": "💡",
+	"bullettrain_front": "🚅",
+	"bullettrain_side": "🚄",
+	"bus": "🚌",
+	"busstop": "🚏",
+	"busts_in_silhouette": "👥",
+	"bust_in_silhouette": "👤",
+	"c": ":c:",
+	"cactus": "🌵",
+	"cake": "🍰",
+	"calendar": "📆",
+	"calling": "📲",
+	"camel": "🐫",
+	"camera": "📷",
+	"cancer": "🦀",
+	"candy": "🍬",
+	"capital_abcd": "🔠",
+	"capricorn": "♑",
+	"car": "🚗",
+	"card_index": "📇",
+	"carousel_horse": "🎠",
+	"cat": "🐱",
+	"cat2": "🐈",
+	"cd": "🇨🇩",
+	"chart": "💹",
+	"chart_with_downwards_trend": "📉",
+	"chart_with_upwards_trend": "📈",
+	"checkered_flag": "🏁",
+	"cherries": "🍒",
+	"cherry_blossom": "🌸",
+	"chestnut": "🌰",
+	"chicken": "🐔",
+	"children_crossing": "🚸",
+	"chocolate_bar": "🍫",
+	"christmas_tree": "🎄",
+	"church": "⛪",
+	"cinema": "🎦",
+	"circus_tent": "🎪",
+	"city_sunrise": "🌇",
+	"city_sunset": "🌆",
+	"cl": "🇨🇱",
+	"clap": "👏",
+	"clapper": "🎬",
+	"clipboard": "📋",
+	"clock1": "🕐",
+	"clock10": "🕙",
+	"clock1030": "🕥",
+	"clock11": "🕚",
+	"clock1130": "🕦",
+	"clock12": "🕛",
+	"clock1230": "🕧",
+	"clock130": "🕜",
+	"clock2": "🕑",
+	"clock230": "🕝",
+	"clock3": "🕒",
+	"clock330": "🕞",
+	"clock4": "🕓",
+	"clock430": "🕟",
+	"clock5": "🕔",
+	"clock530": "🕠",
+	"clock6": "🕕",
+	"clock630": "🕡",
+	"clock7": "🕖",
+	"clock730": "🕢",
+	"clock8": "🕗",
+	"clock830": "🕣",
+	"clock9": "🕘",
+	"clock930": "🕤",
+	"closed_book": "📕",
+	"closed_lock_with_key": "🔐",
+	"closed_umbrella": "🌂",
+	"cloud": "☁",
+	"clubs": "♣",
+	"cn": "🇨🇳",
+	"cocktail": "🍸",
+	"coffee": "☕",
+	"cold_sweat": "😰",
+	"collision": "💥",
+	"computer": "💻",
+	"confetti_ball": "🎊",
+	"confounded": "😖",
+	"confused": "😕",
+	"congratulations": "㊗",
+	"construction": "🚧",
+	"construction_worker": "👷",
+	"convenience_store": "🏪",
+	"cookie": "🍪",
+	"cool": "🆒",
+	"cop": "👮",
+	"copyright": "©",
+	"corn": "🌽",
+	"couple": "👫",
+	"couplekiss": "💏",
+	"couple_with_heart": "💑",
+	"cow": "🐮",
+	"cow2": "🐄",
+	"credit_card": "💳",
+	"crescent_moon": "🌙",
+	"crocodile": "🐊",
+	"crossed_flags": "🎌",
+	"crown": "👑",
+	"cry": "😢",
+	"crying_cat_face": "😿",
+	"crystal_ball": "🔮",
+	"cupid": "💘",
+	"curly_loop": "➰",
+	"currency_exchange": "💱",
+	"curry": "🍛",
+	"custard": "🍮",
+	"customs": "🛃",
+	"cyclone": "🌀",
+	"d": ":d:",
+	"dancer": "💃",
+	"dancers": "👯",
+	"dango": "🍡",
+	"dart": "🎯",
+	"dash": "💨",
+	"date": "📅",
+	"de": "🇩🇪",
+	"deciduous_tree": "🌳",
+	"department_store": "🏬",
+	"diamonds": "♦",
+	"diamond_shape_with_a_dot_inside": "💠",
+	"disappointed": "😞",
+	"disappointed_relieved": "😥",
+	"dizzy": "💫",
+	"dizzy_face": "😵",
+	"dog": "🐶",
+	"dog2": "🐕",
+	"dollar": "💵",
+	"dolls": "🎎",
+	"dolphin": "🐬",
+	"door": "🚪",
+	"doughnut": "🍩",
+	"do_not_litter": "🚯",
+	"dragon": "🐉",
+	"dragon_face": "🐲",
+	"dress": "👗",
+	"dromedary_camel": "🐪",
+	"droplet": "💧",
+	"dvd": "📀",
+	"e-mail": "📧",
+	"e50a": ":e50a:",
+	"ear": "👂",
+	"earth_africa": "🌍",
+	"earth_americas": "🌎",
+	"earth_asia": "🌏",
+	"ear_of_rice": "🌾",
+	"egg": "🥚",
+	"eggplant": "🍆",
+	"eight": "8⃣",
+	"eight_pointed_black_star": "✴",
+	"eight_spoked_asterisk": "✳",
+	"electric_plug": "🔌",
+	"elephant": "🐘",
+	"email": "✉",
+	"end": "🔚",
+	"envelope": "✉",
+	"es": "🇪🇸",
+	"euro": "💶",
+	"european_castle": "🏰",
+	"european_post_office": "🏤",
+	"evergreen_tree": "🌲",
+	"exclamation": "❗",
+	"expressionless": "😑",
+	"eyeglasses": "👓",
+	"eyes": "👀",
+	"f": ":f:",
+	"facepunch": "👊",
+	"factory": "🏭",
+	"fallen_leaf": "🍂",
+	"family": "👪",
+	"fast_forward": "⏩",
+	"fax": "📠",
+	"fearful": "😨",
+	"feet": "🐾",
+	"ferris_wheel": "🎡",
+	"file_folder": "📁",
+	"fire": "🔥",
+	"fireworks": "🎆",
+	"fire_engine": "🚒",
+	"first_quarter_moon": "🌓",
+	"first_quarter_moon_with_face": "🌛",
+	"fish": "🐟",
+	"fishing_pole_and_fish": "🎣",
+	"fish_cake": "🍥",
+	"fist": "✊",
+	"five": "5⃣",
+	"flags": "🎏",
+	"flashlight": "🔦",
+	"floppy_disk": "💾",
+	"flower_playing_cards": "🎴",
+	"flushed": "😳",
+	"foggy": "🌁",
+	"football": "🏈",
+	"fork_and_knife": "🍴",
+	"fountain": "⛲",
+	"four": "4⃣",
+	"four_leaf_clover": "🍀",
+	"fr": "🇫🇷",
+	"free": "🆓",
+	"fried_shrimp": "🍤",
+	"fries": "🍟",
+	"frog": "🐸",
+	"frowning": "😦",
+	"fuelpump": "⛽",
+	"full_moon": "🌕",
+	"full_moon_with_face": "🌝",
+	"g": ":g:",
+	"game_die": "🎲",
+	"gb": "🇬🇧",
+	"gem": "💎",
+	"gemini": "♊",
+	"ghost": "👻",
+	"gift": "🎁",
+	"gift_heart": "💝",
+	"girl": "👧",
+	"globe_with_meridians": "🌐",
+	"goat": "🐐",
+	"golf": "⛳",
+	"grapes": "🍇",
+	"green_apple": "🍏",
+	"green_book": "📗",
+	"green_heart": "💚",
+	"grey_exclamation": "❕",
+	"grey_question": "❔",
+	"grimacing": "😬",
+	"grin": "😁",
+	"grinning": "😀",
+	"guardsman": "💂",
+	"guitar": "🎸",
+	"gun": "🔫",
+	"haircut": "💇",
+	"hamburger": "🍔",
+	"hammer": "🔨",
+	"hamster": "🐹",
+	"hand": "✋",
+	"handbag": "👜",
+	"hankey": "💩",
+	"hash": "#⃣",
+	"hatched_chick": "🐥",
+	"hatching_chick": "🐣",
+	"headphones": "🎧",
+	"heart": "❤",
+	"heartbeat": "💓",
+	"heartpulse": "💗",
+	"hearts": "♥",
+	"heart_decoration": "💟",
+	"heart_eyes": "😍",
+	"heart_eyes_cat": "😻",
+	"hear_no_evil": "🙉",
+	"heavy_check_mark": "✔",
+	"heavy_division_sign": "➗",
+	"heavy_dollar_sign": "💲",
+	"heavy_exclamation_mark": "❗",
+	"heavy_minus_sign": "➖",
+	"heavy_multiplication_x": "✖",
+	"heavy_plus_sign": "➕",
+	"helicopter": "🚁",
+	"herb": "🌿",
+	"hibiscus": "🌺",
+	"high_brightness": "🔆",
+	"high_heel": "👠",
+	"hocho": "🔪",
+	"honeybee": "🐝",
+	"honey_pot": "🍯",
+	"horse": "🐴",
+	"horse_racing": "🏇",
+	"hospital": "🏥",
+	"hotel": "🏨",
+	"hotsprings": "♨",
+	"hourglass": "⌛",
+	"hourglass_flowing_sand": "⏳",
+	"house": "🏠",
+	"house_with_garden": "🏡",
+	"hushed": "😯",
+	"i": ":i:",
+	"icecream": "🍦",
+	"ice_cream": "🍨",
+	"id": "🇮🇩",
+	"ideograph_advantage": "🉐",
+	"imp": "👿",
+	"inbox_tray": "📥",
+	"incoming_envelope": "📨",
+	"information_desk_person": "💁",
+	"information_source": "ℹ",
+	"innocent": "😇",
+	"interrobang": "⁉",
+	"iphone": "📱",
+	"it": "🇮🇹",
+	"izakaya_lantern": "🏮",
+	"j": ":j:",
+	"jack_o_lantern": "🎃",
+	"japan": "🗾",
+	"japanese_castle": "🏯",
+	"japanese_goblin": "👺",
+	"japanese_ogre": "👹",
+	"jeans": "👖",
+	"joy": "😂",
+	"joy_cat": "😹",
+	"jp": "🇯🇵",
+	"k": ":k:",
+	"key": "🔑",
+	"keycap_ten": "🔟",
+	"kimono": "👘",
+	"kiss": "💋",
+	"kissing": "😗",
+	"kissing_cat": "😽",
+	"kissing_closed_eyes": "😚",
+	"kissing_heart": "😘",
+	"kissing_smiling_eyes": "😙",
+	"koala": "🐨",
+	"koko": "🈁",
+	"kr": "🇰🇷",
+	"large_blue_circle": "🔵",
+	"large_blue_diamond": "🔷",
+	"large_orange_diamond": "🔶",
+	"last_quarter_moon": "🌗",
+	"last_quarter_moon_with_face": "🌜",
+	"laughing": "😆",
+	"leaves": "🍃",
+	"ledger": "📒",
+	"leftwards_arrow_with_hook": "↩",
+	"left_luggage": "🛅",
+	"left_right_arrow": "↔",
+	"lemon": "🍋",
+	"leo": "♌",
+	"leopard": "🐆",
+	"libra": "♎",
+	"light_rail": "🚈",
+	"link": "🔗",
+	"lips": "👄",
+	"lipstick": "💄",
+	"lock": "🔒",
+	"lock_with_ink_pen": "🔏",
+	"lollipop": "🍭",
+	"loop": "➿",
+	"loudspeaker": "📢",
+	"love_hotel": "🏩",
+	"love_letter": "💌",
+	"low_brightness": "🔅",
+	"m": "Ⓜ",
+	"mag": "🔍",
+	"mag_right": "🔎",
+	"mahjong": "🀄",
+	"mailbox": "📫",
+	"mailbox_closed": "📪",
+	"mailbox_with_mail": "📬",
+	"mailbox_with_no_mail": "📭",
+	"man": "👨",
+	"mans_shoe": "👞",
+	"man_with_gua_pi_mao": "👲",
+	"man_with_turban": "👳",
+	"maple_leaf": "🍁",
+	"mask": "😷",
+	"massage": "💆",
+	"meat_on_bone": "🍖",
+	"mega": "📣",
+	"melon": "🍈",
+	"memo": "📝",
+	"mens": "🚹",
+	"metro": "🚇",
+	"microphone": "🎤",
+	"microscope": "🔬",
+	"milky_way": "🌌",
+	"minibus": "🚐",
+	"minidisc": "💽",
+	"mobile_phone_off": "📴",
+	"moneybag": "💰",
+	"money_with_wings": "💸",
+	"monkey": "🐒",
+	"monkey_face": "🐵",
+	"monorail": "🚝",
+	"mortar_board": "🎓",
+	"mountain_bicyclist": "🚵",
+	"mountain_cableway": "🚠",
+	"mountain_railway": "🚞",
+	"mount_fuji": "🗻",
+	"mouse": "🐭",
+	"mouse2": "🐁",
+	"movie_camera": "🎥",
+	"moyai": "🗿",
+	"muscle": "💪",
+	"mushroom": "🍄",
+	"musical_keyboard": "🎹",
+	"musical_note": "🎵",
+	"musical_score": "🎼",
+	"mute": "🔇",
+	"nail_care": "💅",
+	"name_badge": "📛",
+	"necktie": "👔",
+	"negative_squared_cross_mark": "❎",
+	"neutral_face": "😐",
+	"new": "🆕",
+	"newspaper": "📰",
+	"new_moon": "🌑",
+	"new_moon_with_face": "🌚",
+	"ng": "🇳🇬",
+	"nine": "9⃣",
+	"non-potable_water": "🚱",
+	"nose": "👃",
+	"notebook": "📓",
+	"notebook_with_decorative_cover": "📔",
+	"notes": "🎶",
+	"no_bell": "🔕",
+	"no_bicycles": "🚳",
+	"no_entry": "⛔",
+	"no_entry_sign": "🚫",
+	"no_good": "🙅",
+	"no_mobile_phones": "📵",
+	"no_mouth": "😶",
+	"no_pedestrians": "🚷",
+	"no_smoking": "🚭",
+	"nut_and_bolt": "🔩",
+	"o": "⭕",
+	"o2": "🅾",
+	"ocean": "🌊",
+	"octocat": ":octocat:",
+	"octopus": "🐙",
+	"oden": "🍢",
+	"office": "🏢",
+	"ok": "🆗",
+	"ok_hand": "👌",
+	"ok_woman": "🙆",
+	"older_man": "👴",
+	"older_woman": "👵",
+	"on": "🔛",
+	"oncoming_automobile": "🚘",
+	"oncoming_bus": "🚍",
+	"oncoming_police_car": "🚔",
+	"oncoming_taxi": "🚖",
+	"one": "1⃣",
+	"open_file_folder": "📂",
+	"open_hands": "👐",
+	"open_mouth": "😮",
+	"ophiuchus": "⛎",
+	"orange_book": "📙",
+	"outbox_tray": "📤",
+	"ox": "🐂",
+	"package": "📦",
+	"pager": "📟",
+	"page_facing_up": "📄",
+	"page_with_curl": "📃",
+	"palm_tree": "🌴",
+	"panda_face": "🐼",
+	"paperclip": "📎",
+	"parking": "🅿",
+	"partly_sunny": "⛅",
+	"part_alternation_mark": "〽",
+	"passport_control": "🛂",
+	"paw_prints": "🐾",
+	"peach": "🍑",
+	"pear": "🍐",
+	"pencil": "📝",
+	"pencil2": "✏",
+	"penguin": "🐧",
+	"pensive": "😔",
+	"performing_arts": "🎭",
+	"persevere": "😣",
+	"person_frowning": "🙍",
+	"person_with_blond_hair": "👱",
+	"person_with_pouting_face": "🙎",
+	"phone": "☎",
+	"pig": "🐷",
+	"pig2": "🐖",
+	"pig_nose": "🐽",
+	"pill": "💊",
+	"pineapple": "🍍",
+	"pisces": "♓",
+	"pizza": "🍕",
+	"point_down": "👇",
+	"point_left": "👈",
+	"point_right": "👉",
+	"point_up": "☝",
+	"point_up_2": "👆",
+	"police_car": "🚓",
+	"poodle": "🐩",
+	"poop": "💩",
+	"postal_horn": "📯",
+	"postbox": "📮",
+	"potable_water": "🚰",
+	"pouch": "👝",
+	"poultry_leg": "🍗",
+	"pound": "💷",
+	"pouting_cat": "😾",
+	"pray": "🙏",
+	"princess": "👸",
+	"punch": "👊",
+	"purple_heart": "💜",
+	"purse": "👛",
+	"pushpin": "📌",
+	"put_litter_in_its_place": "🚮",
+	"question": "❓",
+	"r": ":r:",
+	"rabbit": "🐰",
+	"rabbit2": "🐇",
+	"racehorse": "🐎",
+	"radio": "📻",
+	"radio_button": "🔘",
+	"rage": "😡",
+	"railway_car": "🚃",
+	"rainbow": "🌈",
+	"raised_hand": "✋",
+	"raised_hands": "🙌",
+	"raising_hand": "🙋",
+	"ram": "🐏",
+	"ramen": "🍜",
+	"rat": "🐀",
+	"recycle": "♻",
+	"red_car": "🚗",
+	"red_circle": "🔴",
+	"registered": "®",
+	"relaxed": "☺",
+	"relieved": "😌",
+	"repeat": "🔁",
+	"repeat_one": "🔂",
+	"restroom": "🚻",
+	"revolving_hearts": "💞",
+	"rewind": "⏪",
+	"ribbon": "🎀",
+	"rice": "🍚",
+	"rice_ball": "🍙",
+	"rice_cracker": "🍘",
+	"rice_scene": "🎑",
+	"ring": "💍",
+	"rocket": "🚀",
+	"roller_coaster": "🎢",
+	"rooster": "🐓",
+	"rose": "🌹",
+	"rotating_light": "🚨",
+	"round_pushpin": "📍",
+	"rowboat": "🚣",
+	"ru": "🇷🇺",
+	"rugby_football": "🏉",
+	"running": "🏃",
+	"running_shirt_with_sash": "🎽",
+	"sa": "🇸🇦",
+	"sagittarius": "♐",
+	"sailboat": "⛵",
+	"sake": "🍶",
+	"sandal": "👡",
+	"santa": "🎅",
+	"satellite": "🛰",
+	"satisfied": "😆",
+	"saxophone": "🎷",
+	"school": "🏫",
+	"school_satchel": "🎒",
+	"scissors": "✂",
+	"scorpius": "♏",
+	"scream": "😱",
+	"scream_cat": "🙀",
+	"scroll": "📜",
+	"seat": "💺",
+	"secret": "㊙",
+	"seedling": "🌱",
+	"see_no_evil": "🙈",
+	"seven": "7⃣",
+	"shaved_ice": "🍧",
+	"sheep": "🐑",
+	"shell": "🐚",
+	"ship": "🚢",
+	"shirt": "👕",
+	"shoe": "👞",
+	"shower": "🚿",
+	"signal_strength": "📶",
+	"six": "6⃣",
+	"six_pointed_star": "🔯",
+	"ski": "🎿",
+	"skull": "💀",
+	"sleeping": "😴",
+	"sleepy": "😪",
+	"slot_machine": "🎰",
+	"small_blue_diamond": "🔹",
+	"small_orange_diamond": "🔸",
+	"small_red_triangle": "🔺",
+	"small_red_triangle_down": "🔻",
+	"smile": "😄",
+	"smiley": "😃",
+	"smiley_cat": "😺",
+	"smile_cat": "😸",
+	"smiling_imp": "😈",
+	"smirk": "😏",
+	"smirk_cat": "😼",
+	"smoking": "🚬",
+	"snail": "🐌",
+	"snake": "🐍",
+	"snowboarder": "🏂",
+	"snowflake": "❄",
+	"snowman": "⛄",
+	"sob": "😭",
+	"soccer": "⚽",
+	"soon": "🔜",
+	"sos": "🆘",
+	"sound": "🔉",
+	"space_invader": "👾",
+	"spades": "♠",
+	"spaghetti": "🍝",
+	"sparkle": "❇",
+	"sparkler": "🎇",
+	"sparkles": "✨",
+	"sparkling_heart": "💖",
+	"speaker": "🔈",
+	"speak_no_evil": "🙊",
+	"speech_balloon": "💬",
+	"speedboat": "🚤",
+	"squirrel": "🐿",
+	"star": "⭐",
+	"star2": "🌟",
+	"stars": "🌠",
+	"station": "🚉",
+	"statue_of_liberty": "🗽",
+	"steam_locomotive": "🚂",
+	"stew": "🍲",
+	"straight_ruler": "📏",
+	"strawberry": "🍓",
+	"stuck_out_tongue": "😛",
+	"stuck_out_tongue_closed_eyes": "😝",
+	"stuck_out_tongue_winking_eye": "😜",
+	"sunflower": "🌻",
+	"sunglasses": "😎",
+	"sunny": "☀",
+	"sunrise": "🌅",
+	"sunrise_over_mountains": "🌄",
+	"sun_with_face": "🌞",
+	"surfer": "🏄",
+	"sushi": "🍣",
+	"suspension_railway": "🚟",
+	"sweat": "😓",
+	"sweat_drops": "💦",
+	"sweat_smile": "😅",
+	"sweet_potato": "🍠",
+	"swimmer": "🏊",
+	"symbols": "🔣",
+	"syringe": "💉",
+	"tada": "🎉",
+	"tanabata_tree": "🎋",
+	"tangerine": "🍊",
+	"taurus": "♉",
+	"taxi": "🚕",
+	"tea": "🍵",
+	"telephone": "☎",
+	"telephone_receiver": "📞",
+	"telescope": "🔭",
+	"tennis": "🎾",
+	"tent": "🏕",
+	"thought_balloon": "💭",
+	"three": "3⃣",
+	"thumbsdown": "👎",
+	"thumbsup": "👍",
+	"ticket": "🎫",
+	"tiger": "🐯",
+	"tiger2": "🐅",
+	"tired_face": "😫",
+	"tm": "🇹🇲",
+	"toilet": "🚽",
+	"tokyo_tower": "🗼",
+	"tomato": "🍅",
+	"tongue": "👅",
+	"top": "🔝",
+	"tophat": "🎩",
+	"tractor": "🚜",
+	"traffic_light": "🚥",
+	"train": "🚋",
+	"train2": "🚆",
+	"tram": "🚊",
+	"triangular_flag_on_post": "🚩",
+	"triangular_ruler": "📐",
+	"trident": "🔱",
+	"triumph": "😤",
+	"trolleybus": "🚎",
+	"trollface": ":trollface:",
+	"trophy": "🏆",
+	"tropical_drink": "🍹",
+	"tropical_fish": "🐠",
+	"truck": "🚚",
+	"trumpet": "🎺",
+	"tshirt": "👕",
+	"tulip": "🌷",
+	"turtle": "🐢",
+	"tv": "🇹🇻",
+	"twisted_rightwards_arrows": "🔀",
+	"two": "2⃣",
+	"two_hearts": "💕",
+	"two_men_holding_hands": "👬",
+	"two_women_holding_hands": "👭",
+	"u": ":u:",
+	"u5272": "🈹",
+	"u5408": "🈴",
+	"u55b6": "🈺",
+	"u6307": "🈯",
+	"u6708": "🈷",
+	"u6709": "🈶",
+	"u6e80": "🈵",
+	"u7121": "🈚",
+	"u7533": "🈸",
+	"u7981": "🈲",
+	"u7a7a": "🈳",
+	"umbrella": "☔",
+	"unamused": "😒",
+	"underage": "🔞",
+	"unicorn_face": "🦄",
+	"unlock": "🔓",
+	"up": "🆙",
+	"us": "🇺🇸",
+	"v": "✌",
+	"vertical_traffic_light": "🚦",
+	"vhs": "📼",
+	"vibration_mode": "📳",
+	"video_camera": "📹",
+	"video_game": "🎮",
+	"violin": "🎻",
+	"virgo": "♍",
+	"volcano": "🌋",
+	"vs": "🆚",
+	"walking": "🚶",
+	"waning_crescent_moon": "🌘",
+	"waning_gibbous_moon": "🌖",
+	"warning": "⚠",
+	"watch": "⌚",
+	"watermelon": "🍉",
+	"water_buffalo": "🐃",
+	"wave": "👋",
+	"wavy_dash": "〰",
+	"waxing_crescent_moon": "🌒",
+	"waxing_gibbous_moon": "🌔",
+	"wc": "🚾",
+	"weary": "😩",
+	"wedding": "💒",
+	"whale": "🐳",
+	"whale2": "🐋",
+	"wheelchair": "♿",
+	"white_check_mark": "✅",
+	"white_circle": "⚪",
+	"white_flower": "💮",
+	"white_large_square": "⬜",
+	"white_medium_small_square": "◽",
+	"white_medium_square": "◻",
+	"white_small_square": "▫",
+	"white_square_button": "🔳",
+	"wind_chime": "🎐",
+	"wine_glass": "🍷",
+	"wink": "😉",
+	"wolf": "🐺",
+	"woman": "👩",
+	"womans_clothes": "👚",
+	"womans_hat": "👒",
+	"womens": "🚺",
+	"worried": "😟",
+	"wrench": "🔧",
+	"x": "❌",
+	"yellow_heart": "💛",
+	"yen": "💴",
+	"yum": "😋",
+	"zap": "⚡",
+	"zero": "0⃣",
+	"zzz": "💤"
+};
+
+/***/ }),
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10733,17 +11800,17 @@ var genUploaded = function genUploaded(response, text) {
 };
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"b3log-editor",class:{'b3log-editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"b3log-editor__toolbar"},[_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.emoji)},on:{"click":function($event){_vm.$refs.b3logEmojiPanel.style.display = 'block'}}},[_c('v-icon',[_vm._v("emoji")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.bold)},on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.italic)},on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.quote)},on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.link)},on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.upload)}},[_c('label',[_c('v-icon',[_vm._v("upload")]),_vm._v(" "),_c('input',{attrs:{"multiple":"multiple","type":"file"},on:{"change":_vm.selectFile}})],1)]),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.unorderedList)},on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.orderedList)},on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",class:{'b3log-editor__icon--current' : _vm.hasPreview},attrs:{"aria-label":_vm.convertHotKey(_vm.label.view)},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.fullscreen)},on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{staticClass:"pipe-tooltipped pipe-tooltipped--ne",attrs:{"aria-label":_vm.convertHotKey(_vm.label.question),"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1),_vm._v(" "),_c('div',{ref:"b3logEmojiPanel",staticClass:"b3log-editor__emoji"},[_c('div',_vm._l((_vm.emoji),function(item){return _c('span',{on:{"click":function($event){_vm.insert((item + " "), '', true);}}},[_vm._v(_vm._s(item))])})),_vm._v(" "),_vm._m(0)])]),_vm._v(" "),_c('div',{staticClass:"b3log-editor__content"},[_c('div',{staticClass:"b3log-editor__textarea"},[_c('textarea',{ref:"b3logEditor",attrs:{"placeholder":_vm.placeholder || ''},domProps:{"value":_vm.value},on:{"paste":function($event){$event.preventDefault();_vm.pasteToMarkdown($event)},"drop":function($event){$event.preventDefault();_vm.dragFile($event)},"scroll":_vm.syncScroll,"input":_vm._debounceChange,"focus":function($event){_vm.$refs.b3logEmojiPanel.style.display = 'none'}}})]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"b3logView",staticClass:"b3log-editor__markdown"})])])}
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"b3log-editor",class:{'b3log-editor--fullscreen': _vm.isFullScreen},style:(("height: " + (_vm.height || 'auto') + "px"))},[_c('div',{staticClass:"b3log-editor__toolbar"},[_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.emoji) || 'Emoji'},on:{"click":function($event){_vm.showEmojiPanel = true}}},[_c('v-icon',[_vm._v("emoji")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.bold) || 'Bold'},on:{"click":function($event){_vm.insert('**', '**')}}},[_c('v-icon',[_vm._v("bold")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.italic) || 'Italic'},on:{"click":function($event){_vm.insert('*', '*')}}},[_c('v-icon',[_vm._v("italic")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.quote) || 'Quote'},on:{"click":function($event){_vm.insert('> ', '')}}},[_c('v-icon',[_vm._v("quote")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.link) || 'Link'},on:{"click":function($event){_vm.insert('[', '](http://)')}}},[_c('v-icon',[_vm._v("link")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.upload) || 'Upload'}},[_c('label',[_c('v-icon',[_vm._v("upload")]),_vm._v(" "),_c('input',{attrs:{"multiple":"multiple","type":"file"},on:{"change":_vm.selectFile}})],1)]),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.unorderedList) || 'Unordered List'},on:{"click":function($event){_vm.insert('* ', '')}}},[_c('v-icon',[_vm._v("unordered-list")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.orderedList) || 'Ordered List'},on:{"click":function($event){_vm.insert('1. ', '')}}},[_c('v-icon',[_vm._v("ordered-list")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",class:{'b3log-editor__icon--current' : _vm.hasPreview},attrs:{"aria-label":_vm.convertHotKey(_vm.label.preview) || 'Preview'},on:{"click":function($event){_vm.hasPreview = !_vm.hasPreview}}},[_c('v-icon',[_vm._v("view")])],1),_vm._v(" "),_c('span',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.fullscreen) || 'Fullscreen'},on:{"click":function($event){_vm.isFullScreen = !_vm.isFullScreen}}},[_c('v-icon',[_vm._v(_vm._s(_vm.isFullScreen ? 'contract' : 'fullscreen'))])],1),_vm._v(" "),_c('a',{staticClass:"pipe-tooltipped pipe-tooltipped--e",attrs:{"aria-label":_vm.convertHotKey(_vm.label.help) || 'Help',"target":"_blank","href":"https://hacpai.com/guide/markdown"}},[_c('v-icon',[_vm._v("question")])],1),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showEmojiPanel),expression:"showEmojiPanel"}],staticClass:"b3log-editor__emoji"},[_c('div',_vm._l((_vm.emoji),function(item){return _c('span',{on:{"click":function($event){_vm.insert((item + " "), '', true);_vm.textareaValue = _vm.$refs.b3logEditor.value}}},[_vm._v(_vm._s(item))])})),_vm._v(" "),_vm._m(0)])]),_vm._v(" "),_c('div',{staticClass:"b3log-editor__content"},[_c('div',{staticClass:"b3log-editor__textarea"},[_c('textarea',{ref:"b3logEditor",attrs:{"placeholder":_vm.placeholder || ''},domProps:{"value":_vm.textareaValue},on:{"keydown":[_vm.selectHint,function($event){if(!$event.ctrlKey){ return null; }_vm.hotkey($event)},function($event){if(!$event.metaKey){ return null; }_vm.hotkey($event)}],"paste":function($event){$event.preventDefault();_vm.pasteToMarkdown($event)},"drop":function($event){$event.preventDefault();_vm.dragFile($event)},"scroll":_vm.syncScroll,"input":_vm.input,"focus":function($event){_vm.showEmojiPanel = false;}}}),_vm._v(" "),_c('ul',{directives:[{name:"show",rawName:"v-show",value:(_vm.showHint),expression:"showHint"}],staticClass:"b3log-editor__hints",style:(("left: " + _vm.hintX + "px; top: " + _vm.hintY + "px"))},_vm._l((_vm.hintData),function(item,index){return _c('li',{class:{'b3log-editor__hints--current': _vm.currentHintIndex === index},on:{"click":function($event){_vm.insertHint(item.value + ' ')}}},[_vm._v("\n          "+_vm._s(item.value)+" "+_vm._s(item.label)+"\n        ")])}))]),_vm._v(" "),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasPreview),expression:"hasPreview"}],ref:"b3logView",staticClass:"b3log-editor__markdown"})])])}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"b3log-editor__emoji-tip"},[_c('a',{attrs:{"href":"https://www.webpagefx.com/tools/emoji-cheat-sheet/","target":"_blank"}},[_vm._v("EMOJI CHEAT SHEET")])])}]
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

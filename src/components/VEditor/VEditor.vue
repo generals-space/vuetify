@@ -5,60 +5,60 @@
     :style="`height: ${height || 'auto'}px`">
     <div class="b3log-editor__toolbar">
       <span
-        :aria-label="convertHotKey(label.emoji)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
-        @click="$refs.b3logEmojiPanel.style.display = 'block'"><v-icon>emoji</v-icon></span>
+        :aria-label="convertHotKey(label.emoji) || 'Emoji'"
+        class="pipe-tooltipped pipe-tooltipped--e"
+        @click="showEmojiPanel = true"><v-icon>emoji</v-icon></span>
       <span
-        :aria-label="convertHotKey(label.bold)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.bold) || 'Bold'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         @click="insert('**', '**')"><v-icon>bold</v-icon></span>
       <span
-        :aria-label="convertHotKey(label.italic)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.italic) || 'Italic'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         @click="insert('*', '*')"><v-icon>italic</v-icon></span>
       <span
-        :aria-label="convertHotKey(label.quote)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.quote) || 'Quote'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         @click="insert('> ', '')"><v-icon>quote</v-icon></span>
       <span
-        :aria-label="convertHotKey(label.link)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.link) || 'Link'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         @click="insert('[', '](http://)')"><v-icon>link</v-icon></span>
       <span
-        :aria-label="convertHotKey(label.upload)"
-        class="pipe-tooltipped pipe-tooltipped--ne">
+        :aria-label="convertHotKey(label.upload) || 'Upload'"
+        class="pipe-tooltipped pipe-tooltipped--e">
         <label>
           <v-icon>upload</v-icon>
           <input multiple="multiple" @change="selectFile" type="file"/>
         </label>
       </span>
       <span
-        :aria-label="convertHotKey(label.unorderedList)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.unorderedList) || 'Unordered List'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         @click="insert('* ', '')"><v-icon>unordered-list</v-icon></span>
       <span
-        :aria-label="convertHotKey(label.orderedList)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.orderedList) || 'Ordered List'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         @click="insert('1. ', '')"><v-icon>ordered-list</v-icon></span>
       <span
-        :aria-label="convertHotKey(label.view)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.preview) || 'Preview'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         @click="hasPreview = !hasPreview"
         :class="{'b3log-editor__icon--current' : hasPreview}"><v-icon>view</v-icon></span>
       <span
-        :aria-label="convertHotKey(label.fullscreen)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.fullscreen) || 'Fullscreen'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         @click="isFullScreen = !isFullScreen"><v-icon>{{ isFullScreen ? 'contract' : 'fullscreen' }}</v-icon></span>
       <a
-        :aria-label="convertHotKey(label.question)"
-        class="pipe-tooltipped pipe-tooltipped--ne"
+        :aria-label="convertHotKey(label.help) || 'Help'"
+        class="pipe-tooltipped pipe-tooltipped--e"
         target="_blank"
         href="https://hacpai.com/guide/markdown">
         <v-icon>question</v-icon>
       </a>
-      <div class="b3log-editor__emoji" ref="b3logEmojiPanel">
+      <div class="b3log-editor__emoji" v-show="showEmojiPanel">
         <div>
-          <span v-for="item in emoji" @click="insert(`${item} `, '', true);">{{item}}</span>
+          <span v-for="item in emoji" @click="insert(`${item} `, '', true);textareaValue = $refs.b3logEditor.value">{{item}}</span>
         </div>
         <div class="b3log-editor__emoji-tip">
           <a href="https://www.webpagefx.com/tools/emoji-cheat-sheet/" target="_blank">EMOJI CHEAT SHEET</a>
@@ -69,13 +69,24 @@
       <div class="b3log-editor__textarea">
         <textarea
           :placeholder="placeholder || ''"
+          @keydown="selectHint"
+          @keydown.ctrl="hotkey"
+          @keydown.meta="hotkey"
           @paste.prevent="pasteToMarkdown"
           @drop.prevent="dragFile"
           @scroll="syncScroll"
           ref="b3logEditor"
-          @input="_debounceChange"
-          @focus="$refs.b3logEmojiPanel.style.display = 'none'"
-          :value="value"></textarea>
+          @input="input"
+          @focus="showEmojiPanel = false;"
+          :value="textareaValue"></textarea>
+        <ul v-show="showHint" class="b3log-editor__hints" :style="`left: ${hintX}px; top: ${hintY}px`">
+          <li
+            v-for="(item, index) in hintData"
+            :class="{'b3log-editor__hints--current': currentHintIndex === index}"
+            @click="insertHint(item.value + ' ')">
+            {{item.value}} {{item.label}}
+          </li>
+        </ul>
       </div>
       <div v-show="hasPreview" class="b3log-editor__markdown" ref="b3logView"></div>
     </div>
@@ -85,6 +96,7 @@
 <script>
   require('../../stylus/components/_editor.styl')
   import toMarkdown from 'to-markdown'
+  import allEmoji from './emoji.json';
   import {insertTextAtCaret, ajaxUpload, genUploading, genUploaded} from './tool'
 
   export default {
@@ -110,9 +122,9 @@
         upload: undefined,
         unorderedList: undefined,
         orderedList: undefined,
-        view: undefined,
+        preview: undefined,
         fullscreen: undefined,
-        question: undefined
+        help: undefined
       },
       uploadMax: {
         type: Number,
@@ -133,13 +145,189 @@
     },
     data () {
       return {
+        textareaValue: '',
+        hintX: 0,
+        hintY: 0,
+        showHint: false,
+        currentHintIndex: 0,
+        showEmojiPanel: false,
+        hintData: [],
         hasPreview: true,
         isFullScreen: false,
         timerId: undefined,
-        emoji: ['😄', '😂', '😭', '😋', '🎉', '❤️', '👍', '👌', '🙏', '😱', '😈', '👊', '😍']
+        emoji: {
+          "smile": "😄",
+          "joy": "😂",
+          "+1": "👍",
+          "scream": "😱",
+          "smiling_imp": "😈",
+          "sob": "😭",
+          "yum": "😋",
+          "tada": "🎉",
+          "ok_hand": "👌",
+          "pray": "🙏",
+          "punch": "👊",
+          "heart_eyes": "😍"
+        }
       }
     },
     methods: {
+      shiftHotkey (event) {
+        console.log(event)
+      },
+      hotkey (event) {
+        switch(event.key) {
+          case '/':
+            this.$set(this, 'showEmojiPanel', !this.showEmojiPanel)
+            event.preventDefault()
+            break;
+          case 'b':
+            this.insert('**', '**')
+            event.preventDefault()
+            break;
+          case 'i':
+            this.insert('*', '*')
+            event.preventDefault()
+            break;
+          case 'e':
+            this.insert('> ', '')
+            event.preventDefault()
+            break;
+          case 'k':
+            this.insert('[', '](http://)')
+            event.preventDefault()
+            break;
+          case 'l':
+            this.insert('* ', '')
+            event.preventDefault()
+            break;
+          case 'd':
+            this.$set(this, 'hasPreview', !this.hasPreview)
+            event.preventDefault()
+            break;
+          case 'A':
+            if (event.shiftKey) {
+              this.$set(this, 'isFullScreen', !this.isFullScreen)
+              event.preventDefault()
+            }
+            break;
+          case 'L':
+            if (event.shiftKey) {
+              this.insert('1. ', '')
+              event.preventDefault()
+            }
+            break;
+          default:
+            break
+        }
+      },
+      selectHint (event) {
+        // at hints action
+        if (!this.showHint) {
+          return
+        }
+        if (event.keyCode === 40) {
+          // down
+          event.preventDefault();
+          if (this.currentHintIndex === this.hintData.length - 1) {
+            this.currentHintIndex = 0
+          } else {
+            this.currentHintIndex++
+          }
+        } else if (event.keyCode === 38) {
+          // up
+          event.preventDefault();
+          if (this.currentHintIndex === 0) {
+            this.currentHintIndex = this.hintData.length - 1
+          } else {
+            this.currentHintIndex--
+          }
+        } else if (event.keyCode === 13) {
+          // enter
+          event.preventDefault();
+          this.$set(this, 'showHint', false)
+
+          const valueArray = event.target.value.substr(0, event.target.selectionStart).split(':')[0]
+          event.target.value = valueArray + this.hintData[this.currentHintIndex].value + ' '
+            + event.target.value.substr(event.target.selectionStart)
+          event.target.selectionEnd = event.target.selectionStart = valueArray.length + 3
+          this.$set(this, 'textareaValue', event.target.value)
+          this._debounceChange()
+        }
+      },
+      insertHint (value) {
+        const valueArray = this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionStart).split(':')[0]
+        this.$refs.b3logEditor.value = valueArray + value + this.$refs.b3logEditor.value.substr(this.$refs.b3logEditor.selectionStart)
+        this.$refs.b3logEditor.selectionEnd = this.$refs.b3logEditor.selectionStart = valueArray.length + 3
+        this.$set(this, 'showHint', false)
+        this.$set(this, 'textareaValue', this.$refs.b3logEditor.value)
+        this.$refs.b3logEditor.focus()
+        this._debounceChange()
+      },
+      input (event) {
+        // at and emoji hints
+        const valueArray = event.target.value.substr(0, event.target.selectionStart).split('\n')
+        const xValue = valueArray.slice(-1).pop()
+
+        const genHintsHTML = (data) => {
+          if (data.length === 0) {
+            this.$set(this, 'showHint', false)
+            return
+          }
+          const zhReg = xValue.match(/[\u4E00-\u9FA5\uF900-\uFA2D\uFF00-\uFFEF]/g)
+          const zhLength = zhReg === null ? 0 : zhReg.length
+          this.$set(this, 'hintX', zhLength * 15 + (xValue.length - zhLength) * 9 + 10 + event.target.scrollLeft)
+          this.$set(this, 'hintY', valueArray.length * 18 + 35 - event.target.scrollTop)
+          this.$set(this, 'currentHintIndex', 0)
+
+          this.$set(this, 'showHint', true)
+        }
+
+        const getSearchKey = (splitChar) => {
+          const xAtArray = xValue.split(splitChar)
+          let searchKey = undefined
+          if (xAtArray.length > 1) {
+            if (xAtArray.length === 2 && xAtArray[0] === '') {
+              if ((xAtArray[1] === '' || xAtArray[1].trim() !== '') && xAtArray[1].indexOf(' ') === -1 &&
+                xAtArray[1].length < 33) {
+                searchKey = xAtArray[1]
+              }
+            } else {
+              const prefAt = xAtArray[xAtArray.length - 2]
+              const currentAt = xAtArray.slice(-1).pop()
+              if (prefAt.slice(-1) === ' ' && currentAt.indexOf(' ') === -1 &&
+                ((currentAt === '' || currentAt.trim() !== '') && currentAt.length < 33)) {
+                searchKey = currentAt
+              }
+            }
+          }
+          return searchKey
+        }
+
+        const searchEmoji = getSearchKey(':')
+        if (searchEmoji === undefined) {
+          this.$set(this, 'showHint', false)
+        } else {
+          const matchEmoji = []
+          const emojies = searchEmoji === '' ? this.emoji : allEmoji
+          Object.keys(emojies).forEach((key) => {
+            if (matchEmoji.length > 4) {
+              return
+            }
+            if (key.indexOf(searchEmoji.toLowerCase()) > -1) {
+              const emojiItem = {
+                value: emojies[key],
+                label: key
+              }
+              matchEmoji.push(emojiItem)
+            }
+          })
+          this.$set(this, 'hintData', matchEmoji)
+          genHintsHTML(matchEmoji)
+        }
+        this.$set(this, 'textareaValue', event.target.value)
+        this._debounceChange()
+      },
       convertHotKey (v) {
         if (v) {
           if (/Mac/.test(navigator.platform)) {
@@ -256,7 +444,8 @@
         this._debounceChange()
       }
     },
-    mounted() {
+    mounted () {
+      this.$set(this, 'textareaValue', this.value)
       this._debounceChange()
     }
   }
