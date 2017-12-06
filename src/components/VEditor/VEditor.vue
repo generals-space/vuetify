@@ -96,8 +96,8 @@
 <script>
   require('../../stylus/components/_editor.styl')
   import toMarkdown from 'to-markdown'
-  import allEmoji from './emoji.json';
-  import {insertTextAtCaret, ajaxUpload, genUploading, genUploaded} from './tool'
+  import allEmoji from './emoji.json'
+  import { insertTextAtCaret, ajaxUpload, genUploading, genUploaded } from './tool'
 
   export default {
     name: 'v-editor',
@@ -156,19 +156,24 @@
         isFullScreen: false,
         timerId: undefined,
         emoji: {
-          "smile": "😄",
-          "joy": "😂",
-          "+1": "👍",
-          "scream": "😱",
-          "smiling_imp": "😈",
-          "sob": "😭",
-          "yum": "😋",
-          "tada": "🎉",
-          "ok_hand": "👌",
-          "pray": "🙏",
-          "punch": "👊",
-          "heart_eyes": "😍"
+          smile: '😄',
+          joy: '😂',
+          '+1': '👍',
+          scream: '😱',
+          'smiling_imp': '😈',
+          sob: '😭',
+          yum: '😋',
+          tada: '🎉',
+          'ok_hand': '👌',
+          pray: '🙏',
+          punch: '👊',
+          'heart_eyes': '😍'
         }
+      }
+    },
+    watch: {
+      value: function (newValue) {
+        this.$set(this, 'textareaValue', newValue)
       }
     },
     methods: {
@@ -176,47 +181,47 @@
         console.log(event)
       },
       hotkey (event) {
-        switch(event.key) {
+        switch (event.key) {
           case '/':
             this.$set(this, 'showEmojiPanel', !this.showEmojiPanel)
             event.preventDefault()
-            break;
+            break
           case 'b':
             this.insert('**', '**')
             event.preventDefault()
-            break;
+            break
           case 'i':
             this.insert('*', '*')
             event.preventDefault()
-            break;
+            break
           case 'e':
             this.insert('> ', '')
             event.preventDefault()
-            break;
+            break
           case 'k':
             this.insert('[', '](http://)')
             event.preventDefault()
-            break;
+            break
           case 'l':
             this.insert('* ', '')
             event.preventDefault()
-            break;
+            break
           case 'd':
             this.$set(this, 'hasPreview', !this.hasPreview)
             event.preventDefault()
-            break;
+            break
           case 'A':
             if (event.shiftKey) {
               this.$set(this, 'isFullScreen', !this.isFullScreen)
               event.preventDefault()
             }
-            break;
+            break
           case 'L':
             if (event.shiftKey) {
               this.insert('1. ', '')
               event.preventDefault()
             }
-            break;
+            break
           default:
             break
         }
@@ -228,7 +233,7 @@
         }
         if (event.keyCode === 40) {
           // down
-          event.preventDefault();
+          event.preventDefault()
           if (this.currentHintIndex === this.hintData.length - 1) {
             this.currentHintIndex = 0
           } else {
@@ -236,7 +241,7 @@
           }
         } else if (event.keyCode === 38) {
           // up
-          event.preventDefault();
+          event.preventDefault()
           if (this.currentHintIndex === 0) {
             this.currentHintIndex = this.hintData.length - 1
           } else {
@@ -244,12 +249,12 @@
           }
         } else if (event.keyCode === 13) {
           // enter
-          event.preventDefault();
+          event.preventDefault()
           this.$set(this, 'showHint', false)
 
           const valueArray = event.target.value.substr(0, event.target.selectionStart).split(':')[0]
-          event.target.value = valueArray + this.hintData[this.currentHintIndex].value + ' '
-            + event.target.value.substr(event.target.selectionStart)
+          event.target.value = valueArray + this.hintData[this.currentHintIndex].value + ' ' +
+            event.target.value.substr(event.target.selectionStart)
           event.target.selectionEnd = event.target.selectionStart = valueArray.length + 3
           this.$set(this, 'textareaValue', event.target.value)
           this._debounceChange()
@@ -285,7 +290,7 @@
 
         const getSearchKey = (splitChar) => {
           const xAtArray = xValue.split(splitChar)
-          let searchKey = undefined
+          let searchKey
           if (xAtArray.length > 1) {
             if (xAtArray.length === 2 && xAtArray[0] === '') {
               if ((xAtArray[1] === '' || xAtArray[1].trim() !== '') && xAtArray[1].indexOf(' ') === -1 &&
@@ -384,15 +389,15 @@
             }, {
               filter: ['img'],
               replacement: (content, target) => {
-                if (1 === target.attributes.length) {
-                  return '';
+                if (target.attributes.length === 1) {
+                  return ''
                 }
 
                 this.fetchUpload && this.fetchUpload(target.src, (originalURL, url) => {
                   event.target.value = event.target.value.replace(originalURL, url)
                 })
 
-                return `![${target.alt}](${target.src})`;
+                return `![${target.alt}](${target.src})`
               }
             }],
             gfm: true
