@@ -359,6 +359,7 @@
           this.$refs.b3logEditor.value = genUploaded(response.data, this.$refs.b3logEditor.value,
             this.label.loading, this.label.error)
           this._debounceChange()
+          event.target.value = ''
         }, this.uploadMax)
       },
       dragFile (event) {

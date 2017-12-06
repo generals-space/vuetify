@@ -9769,6 +9769,7 @@ __webpack_require__(108);
       Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, function (response) {
         _this3.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, _this3.$refs.b3logEditor.value, _this3.label.loading, _this3.label.error);
         _this3._debounceChange();
+        event.target.value = '';
       }, this.uploadMax);
     },
     dragFile: function dragFile(event) {
