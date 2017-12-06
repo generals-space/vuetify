@@ -43,6 +43,10 @@
       update () {
         console.log('input', arguments)
       }
+    },
+    mounted () {
+      this.$set(this, 'text', 'hi')
+      console.log(this.text)
     }
   }
 </script>
