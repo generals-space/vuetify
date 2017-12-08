@@ -58,10 +58,15 @@ export default {
         return i.$el.classList && i.$el.classList.contains('carousel__item')
       })
 
-      this.items.forEach(i => i.open(
-        this.items[this.inputValue]._uid,
-        this.reverse
-      ))
+      this.items.forEach(i => {
+        if (typeof this.items[this.inputValue] === 'undefined') {
+          this.inputValue = this.inputValue - 1
+        }
+        return i.open(
+          this.items[this.inputValue]._uid,
+          this.reverse
+        )
+      })
 
       this.$emit('input', this.inputValue)
       this.restartTimeout()

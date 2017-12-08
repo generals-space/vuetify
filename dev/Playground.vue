@@ -9,6 +9,13 @@
         :label="label"
         :fetchUpload="fetchUpload"
         @change="update"></v-editor>
+      <v-carousel
+        :cycle="false"
+        icon="circle"
+        left-control-icon="angle-left"
+        right-control-icon="angle-right">
+        <v-carousel-item v-for="(item,i) in thumbs" v-bind:src="item" :key="i"></v-carousel-item>
+      </v-carousel>
     </div>
   </v-app>
 </template>
@@ -16,6 +23,12 @@
 <script>
   export default {
     data: () => ({
+      thumbs: ['https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100',
+        'https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100',
+        'https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100',
+        'https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100',
+        'https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100',
+        'https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100'],
       text: 'pipe editor',
       label: {
         loading: '',
@@ -45,8 +58,7 @@
       }
     },
     mounted () {
-      this.$set(this, 'text', 'hi')
-      console.log(this.text)
+      this.$set(this, 'thumbs', ["https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100","https://img.hacpai.com/bing/20171123.jpg?imageView2/1/w/768/h/180/interlace/1/q/100","https://img.hacpai.com/bing/20171121.jpg?imageView2/1/w/768/h/180/interlace/1/q/100","https://img.hacpai.com/bing/20171108.jpg?imageView2/1/w/768/h/180/interlace/1/q/100","https://img.hacpai.com/bing/20171207.jpg?imageView2/1/w/768/h/180/interlace/1/q/100"])
     }
   }
 </script>

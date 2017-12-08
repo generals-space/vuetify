@@ -9068,6 +9068,9 @@ __webpack_require__(101);
       });
 
       this.items.forEach(function (i) {
+        if (typeof _this.items[_this.inputValue] === 'undefined') {
+          _this.inputValue = _this.inputValue - 1;
+        }
         return i.open(_this.items[_this.inputValue]._uid, _this.reverse);
       });
 
