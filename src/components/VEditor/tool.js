@@ -2,8 +2,9 @@
  * @fileOverview editor tool
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Nov 29, 2017
+ * @version 0.1.1.0, Dec 21, 2017
  */
+
 export const insertTextAtCaret = (textarea, prefix, suffix, replace) => {
   if (typeof textarea.selectionStart === 'number' && typeof textarea.selectionEnd === 'number') {
     const startPos = textarea.selectionStart
@@ -40,18 +41,25 @@ export const insertTextAtCaret = (textarea, prefix, suffix, replace) => {
   textarea.focus()
 }
 
-export const ajaxUpload = (url, files, cb, uploadMax = 5) => {
+export const ajaxUpload = (url, files, uploadMax = 5, succCB, errorCB) => {
   const formData = new FormData()
   for (let iMax = files.length, i = 0; i < iMax; i++) {
     if (files[i].size <= 1024 * 1024 * uploadMax) {
       formData.append('file[]', files[i])
+    } else if (files.length === 1) {
+      errorCB && errorCB()
+      return
     }
   }
   const xhr = new XMLHttpRequest()
   xhr.open('POST', url)
   xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-      cb(JSON.parse(xhr.responseText))
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        succCB(JSON.parse(xhr.responseText))
+      } else {
+        errorCB && errorCB(JSON.parse(xhr.responseText))
+      }
     }
   }
   xhr.send(formData)
@@ -62,9 +70,9 @@ export const genUploading = (files, uploadMax = 5, loadingLabel = 'Uploading', o
   for (let iMax = files.length, i = 0; i < iMax; i++) {
     const tag = files[i].type.indexOf('image') === -1 ? '' : '!'
     if (files[i].size > 1024 * 1024 * uploadMax) {
-      uploadingStr += `\n${tag}[${files[i].name}](${overLabel} ${uploadMax}MB)\n`
+      uploadingStr += `\n${tag}[${files[i].name.replace(/\W/g, '')}](${overLabel} ${uploadMax}MB)\n`
     } else {
-      uploadingStr += `\n${tag}[${files[i].name}](${loadingLabel})\n`
+      uploadingStr += `\n${tag}[${files[i].name.replace(/\W/g, '')}](${loadingLabel})\n`
     }
   }
   return uploadingStr
@@ -72,13 +80,13 @@ export const genUploading = (files, uploadMax = 5, loadingLabel = 'Uploading', o
 
 export const genUploaded = (response, text, loadingLabel = 'Uploading', errorLabel = 'Error') => {
   response.errFiles.forEach((data) => {
-    text = text.replace(`[${data}](${loadingLabel})\n`,
-      `[${data}](${errorLabel})\n`)
+    text = text.replace(`[${data.replace(/\W/g, '')}](${loadingLabel})\n`,
+      `[${data.replace(/\W/g, '')}](${errorLabel})\n`)
   })
 
   Object.keys(response.succMap).forEach((key) => {
-    text = text.replace(`[${key}](${loadingLabel})\n`,
-      `[${key}](${response.succMap[key]})\n`)
+    text = text.replace(`[${key.replace(/\W/g, '')}](${loadingLabel})\n`,
+      `[${key.replace(/\W/g, '')}](${response.succMap[key]})\n`)
   })
   return text
 }

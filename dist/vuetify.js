@@ -9724,9 +9724,6 @@ __webpack_require__(108);
     }
   },
   methods: {
-    shiftHotkey: function shiftHotkey(event) {
-      console.log(event);
-    },
     hotkey: function hotkey(event) {
       switch (event.key) {
         case '/':
@@ -9904,11 +9901,14 @@ __webpack_require__(108);
       var _this3 = this;
 
       Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(event.target.files, this.uploadMax, this.label.loading, this.label.over), '');
-      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, function (response) {
+      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, this.uploadMax, function (response) {
         _this3.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, _this3.$refs.b3logEditor.value, _this3.label.loading, _this3.label.error);
         _this3._debounceChange();
         event.target.value = '';
-      }, this.uploadMax);
+      }, function (response) {
+        event.target.value = '';
+        response && alert(response.msg);
+      });
     },
     dragFile: function dragFile(event) {
       var _this4 = this;
@@ -9918,10 +9918,13 @@ __webpack_require__(108);
         return;
       }
       Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(files, this.uploadMax, this.label.loading, this.label.over), '');
-      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, files, function (response) {
+      Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, files, this.uploadMax, function (response) {
         _this4.$refs.b3logEditor.value = Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, _this4.$refs.b3logEditor.value, _this4.label.loading, _this4.label.error);
         _this4._debounceChange();
-      }, this.uploadMax);
+      }, function (response) {
+        event.target.value = '';
+        response && alert(response.msg);
+      });
     },
     pasteToMarkdown: function pasteToMarkdown(event) {
       var _this5 = this;
@@ -9970,10 +9973,13 @@ __webpack_require__(108);
         // upload file
         if (this.uploadURL) {
           Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true);
-          Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, function (response) {
+          Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, this.uploadMax, function (response) {
             event.target.value = Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, event.target.value, _this5.label.loading, _this5.label.error);
             _this5._debounceChange();
-          }, this.uploadMax);
+          }, function (response) {
+            event.target.value = '';
+            response && alert(response.msg);
+          });
         }
       }
     },
@@ -11724,8 +11730,9 @@ module.exports = {
  * @fileOverview editor tool
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Nov 29, 2017
+ * @version 0.1.1.0, Dec 21, 2017
  */
+
 var insertTextAtCaret = function insertTextAtCaret(textarea, prefix, suffix, replace) {
   if (typeof textarea.selectionStart === 'number' && typeof textarea.selectionEnd === 'number') {
     var startPos = textarea.selectionStart;
@@ -11758,20 +11765,29 @@ var insertTextAtCaret = function insertTextAtCaret(textarea, prefix, suffix, rep
   textarea.focus();
 };
 
-var ajaxUpload = function ajaxUpload(url, files, cb) {
-  var uploadMax = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 5;
+var ajaxUpload = function ajaxUpload(url, files) {
+  var uploadMax = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 5;
+  var succCB = arguments[3];
+  var errorCB = arguments[4];
 
   var formData = new FormData();
   for (var iMax = files.length, i = 0; i < iMax; i++) {
     if (files[i].size <= 1024 * 1024 * uploadMax) {
       formData.append('file[]', files[i]);
+    } else if (files.length === 1) {
+      errorCB && errorCB();
+      return;
     }
   }
   var xhr = new XMLHttpRequest();
   xhr.open('POST', url);
   xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-      cb(JSON.parse(xhr.responseText));
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        succCB(JSON.parse(xhr.responseText));
+      } else {
+        errorCB && errorCB(JSON.parse(xhr.responseText));
+      }
     }
   };
   xhr.send(formData);
@@ -11786,9 +11802,9 @@ var genUploading = function genUploading(files) {
   for (var iMax = files.length, i = 0; i < iMax; i++) {
     var tag = files[i].type.indexOf('image') === -1 ? '' : '!';
     if (files[i].size > 1024 * 1024 * uploadMax) {
-      uploadingStr += '\n' + tag + '[' + files[i].name + '](' + overLabel + ' ' + uploadMax + 'MB)\n';
+      uploadingStr += '\n' + tag + '[' + files[i].name.replace(/\W/g, '') + '](' + overLabel + ' ' + uploadMax + 'MB)\n';
     } else {
-      uploadingStr += '\n' + tag + '[' + files[i].name + '](' + loadingLabel + ')\n';
+      uploadingStr += '\n' + tag + '[' + files[i].name.replace(/\W/g, '') + '](' + loadingLabel + ')\n';
     }
   }
   return uploadingStr;
@@ -11799,11 +11815,11 @@ var genUploaded = function genUploaded(response, text) {
   var errorLabel = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'Error';
 
   response.errFiles.forEach(function (data) {
-    text = text.replace('[' + data + '](' + loadingLabel + ')\n', '[' + data + '](' + errorLabel + ')\n');
+    text = text.replace('[' + data.replace(/\W/g, '') + '](' + loadingLabel + ')\n', '[' + data.replace(/\W/g, '') + '](' + errorLabel + ')\n');
   });
 
   Object.keys(response.succMap).forEach(function (key) {
-    text = text.replace('[' + key + '](' + loadingLabel + ')\n', '[' + key + '](' + response.succMap[key] + ')\n');
+    text = text.replace('[' + key.replace(/\W/g, '') + '](' + loadingLabel + ')\n', '[' + key.replace(/\W/g, '') + '](' + response.succMap[key] + ')\n');
   });
   return text;
 };

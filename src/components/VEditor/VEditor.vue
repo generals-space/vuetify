@@ -177,9 +177,6 @@
       }
     },
     methods: {
-      shiftHotkey (event) {
-        console.log(event)
-      },
       hotkey (event) {
         switch (event.key) {
           case '/':
@@ -355,12 +352,15 @@
       selectFile (event) {
         insertTextAtCaret(this.$refs.b3logEditor,
           genUploading(event.target.files, this.uploadMax, this.label.loading, this.label.over), '')
-        ajaxUpload(this.uploadURL, event.target.files, (response) => {
+        ajaxUpload(this.uploadURL, event.target.files, this.uploadMax, (response) => {
           this.$refs.b3logEditor.value = genUploaded(response.data, this.$refs.b3logEditor.value,
             this.label.loading, this.label.error)
           this._debounceChange()
           event.target.value = ''
-        }, this.uploadMax)
+        }, (response) => {
+          event.target.value = ''
+          response && alert(response.msg)
+        })
       },
       dragFile (event) {
         const files = event.dataTransfer.files
@@ -369,11 +369,14 @@
         }
         insertTextAtCaret(this.$refs.b3logEditor,
           genUploading(files, this.uploadMax, this.label.loading, this.label.over), '')
-        ajaxUpload(this.uploadURL, files, (response) => {
+        ajaxUpload(this.uploadURL, files, this.uploadMax, (response) => {
           this.$refs.b3logEditor.value = genUploaded(response.data, this.$refs.b3logEditor.value,
             this.label.loading, this.label.error)
           this._debounceChange()
-        }, this.uploadMax)
+        }, (response) => {
+          event.target.value = ''
+          response && alert(response.msg)
+        })
       },
       pasteToMarkdown (event) {
         if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') !== '') {
@@ -422,11 +425,14 @@
           if (this.uploadURL) {
             insertTextAtCaret(this.$refs.b3logEditor,
               genUploading(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true)
-            ajaxUpload(this.uploadURL, event.clipboardData.files, (response) => {
+            ajaxUpload(this.uploadURL, event.clipboardData.files, this.uploadMax, (response) => {
               event.target.value = genUploaded(response.data, event.target.value,
                 this.label.loading, this.label.error)
               this._debounceChange()
-            }, this.uploadMax)
+            }, (response) => {
+              event.target.value = ''
+              response && alert(response.msg)
+            })
           }
         }
       },
