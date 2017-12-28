@@ -3232,7 +3232,7 @@ process.umask = function() { return 0; };
 
 module.exports = {
 	"name": "vuetify",
-	"version": "1.0.0",
+	"version": "1.2.0",
 	"author": {
 		"name": "John Leider",
 		"email": "john@vuetifyjs.com"
@@ -9888,7 +9888,7 @@ __webpack_require__(108);
     _debounceChange: function _debounceChange() {
       var _this2 = this;
 
-      var debounce = 1000;
+      var debounce = 500;
       if (this.timerId !== undefined) {
         clearTimeout(this.timerId);
       }

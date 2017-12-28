@@ -340,7 +340,7 @@
         return ''
       },
       _debounceChange () {
-        const debounce = 1000
+        const debounce = 500
         if (this.timerId !== undefined) {
           clearTimeout(this.timerId)
         }
