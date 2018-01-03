@@ -97,7 +97,7 @@
   require('../../stylus/components/_editor.styl')
   import toMarkdown from 'to-markdown'
   import allEmoji from './emoji.json'
-  import { insertTextAtCaret, ajaxUpload, genUploading, genUploaded } from './tool'
+  import { insertTextAtCaret, ajaxUpload, genUploading, genUploaded, replaceTextareaValue } from './tool'
 
   export default {
     name: 'v-editor',
@@ -249,22 +249,24 @@
           event.preventDefault()
           this.$set(this, 'showHint', false)
 
-          const valueArray = event.target.value.substr(0, event.target.selectionStart).split(':')[0]
-          event.target.value = valueArray + this.hintData[this.currentHintIndex].value + ' ' +
-            event.target.value.substr(event.target.selectionStart)
-          event.target.selectionEnd = event.target.selectionStart = valueArray.length + 3
-          this.$set(this, 'textareaValue', event.target.value)
-          this._debounceChange()
+          while (!event.target.value.substr(0, event.target.selectionEnd).endsWith(':') &&
+          event.target.value.substr(0, event.target.selectionEnd) !== '') {
+            document.execCommand('delete', false)
+          }
+          document.execCommand('delete', false)
+          document.execCommand('insertText', false, this.hintData[this.currentHintIndex].value + ' ')
         }
       },
       insertHint (value) {
-        const valueArray = this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionStart).split(':')[0]
-        this.$refs.b3logEditor.value = valueArray + value + this.$refs.b3logEditor.value.substr(this.$refs.b3logEditor.selectionStart)
-        this.$refs.b3logEditor.selectionEnd = this.$refs.b3logEditor.selectionStart = valueArray.length + 3
-        this.$set(this, 'showHint', false)
-        this.$set(this, 'textareaValue', this.$refs.b3logEditor.value)
         this.$refs.b3logEditor.focus()
-        this._debounceChange()
+        this.$set(this, 'showHint', false)
+
+        while (!this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionEnd).endsWith(':') &&
+        this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionEnd) !== '') {
+          document.execCommand('delete', false)
+        }
+        document.execCommand('delete', false)
+        document.execCommand('insertText', false, value)
       },
       input (event) {
         // at and emoji hints
@@ -353,9 +355,7 @@
         insertTextAtCaret(this.$refs.b3logEditor,
           genUploading(event.target.files, this.uploadMax, this.label.loading, this.label.over), '')
         ajaxUpload(this.uploadURL, event.target.files, this.uploadMax, (response) => {
-          this.$refs.b3logEditor.value = genUploaded(response.data, this.$refs.b3logEditor.value,
-            this.label.loading, this.label.error)
-          this._debounceChange()
+          genUploaded(response.data, this.$refs.b3logEditor, this.label.loading, this.label.error)
           event.target.value = ''
         }, (response) => {
           event.target.value = ''
@@ -370,11 +370,8 @@
         insertTextAtCaret(this.$refs.b3logEditor,
           genUploading(files, this.uploadMax, this.label.loading, this.label.over), '')
         ajaxUpload(this.uploadURL, files, this.uploadMax, (response) => {
-          this.$refs.b3logEditor.value = genUploaded(response.data, this.$refs.b3logEditor.value,
-            this.label.loading, this.label.error)
-          this._debounceChange()
+          genUploaded(response.data, this.$refs.b3logEditor, this.label.loading, this.label.error)
         }, (response) => {
-          event.target.value = ''
           response && alert(response.msg)
         })
       },
@@ -398,7 +395,7 @@
                 }
 
                 this.fetchUpload && this.fetchUpload(target.src, (originalURL, url) => {
-                  event.target.value = event.target.value.replace(originalURL, url)
+                  replaceTextareaValue(event.target, originalURL, url)
                 })
 
                 return `![${target.alt}](${target.src})`
@@ -408,29 +405,23 @@
           })
           if (hasCode) {
             insertTextAtCaret(event.target, event.clipboardData.getData('text/plain'), '', true)
-            this._debounceChange()
           } else {
             const div = document.createElement('div')
             div.innerHTML = markdownStr
             markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '', true)
             insertTextAtCaret(event.target, markdownStr, '')
-            this._debounceChange()
           }
         } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '' &&
           event.clipboardData.files.length === 0) {
           insertTextAtCaret(event.target, event.clipboardData.getData('text/plain'), '', true)
-          this._debounceChange()
         } else if (event.clipboardData.files.length > 0) {
           // upload file
           if (this.uploadURL) {
             insertTextAtCaret(this.$refs.b3logEditor,
               genUploading(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true)
             ajaxUpload(this.uploadURL, event.clipboardData.files, this.uploadMax, (response) => {
-              event.target.value = genUploaded(response.data, event.target.value,
-                this.label.loading, this.label.error)
-              this._debounceChange()
+              genUploaded(response.data, event.target, this.label.loading, this.label.error)
             }, (response) => {
-              event.target.value = ''
               response && alert(response.msg)
             })
           }
@@ -453,7 +444,6 @@
       },
       insert (prefix, suffix, hasReplaced) {
         insertTextAtCaret(this.$refs.b3logEditor, prefix, suffix, hasReplaced)
-        this._debounceChange()
       }
     },
     mounted () {
