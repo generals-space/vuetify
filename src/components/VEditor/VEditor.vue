@@ -249,12 +249,13 @@
           event.preventDefault()
           this.$set(this, 'showHint', false)
 
+          const hintValue = this.hintData[this.currentHintIndex].value
           while (!event.target.value.substr(0, event.target.selectionEnd).endsWith(':') &&
           event.target.value.substr(0, event.target.selectionEnd) !== '') {
             document.execCommand('delete', false)
           }
           document.execCommand('delete', false)
-          document.execCommand('insertText', false, this.hintData[this.currentHintIndex].value + ' ')
+          document.execCommand('insertText', false, hintValue + ' ')
         }
       },
       insertHint (value) {
