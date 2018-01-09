@@ -6,8 +6,43 @@
  * @fileOverview editor tool
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 1.1.0.0, Jan 3, 2018
+ * @version 1.1.1.0, Jan 9, 2018
  */
+
+const _insertFF = (textarea, prefix, suffix, replace) => {
+  const startPos = textarea.selectionStart
+  const endPos = textarea.selectionEnd
+  const tmpStr = textarea.value
+  if (document.execCommand('insertText', false, '') === false) {
+    if (startPos === endPos) {
+      // no selection
+      textarea.value = tmpStr.substring(0, startPos) + prefix + suffix + tmpStr.substring(endPos, tmpStr.length)
+      textarea.selectionEnd = textarea.selectionStart = endPos + prefix.length
+    } else {
+      if (replace) {
+        textarea.value = tmpStr.substring(0, startPos) + prefix + suffix + tmpStr.substring(endPos, tmpStr.length)
+        textarea.selectionEnd = startPos + prefix.length + suffix.length
+      } else {
+        if (tmpStr.substring(startPos - prefix.length, startPos) === prefix &&
+          tmpStr.substring(endPos, endPos + suffix.length) === suffix) {
+          // broke circle, avoid repeat
+          textarea.value = tmpStr.substring(0, startPos - prefix.length) +
+            tmpStr.substring(startPos, endPos) + tmpStr.substring(endPos + suffix.length, tmpStr.length)
+          textarea.selectionStart = startPos - prefix.length
+          textarea.selectionEnd = endPos - prefix.length
+        } else {
+          // insert
+          textarea.value = tmpStr.substring(0, startPos) + prefix + tmpStr.substring(startPos, endPos) +
+            suffix + tmpStr.substring(endPos, tmpStr.length)
+          textarea.selectionStart = startPos + prefix.length
+          textarea.selectionEnd = endPos + prefix.length
+        }
+      }
+    }
+    return false
+  }
+  return true
+}
 
 export const insertTextAtCaret = (textarea, prefix, suffix, replace) => {
   if (typeof textarea.selectionStart === 'number' && typeof textarea.selectionEnd === 'number') {
@@ -15,6 +50,10 @@ export const insertTextAtCaret = (textarea, prefix, suffix, replace) => {
     const endPos = textarea.selectionEnd
     const tmpStr = textarea.value
     textarea.focus()
+    // compatible ff
+    if (!_insertFF(textarea, prefix, suffix, replace)) {
+      return
+    }
     if (startPos === endPos) {
       // no selection
       document.execCommand('insertText', false, prefix + suffix)
@@ -99,6 +138,10 @@ export const genUploaded = (response, textarea, loadingLabel = 'Uploading', erro
 export const replaceTextareaValue = (textarea, original, value) => {
   textarea.selectionStart = textarea.value.split(original)[0].length
   textarea.selectionEnd = textarea.selectionStart + original.length
+  if (document.execCommand('insertText', false, '') === false) {
+    textarea.value = textarea.value.replace(original, value)
+    return
+  }
   document.execCommand('delete', false)
   document.execCommand('insertText', false, value)
 }

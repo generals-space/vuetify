@@ -249,19 +249,39 @@
           event.preventDefault()
           this.$set(this, 'showHint', false)
 
-          const hintValue = this.hintData[this.currentHintIndex].value
+          const hintValue = this.hintData[this.currentHintIndex].value + ' '
+
+          if (document.execCommand('insertText', false, '') === false) {
+            const valueArray = event.target.value.substr(0, event.target.selectionStart).split(':')
+            valueArray.pop()
+            event.target.value = valueArray.join(':') + hintValue + event.target.value.substr(event.target.selectionStart)
+            event.target.selectionEnd = event.target.selectionStart = (valueArray.join(':') + hintValue).length
+            this.$set(this, 'textareaValue', event.target.value)
+            this._debounceChange()
+            return;
+          }
+
           while (!event.target.value.substr(0, event.target.selectionEnd).endsWith(':') &&
           event.target.value.substr(0, event.target.selectionEnd) !== '') {
             document.execCommand('delete', false)
           }
           document.execCommand('delete', false)
-          document.execCommand('insertText', false, hintValue + ' ')
+          document.execCommand('insertText', false, hintValue)
         }
       },
       insertHint (value) {
         this.$refs.b3logEditor.focus()
         this.$set(this, 'showHint', false)
 
+        if (document.execCommand('insertText', false, '') === false) {
+          const valueArray = this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionStart).split(':')
+          valueArray.pop()
+          this.$refs.b3logEditor.value = valueArray.join(':') + value + this.$refs.b3logEditor.value.substr(this.$refs.b3logEditor.selectionStart)
+          this.$refs.b3logEditor.selectionEnd = this.$refs.b3logEditor.selectionStart = (valueArray.join(':') + value).length
+          this.$set(this, 'textareaValue', this.$refs.b3logEditor.value)
+          this._debounceChange()
+          return;
+        }
         while (!this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionEnd).endsWith(':') &&
         this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionEnd) !== '') {
           document.execCommand('delete', false)
@@ -343,20 +363,25 @@
         return ''
       },
       _debounceChange () {
-        const debounce = 500
         if (this.timerId !== undefined) {
           clearTimeout(this.timerId)
         }
         this.$set(this, 'timerId', undefined)
         this.$set(this, 'timerId', setTimeout(() => {
           this.$emit('change', this.$refs.b3logEditor.value, this.hasPreview ? this.$refs.b3logView : undefined)
-        }, debounce))
+        }, 500))
       },
       selectFile (event) {
         insertTextAtCaret(this.$refs.b3logEditor,
           genUploading(event.target.files, this.uploadMax, this.label.loading, this.label.over), '')
+        if (document.execCommand('insertText', false, '') === false) {
+          this._debounceChange()
+        }
         ajaxUpload(this.uploadURL, event.target.files, this.uploadMax, (response) => {
           genUploaded(response.data, this.$refs.b3logEditor, this.label.loading, this.label.error)
+          if (document.execCommand('insertText', false, '') === false) {
+            this._debounceChange()
+          }
           event.target.value = ''
         }, (response) => {
           event.target.value = ''
@@ -370,8 +395,14 @@
         }
         insertTextAtCaret(this.$refs.b3logEditor,
           genUploading(files, this.uploadMax, this.label.loading, this.label.over), '')
+        if (document.execCommand('insertText', false, '') === false) {
+          this._debounceChange()
+        }
         ajaxUpload(this.uploadURL, files, this.uploadMax, (response) => {
           genUploaded(response.data, this.$refs.b3logEditor, this.label.loading, this.label.error)
+          if (document.execCommand('insertText', false, '') === false) {
+            this._debounceChange()
+          }
         }, (response) => {
           response && alert(response.msg)
         })
@@ -396,6 +427,13 @@
                 }
 
                 this.fetchUpload && this.fetchUpload(target.src, (originalURL, url) => {
+                  if (document.execCommand('insertText', false, '') === false) {
+                    event.target.value = event.target.value.replace(originalURL, url)
+                    this.$set(this, 'textareaValue', event.target.value)
+                    this._debounceChange()
+                    return
+                  }
+
                   replaceTextareaValue(event.target, originalURL, url)
                 })
 
@@ -412,16 +450,29 @@
             markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '', true)
             insertTextAtCaret(event.target, markdownStr, '')
           }
+
+          if (document.execCommand('insertText', false, '') === false) {
+            this._debounceChange()
+          }
         } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '' &&
           event.clipboardData.files.length === 0) {
           insertTextAtCaret(event.target, event.clipboardData.getData('text/plain'), '', true)
+          if (document.execCommand('insertText', false, '') === false) {
+            this._debounceChange()
+          }
         } else if (event.clipboardData.files.length > 0) {
           // upload file
           if (this.uploadURL) {
             insertTextAtCaret(this.$refs.b3logEditor,
               genUploading(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true)
+            if (document.execCommand('insertText', false, '') === false) {
+              this._debounceChange()
+            }
             ajaxUpload(this.uploadURL, event.clipboardData.files, this.uploadMax, (response) => {
               genUploaded(response.data, event.target, this.label.loading, this.label.error)
+              if (document.execCommand('insertText', false, '') === false) {
+                this._debounceChange()
+              }
             }, (response) => {
               response && alert(response.msg)
             })
@@ -445,6 +496,9 @@
       },
       insert (prefix, suffix, hasReplaced) {
         insertTextAtCaret(this.$refs.b3logEditor, prefix, suffix, hasReplaced)
+        if (document.execCommand('insertText', false, '') === false) {
+          this._debounceChange()
+        }
       }
     },
     mounted () {
