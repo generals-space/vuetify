@@ -13,7 +13,7 @@ const _insertFF = (textarea, prefix, suffix, replace) => {
   const startPos = textarea.selectionStart
   const endPos = textarea.selectionEnd
   const tmpStr = textarea.value
-  if (document.execCommand('insertText', false, '') === false) {
+  if (/firefox/i.test(navigator.userAgent)) {
     if (startPos === endPos) {
       // no selection
       textarea.value = tmpStr.substring(0, startPos) + prefix + suffix + tmpStr.substring(endPos, tmpStr.length)
@@ -138,7 +138,7 @@ export const genUploaded = (response, textarea, loadingLabel = 'Uploading', erro
 export const replaceTextareaValue = (textarea, original, value) => {
   textarea.selectionStart = textarea.value.split(original)[0].length
   textarea.selectionEnd = textarea.selectionStart + original.length
-  if (document.execCommand('insertText', false, '') === false) {
+  if (/firefox/i.test(navigator.userAgent)) {
     textarea.value = textarea.value.replace(original, value)
     return
   }

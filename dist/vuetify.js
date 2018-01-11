@@ -3232,7 +3232,7 @@ process.umask = function() { return 0; };
 
 module.exports = {
 	"name": "vuetify",
-	"version": "1.2.3",
+	"version": "1.2.4",
 	"author": {
 		"name": "John Leider",
 		"email": "john@vuetifyjs.com"
@@ -9798,7 +9798,7 @@ __webpack_require__(108);
 
         var hintValue = this.hintData[this.currentHintIndex].value + ' ';
 
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           var valueArray = event.target.value.substr(0, event.target.selectionStart).split(':');
           valueArray.pop();
           event.target.value = valueArray.join(':') + hintValue + event.target.value.substr(event.target.selectionStart);
@@ -9819,7 +9819,7 @@ __webpack_require__(108);
       this.$refs.b3logEditor.focus();
       this.$set(this, 'showHint', false);
 
-      if (document.execCommand('insertText', false, '') === false) {
+      if (/firefox/i.test(navigator.userAgent)) {
         var valueArray = this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionStart).split(':');
         valueArray.pop();
         this.$refs.b3logEditor.value = valueArray.join(':') + value + this.$refs.b3logEditor.value.substr(this.$refs.b3logEditor.selectionStart);
@@ -9922,12 +9922,12 @@ __webpack_require__(108);
       var _this3 = this;
 
       Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(event.target.files, this.uploadMax, this.label.loading, this.label.over), '');
-      if (document.execCommand('insertText', false, '') === false) {
+      if (/firefox/i.test(navigator.userAgent)) {
         this._debounceChange();
       }
       Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.target.files, this.uploadMax, function (response) {
         Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, _this3.$refs.b3logEditor, _this3.label.loading, _this3.label.error);
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           _this3._debounceChange();
         }
         event.target.value = '';
@@ -9944,12 +9944,12 @@ __webpack_require__(108);
         return;
       }
       Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(files, this.uploadMax, this.label.loading, this.label.over), '');
-      if (document.execCommand('insertText', false, '') === false) {
+      if (/firefox/i.test(navigator.userAgent)) {
         this._debounceChange();
       }
       Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, files, this.uploadMax, function (response) {
         Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, _this4.$refs.b3logEditor, _this4.label.loading, _this4.label.error);
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           _this4._debounceChange();
         }
       }, function (response) {
@@ -9978,7 +9978,7 @@ __webpack_require__(108);
               }
 
               _this5.fetchUpload && _this5.fetchUpload(target.src, function (originalURL, url) {
-                if (document.execCommand('insertText', false, '') === false) {
+                if (/firefox/i.test(navigator.userAgent)) {
                   event.target.value = event.target.value.replace(originalURL, url);
                   _this5.$set(_this5, 'textareaValue', event.target.value);
                   _this5._debounceChange();
@@ -10002,24 +10002,24 @@ __webpack_require__(108);
           Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(event.target, markdownStr, '');
         }
 
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           this._debounceChange();
         }
       } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '' && event.clipboardData.files.length === 0) {
         Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(event.target, event.clipboardData.getData('text/plain'), '', true);
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           this._debounceChange();
         }
       } else if (event.clipboardData.files.length > 0) {
         // upload file
         if (this.uploadURL) {
           Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, Object(__WEBPACK_IMPORTED_MODULE_2__tool__["c" /* genUploading */])(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true);
-          if (document.execCommand('insertText', false, '') === false) {
+          if (/firefox/i.test(navigator.userAgent)) {
             this._debounceChange();
           }
           Object(__WEBPACK_IMPORTED_MODULE_2__tool__["a" /* ajaxUpload */])(this.uploadURL, event.clipboardData.files, this.uploadMax, function (response) {
             Object(__WEBPACK_IMPORTED_MODULE_2__tool__["b" /* genUploaded */])(response.data, event.target, _this5.label.loading, _this5.label.error);
-            if (document.execCommand('insertText', false, '') === false) {
+            if (/firefox/i.test(navigator.userAgent)) {
               _this5._debounceChange();
             }
           }, function (response) {
@@ -10043,7 +10043,7 @@ __webpack_require__(108);
     },
     insert: function insert(prefix, suffix, hasReplaced) {
       Object(__WEBPACK_IMPORTED_MODULE_2__tool__["d" /* insertTextAtCaret */])(this.$refs.b3logEditor, prefix, suffix, hasReplaced);
-      if (document.execCommand('insertText', false, '') === false) {
+      if (/firefox/i.test(navigator.userAgent)) {
         this._debounceChange();
       }
     }
@@ -11789,7 +11789,7 @@ var _insertFF = function _insertFF(textarea, prefix, suffix, replace) {
   var startPos = textarea.selectionStart;
   var endPos = textarea.selectionEnd;
   var tmpStr = textarea.value;
-  if (document.execCommand('insertText', false, '') === false) {
+  if (/firefox/i.test(navigator.userAgent)) {
     if (startPos === endPos) {
       // no selection
       textarea.value = tmpStr.substring(0, startPos) + prefix + suffix + tmpStr.substring(endPos, tmpStr.length);
@@ -11919,7 +11919,7 @@ var genUploaded = function genUploaded(response, textarea) {
 var replaceTextareaValue = function replaceTextareaValue(textarea, original, value) {
   textarea.selectionStart = textarea.value.split(original)[0].length;
   textarea.selectionEnd = textarea.selectionStart + original.length;
-  if (document.execCommand('insertText', false, '') === false) {
+  if (/firefox/i.test(navigator.userAgent)) {
     textarea.value = textarea.value.replace(original, value);
     return;
   }

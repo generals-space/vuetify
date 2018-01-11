@@ -251,7 +251,7 @@
 
           const hintValue = this.hintData[this.currentHintIndex].value + ' '
 
-          if (document.execCommand('insertText', false, '') === false) {
+          if (/firefox/i.test(navigator.userAgent)) {
             const valueArray = event.target.value.substr(0, event.target.selectionStart).split(':')
             valueArray.pop()
             event.target.value = valueArray.join(':') + hintValue + event.target.value.substr(event.target.selectionStart)
@@ -273,7 +273,7 @@
         this.$refs.b3logEditor.focus()
         this.$set(this, 'showHint', false)
 
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           const valueArray = this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionStart).split(':')
           valueArray.pop()
           this.$refs.b3logEditor.value = valueArray.join(':') + value + this.$refs.b3logEditor.value.substr(this.$refs.b3logEditor.selectionStart)
@@ -374,12 +374,12 @@
       selectFile (event) {
         insertTextAtCaret(this.$refs.b3logEditor,
           genUploading(event.target.files, this.uploadMax, this.label.loading, this.label.over), '')
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           this._debounceChange()
         }
         ajaxUpload(this.uploadURL, event.target.files, this.uploadMax, (response) => {
           genUploaded(response.data, this.$refs.b3logEditor, this.label.loading, this.label.error)
-          if (document.execCommand('insertText', false, '') === false) {
+          if (/firefox/i.test(navigator.userAgent)) {
             this._debounceChange()
           }
           event.target.value = ''
@@ -395,12 +395,12 @@
         }
         insertTextAtCaret(this.$refs.b3logEditor,
           genUploading(files, this.uploadMax, this.label.loading, this.label.over), '')
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           this._debounceChange()
         }
         ajaxUpload(this.uploadURL, files, this.uploadMax, (response) => {
           genUploaded(response.data, this.$refs.b3logEditor, this.label.loading, this.label.error)
-          if (document.execCommand('insertText', false, '') === false) {
+          if (/firefox/i.test(navigator.userAgent)) {
             this._debounceChange()
           }
         }, (response) => {
@@ -427,7 +427,7 @@
                 }
 
                 this.fetchUpload && this.fetchUpload(target.src, (originalURL, url) => {
-                  if (document.execCommand('insertText', false, '') === false) {
+                  if (/firefox/i.test(navigator.userAgent)) {
                     event.target.value = event.target.value.replace(originalURL, url)
                     this.$set(this, 'textareaValue', event.target.value)
                     this._debounceChange()
@@ -451,13 +451,13 @@
             insertTextAtCaret(event.target, markdownStr, '')
           }
 
-          if (document.execCommand('insertText', false, '') === false) {
+          if (/firefox/i.test(navigator.userAgent)) {
             this._debounceChange()
           }
         } else if (event.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '' &&
           event.clipboardData.files.length === 0) {
           insertTextAtCaret(event.target, event.clipboardData.getData('text/plain'), '', true)
-          if (document.execCommand('insertText', false, '') === false) {
+          if (/firefox/i.test(navigator.userAgent)) {
             this._debounceChange()
           }
         } else if (event.clipboardData.files.length > 0) {
@@ -465,12 +465,12 @@
           if (this.uploadURL) {
             insertTextAtCaret(this.$refs.b3logEditor,
               genUploading(event.clipboardData.files, this.uploadMax, this.label.loading, this.label.over), '', true)
-            if (document.execCommand('insertText', false, '') === false) {
+            if (/firefox/i.test(navigator.userAgent)) {
               this._debounceChange()
             }
             ajaxUpload(this.uploadURL, event.clipboardData.files, this.uploadMax, (response) => {
               genUploaded(response.data, event.target, this.label.loading, this.label.error)
-              if (document.execCommand('insertText', false, '') === false) {
+              if (/firefox/i.test(navigator.userAgent)) {
                 this._debounceChange()
               }
             }, (response) => {
@@ -496,7 +496,7 @@
       },
       insert (prefix, suffix, hasReplaced) {
         insertTextAtCaret(this.$refs.b3logEditor, prefix, suffix, hasReplaced)
-        if (document.execCommand('insertText', false, '') === false) {
+        if (/firefox/i.test(navigator.userAgent)) {
           this._debounceChange()
         }
       }
