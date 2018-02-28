@@ -95,7 +95,7 @@
 
 <script>
   require('../../stylus/components/_editor.styl')
-  import toMarkdown from 'to-markdown'
+  import TurndownService from 'turndown'
   import allEmoji from './emoji.json'
   import { insertTextAtCaret, ajaxUpload, genUploading, genUploaded, replaceTextareaValue } from './tool'
 
@@ -410,7 +410,8 @@
       pasteToMarkdown (event) {
         if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') !== '') {
           let hasCode = false
-          let markdownStr = toMarkdown(event.clipboardData.getData('text/html'), {
+
+          let turndownService = new TurndownService({
             converters: [{
               filter: ['pre', 'code'],
               replacement: function (content) {
@@ -442,6 +443,8 @@
             }],
             gfm: true
           })
+          let markdownStr = turndownService.turndown(event.clipboardData.getData('text/html'))
+
           if (hasCode) {
             insertTextAtCaret(event.target, event.clipboardData.getData('text/plain'), '', true)
           } else {
