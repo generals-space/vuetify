@@ -43,7 +43,7 @@
       <span
         :aria-label="convertHotKey(label.preview) || 'Preview'"
         class="pipe-tooltipped pipe-tooltipped--e"
-        @click="hasPreview = !hasPreview"
+        @click="togglePreview"
         :class="{'b3log-editor__icon--current' : hasPreview}"><v-icon>view</v-icon></span>
       <span
         :aria-label="convertHotKey(label.fullscreen) || 'Fullscreen'"
@@ -177,6 +177,12 @@
       }
     },
     methods: {
+      togglePreview () {
+        this.$set(this, 'hasPreview', !this.hasPreview)
+        if (this.hasPreview) {
+          this.$emit('change', this.$refs.b3logEditor.value, this.$refs.b3logView)
+        }
+      },
       hotkey (event) {
         switch (event.key) {
           case '/':
