@@ -161,13 +161,6 @@ kbd {
   font-size: 85%;
   font-weight: 900;
 }
-code:after,
-kbd:after,
-code:before,
-kbd:before {
-  content: "\A0";
-  letter-spacing: -1px;
-}
 code {
   background-color: #f5f5f5;
   color: #bd4147;
