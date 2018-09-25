@@ -601,6 +601,10 @@ export default {
       // reset the caret pos
       this.$nextTick(() => {
         this.focus()
+        // NOTE: https://github.com/b3log/pipe/issues/147
+        setTimeout(() => {
+          this.isFocused = true
+        }, 0)
         this.setCaretPosition(this.currentRange)
 
         requestAnimationFrame(() => {

@@ -1,6 +1,14 @@
 <template>
   <v-app>
     <div style="width: 768px;margin: 50px auto;">
+      <v-select
+        v-model="tags"
+        label="标签"
+        chips
+        tags
+        required
+      ></v-select>
+
       <v-editor
         uploadURL="/blogs/Vanessa/upload"
         :uploadMax="10"
@@ -30,6 +38,7 @@
         'https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100',
         'https://img.hacpai.com/bing/20171202.jpg?imageView2/1/w/768/h/180/interlace/1/q/100'],
       text: 'pipe editor',
+      tags: [],
       label: {
         loading: '',
         over: '',
