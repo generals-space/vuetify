@@ -2452,7 +2452,6 @@ p {
 }
 .input-group--select .input-group--select__autocomplete {
   display: block;
-  height: 0px;
 }
 .input-group--select .input-group--select__autocomplete--index {
   opacity: 0 !important;

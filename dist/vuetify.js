@@ -3232,7 +3232,7 @@ process.umask = function() { return 0; };
 
 module.exports = {
 	"name": "vuetify",
-	"version": "1.2.7",
+	"version": "1.2.8",
 	"author": {
 		"name": "John Leider",
 		"email": "john@vuetifyjs.com"
@@ -6434,6 +6434,10 @@ __webpack_require__(62);
       // reset the caret pos
       this.$nextTick(function () {
         _this12.focus();
+        // NOTE: https://github.com/b3log/pipe/issues/147
+        setTimeout(function () {
+          _this12.isFocused = true;
+        }, 0);
         _this12.setCaretPosition(_this12.currentRange);
 
         requestAnimationFrame(function () {
