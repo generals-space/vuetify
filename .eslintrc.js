@@ -37,6 +37,6 @@ module.exports = {
     // ensure consistent 2 space indentation and indent cases under switch
     'indent': [2, 2, {'SwitchCase': 1}],
     'object-curly-spacing': [2, 'always'],
-    'max-statements': [2, 24]
+    'max-statements': [2, 30]
   }
 }

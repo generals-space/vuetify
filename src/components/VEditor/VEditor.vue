@@ -264,7 +264,7 @@
             event.target.selectionEnd = event.target.selectionStart = (valueArray.join(':') + hintValue).length
             this.$set(this, 'textareaValue', event.target.value)
             this._debounceChange()
-            return;
+            return
           }
 
           while (!event.target.value.substr(0, event.target.selectionEnd).endsWith(':') &&
@@ -286,7 +286,7 @@
           this.$refs.b3logEditor.selectionEnd = this.$refs.b3logEditor.selectionStart = (valueArray.join(':') + value).length
           this.$set(this, 'textareaValue', this.$refs.b3logEditor.value)
           this._debounceChange()
-          return;
+          return
         }
         while (!this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionEnd).endsWith(':') &&
         this.$refs.b3logEditor.value.substr(0, this.$refs.b3logEditor.selectionEnd) !== '') {
@@ -417,7 +417,7 @@
         if (event.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') !== '') {
           let hasCode = false
 
-          let turndownService = new TurndownService({
+          const turndownService = new TurndownService({
             converters: [{
               filter: ['pre', 'code'],
               replacement: function (content) {

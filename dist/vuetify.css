@@ -3775,5 +3775,449 @@ p {
     overflow: auto;
   }
 }
+/* Theme */
+.table {
+  background-color: #fff;
+  color: rgba(0,0,0,0.87);
+}
+.table thead {
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.table thead th {
+  color: rgba(0,0,0,0.54);
+}
+.table tbody tr:not(:last-child) {
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.table tbody tr[active] {
+  background: #f5f5f5;
+}
+.table tbody tr:hover:not(.datatable__expand-row) {
+  background: #eee;
+}
+.table tfoot tr {
+  border-top: 1px solid rgba(0,0,0,0.12);
+}
+.table__overflow {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+table.table {
+  border-radius: 2px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 100%;
+}
+table.table thead td:not(:nth-child(1)),
+table.table tbody td:not(:nth-child(1)),
+table.table thead th:not(:nth-child(1)),
+table.table tbody th:not(:nth-child(1)),
+table.table thead td:first-child,
+table.table tbody td:first-child,
+table.table thead th:first-child,
+table.table tbody th:first-child {
+  padding: 0 24px;
+}
+table.table thead tr {
+  height: 56px;
+}
+table.table thead th {
+  font-weight: 500;
+  font-size: 12px;
+  -webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  white-space: nowrap;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+table.table thead th.sortable {
+  pointer-events: auto;
+}
+table.table thead th > div {
+  width: 100%;
+}
+table.table tbody tr {
+  -webkit-transition: background 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: background 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  will-change: background;
+}
+table.table tbody td,
+table.table tbody th {
+  height: 48px;
+}
+table.table tbody td {
+  font-weight: 400;
+  font-size: 13px;
+}
+table.table .input-group--selection-controls {
+  padding: 0;
+}
+table.table .input-group--selection-controls .input-group__details {
+  display: none;
+}
+table.table .input-group--selection-controls.checkbox .icon {
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+table.table .input-group--selection-controls.checkbox .input-group--selection-controls__ripple {
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+}
+table.table tfoot tr:not(:last-child) {
+  height: 48px;
+}
+table.table tfoot tr:not(:last-child):not(:only-child) td {
+  padding: 0 24px;
+}
+table.table tfoot tr {
+  height: 56px;
+}
+/* Theme */
+.datatable thead th.column.sortable i {
+  color: rgba(0,0,0,0.38);
+}
+.datatable thead th.column.sortable:hover {
+  color: rgba(0,0,0,0.87);
+}
+.datatable thead th.column.sortable.active {
+  color: rgba(0,0,0,0.87);
+}
+.datatable thead th.column.sortable.active i {
+  color: rgba(0,0,0,0.87);
+}
+.datatable .datatable__actions {
+  color: rgba(0,0,0,0.54);
+}
+.datatable .datatable__actions__select .input-group--select .input-group__selections__comma {
+  color: rgba(0,0,0,0.54) !important;
+}
+.datatable .datatable__actions__select .input-group--select .input-group__append-icon {
+  color: rgba(0,0,0,0.54) !important;
+}
+.datatable thead th.column.sortable {
+  cursor: pointer;
+}
+.datatable thead th.column.sortable i {
+  font-size: 16px;
+  vertical-align: sub;
+  display: inline-block;
+  opacity: 0;
+  -webkit-transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+.datatable thead th.column.sortable:hover i {
+  opacity: 0.6;
+}
+.datatable thead th.column.sortable.active {
+  -webkit-transform: none;
+          transform: none;
+}
+.datatable thead th.column.sortable.active i {
+  opacity: 1;
+}
+.datatable thead th.column.sortable.active.desc i {
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+}
+/** Actions */
+.datatable__actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 12px;
+}
+.datatable__actions .btn {
+  color: inherit;
+}
+.datatable__actions .btn:last-of-type {
+  margin-left: 18px;
+}
+.datatable__actions__pagination {
+  text-align: center;
+  margin: 0 26px 0 32px;
+}
+.datatable__actions__select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.datatable__actions__select .input-group--select {
+  margin: 13px 0 13px 34px;
+  padding: 0;
+  position: initial;
+}
+.datatable__actions__select .input-group--select .input-group__selections__comma {
+  font-size: 12px;
+}
+.datatable__progress {
+  height: auto !important;
+}
+.datatable__progress tr,
+.datatable__progress td,
+.datatable__progress th {
+  height: auto !important;
+}
+.datatable__progress th {
+  padding: 0 !important;
+}
+.datatable__progress th .progress-linear {
+  top: -2px;
+  margin: 0 0 -2px;
+}
+.datatable__expand-row {
+  border: none !important;
+}
+.datatable__expand-col {
+  padding: 0 !important;
+  height: 0px !important;
+}
+.datatable__expand-col--expanded {
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+.datatable__expand-content {
+  -webkit-transition: height 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: height 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+.datatable__expand-content > .card {
+  border-radius: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.progress-linear {
+  background: transparent;
+  margin: 1rem 0;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+.progress-linear__bar {
+  width: 100%;
+  height: inherit;
+  position: relative;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+  z-index: 1;
+}
+.progress-linear__bar__determinate {
+  height: inherit;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+.progress-linear__bar__indeterminate .long,
+.progress-linear__bar__indeterminate .short {
+  height: inherit;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  will-change: left, right;
+  width: auto;
+  background-color: inherit;
+}
+.progress-linear__bar__indeterminate--active .long {
+  -webkit-animation: indeterminate;
+          animation: indeterminate;
+  -webkit-animation-duration: 2.2s;
+          animation-duration: 2.2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+.progress-linear__bar__indeterminate--active .short {
+  -webkit-animation: indeterminate-short;
+          animation: indeterminate-short;
+  -webkit-animation-duration: 2.2s;
+          animation-duration: 2.2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+.progress-linear__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  -webkit-transition: 0.3s ease-in;
+  transition: 0.3s ease-in;
+}
+.progress-linear--query .progress-linear__bar__indeterminate--active .long {
+  -webkit-animation: query;
+          animation: query;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+.progress-linear--query .progress-linear__bar__indeterminate--active .short {
+  -webkit-animation: query-short;
+          animation: query-short;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+@-webkit-keyframes indeterminate {
+  0% {
+    left: -90%;
+    right: 100%;
+  }
+  60% {
+    left: -90%;
+    right: 100%;
+  }
+  100% {
+    left: 100%;
+    right: -35%;
+  }
+}
+@keyframes indeterminate {
+  0% {
+    left: -90%;
+    right: 100%;
+  }
+  60% {
+    left: -90%;
+    right: 100%;
+  }
+  100% {
+    left: 100%;
+    right: -35%;
+  }
+}
+@-webkit-keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
+@keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
+@-webkit-keyframes query {
+  0% {
+    right: -90%;
+    left: 100%;
+  }
+  60% {
+    right: -90%;
+    left: 100%;
+  }
+  100% {
+    right: 100%;
+    left: -35%;
+  }
+}
+@keyframes query {
+  0% {
+    right: -90%;
+    left: 100%;
+  }
+  60% {
+    right: -90%;
+    left: 100%;
+  }
+  100% {
+    right: 100%;
+    left: -35%;
+  }
+}
+@-webkit-keyframes query-short {
+  0% {
+    right: -200%;
+    left: 100%;
+  }
+  60% {
+    right: 107%;
+    left: -8%;
+  }
+  100% {
+    right: 107%;
+    left: -8%;
+  }
+}
+@keyframes query-short {
+  0% {
+    right: -200%;
+    left: 100%;
+  }
+  60% {
+    right: 107%;
+    left: -8%;
+  }
+  100% {
+    right: 107%;
+    left: -8%;
+  }
+}
+.small-dialog__content {
+  background: #fff;
+}
+.small-dialog__actions {
+  background: #fff;
+}
+.small-dialog a {
+  color: rgba(0,0,0,0.87);
+}
+.small-dialog {
+  display: block;
+  height: 100%;
+}
+.small-dialog__content {
+  padding: 0 24px;
+}
+.small-dialog__actions {
+  text-align: right;
+}
+.small-dialog a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  text-decoration: none;
+}
+.small-dialog a > * {
+  width: 100%;
+}
+.small-dialog .menu__activator {
+  height: 100%;
+}
 
 /*# sourceMappingURL=vuetify.css.map*/
